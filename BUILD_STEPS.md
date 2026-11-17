@@ -20,7 +20,7 @@ Each step is small enough to build, test and explain in one sitting. Steps that 
 - [x] **1.3 Yacht selection.** Filters (guests, region, season, budget, type), cost breakdown per yacht, budget band pill, currency switch showing the rate date.
 - [x] **1.4 Itinerary builder.** Day by day ports, nautical miles, cruising time at chosen speed, long day flag over 6 hours.
 - [x] **1.5 Proposal.** One-page printable proposal of the top three yachts, copy-to-Claude prompt, fallback email template.
-- [ ] **1.6 Contract and payment checklist.** Checklist items, payment schedule with due dates and "check the signed contract" notice.
+- [x] **1.6 Contract and payment checklist.** Checklist items, payment schedule with due dates and "check the signed contract" notice.
 - [ ] **1.7 Preference sheet.** Form plus one-page captain handover summary.
 
 ## Phase 2: Charter management

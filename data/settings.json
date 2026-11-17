@@ -423,6 +423,17 @@
       "note": "Red when overdue, amber within this many days, green otherwise."
     },
     {
+      "id": "alerts.paymentDueSoonDays",
+      "group": "Alerts and thresholds",
+      "label": "Payments: amber when due within",
+      "value": 14,
+      "unit": "days",
+      "source": "Working rule",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Red when overdue, amber when due within this many days."
+    },
+    {
       "id": "currency.gbpPerEur",
       "group": "Currency rates (manual)",
       "label": "GBP per 1 EUR",

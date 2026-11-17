@@ -15,6 +15,8 @@ import * as enquiriesView from './views/enquiries.js';
 import * as selectionView from './views/selection.js';
 import * as itineraryView from './views/itinerary.js';
 import * as proposalView from './views/proposal.js';
+import * as contractsView from './views/contracts.js';
+import { buildSampleContracts } from './contracts.js';
 import { buildSampleItineraries } from './calc/itinerary.js';
 
 // Screens that have been built. Each view file exports
@@ -27,6 +29,7 @@ const VIEWS = {
   selection: selectionView,
   itinerary: itineraryView,
   proposal: proposalView,
+  contracts: contractsView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.
@@ -241,6 +244,13 @@ if (!hasCollection('itineraries')) {
   if (response.ok) {
     const { itineraries } = await response.json();
     saveCollection('itineraries', buildSampleItineraries(itineraries, todayISO()));
+  }
+}
+if (!hasCollection('contracts')) {
+  const response = await fetch('data/sample-contracts.json');
+  if (response.ok) {
+    const { contracts } = await response.json();
+    saveCollection('contracts', buildSampleContracts(contracts, todayISO()));
   }
 }
 onChange(() => {

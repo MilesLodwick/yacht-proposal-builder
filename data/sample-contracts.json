@@ -1,0 +1,30 @@
+{
+  "about": "Fictional sample contracts for the fictional sample enquiries. The yachts are real public listings from data/yachts.csv. Checklist values are 'days ago' the item was done; missing means not done yet.",
+  "contracts": [
+    {
+      "enquiryId": "sample-enquiry-5",
+      "yachtId": "tww-yachts-agape-rose",
+      "signedDaysAgo": null,
+      "checklistDaysAgo": { "kyc": 3 }
+    },
+    {
+      "enquiryId": "sample-enquiry-6",
+      "yachtId": "tww-yachts-te-manu",
+      "signedDaysAgo": 20,
+      "checklistDaysAgo": { "kyc": 24, "contractSigned": 20, "depositReceived": 18 }
+    },
+    {
+      "enquiryId": "sample-enquiry-7",
+      "yachtId": "burgess-santosha",
+      "vatOption": 1,
+      "signedDaysAgo": 60,
+      "checklistDaysAgo": { "kyc": 65, "contractSigned": 60, "depositReceived": 57, "balanceReceived": 2, "preferenceSheet": 10 }
+    },
+    {
+      "enquiryId": "sample-enquiry-8",
+      "yachtId": "tww-yachts-dakota",
+      "signedDaysAgo": 100,
+      "checklistDaysAgo": { "kyc": 104, "contractSigned": 100, "depositReceived": 98, "balanceReceived": 35, "apaReceived": 33, "preferenceSheet": 20, "guestList": 15 }
+    }
+  ]
+}

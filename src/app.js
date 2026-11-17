@@ -25,6 +25,8 @@ import * as listingsView from './views/listings.js';
 import * as buyerBriefView from './views/buyer-brief.js';
 import * as sellerView from './views/seller-view.js';
 import * as viewingsView from './views/viewings.js';
+import * as dealsView from './views/deals.js';
+import { buildSampleDeals } from './deals.js';
 import { buildSampleActivity } from './activity.js';
 import { buildSampleBriefs } from './buyer.js';
 import { buildSampleBooklets } from './booklet.js';
@@ -53,6 +55,7 @@ const VIEWS = {
   'buyer-brief': buyerBriefView,
   'seller-view': sellerView,
   viewings: viewingsView,
+  deals: dealsView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.
@@ -309,6 +312,13 @@ if (!hasCollection('saleActivity')) {
   if (response.ok) {
     const { entries } = await response.json();
     saveCollection('saleActivity', buildSampleActivity(entries, todayISO()));
+  }
+}
+if (!hasCollection('deals')) {
+  const response = await fetch('data/sample-deals.json');
+  if (response.ok) {
+    const { deals } = await response.json();
+    saveCollection('deals', buildSampleDeals(deals, todayISO()));
   }
 }
 onChange(() => {

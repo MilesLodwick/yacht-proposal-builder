@@ -1,0 +1,18 @@
+{
+  "about": "A fictional sample sale on one real public listing from data/for-sale.csv. The buyer, broker and every stage of this deal are made up. Dates are days before today.",
+  "deals": [
+    {
+      "listingId": "berthon-discovery-55-3",
+      "buyer": "Buyer ref B-131",
+      "buyerBroker": "Saltmarsh Yacht Agency",
+      "agreedPrice": 640000,
+      "currency": "USD",
+      "stages": {
+        "offer": { "daysAgo": 20, "docs": ["writtenOffer", "offerAccepted"], "notes": "Offer of USD 640,000 accepted subject to sea trial and survey." },
+        "moa": { "daysAgo": 14, "docs": ["moaBuyer", "moaSeller", "kyc"] },
+        "deposit": { "daysAgo": 11, "docs": ["depositCleared"] },
+        "seaTrial": { "daysAgo": 3, "docs": ["seaTrialDone"], "notes": "Sea trial in the Solent. Buyer happy with performance under sail." }
+      }
+    }
+  ]
+}

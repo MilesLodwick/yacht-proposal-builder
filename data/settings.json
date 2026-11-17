@@ -335,6 +335,17 @@
       "note": "Counted from MOA signing. Check against the current MYBA MOA."
     },
     {
+      "id": "sale.commissionPercent",
+      "group": "Brokerage sales",
+      "label": "Sale commission",
+      "value": 10,
+      "unit": "% of final sale price",
+      "source": "Industry rule of thumb",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Check the central agency agreement for each yacht. Any split with the buyer's broker is agreed case by case."
+    },
+    {
       "id": "sale.runningCostPercent",
       "group": "Brokerage sales",
       "label": "Annual running cost estimate",

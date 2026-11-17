@@ -42,6 +42,12 @@
   --amber-text: #6e4a00;
   --red-bg: #f9dcdc;
   --red-text: #8a1c1c;
+
+  /* Availability calendar: owner use (purple), booked (teal), options (amber) */
+  --owner-bg: #e6def5;
+  --owner-text: #3e2a6e;
+  --booking-bg: #0b5e5f;
+  --booking-text: #ffffff;
 }
 
 /* Dark mode follows the phone or computer's own setting */
@@ -64,6 +70,11 @@
     --amber-text: #f3cf7a;
     --red-bg: #431b1b;
     --red-text: #f4a9a9;
+
+    --owner-bg: #2f2547;
+    --owner-text: #d4c6f5;
+    --booking-bg: #5cbcb5;
+    --booking-text: #06211f;
   }
 }
 
@@ -700,6 +711,52 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
 .link-list { margin: 0 0 var(--space-4); padding-left: var(--space-5); font-size: 0.875rem; overflow-wrap: anywhere; }
 @media (max-width: 759px) {
   .pill-stack { align-items: flex-end; }
+}
+
+/* ==========================================================================
+   Availability calendar
+   ========================================================================== */
+
+.calendar-nav { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-3); }
+.calendar-nav h2 { margin: 0; text-align: center; }
+
+.calendar-legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); list-style: none; margin: 0 0 var(--space-3); padding: 0; font-size: 0.8125rem; }
+.calendar-legend li { display: flex; align-items: center; gap: var(--space-2); }
+.cal-swatch { display: inline-block; width: 16px; height: 16px; border-radius: 3px; border: 1px solid var(--border); }
+
+.calendar { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 3px; }
+.calendar th { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); padding-bottom: var(--space-1); }
+.calendar td {
+  position: relative;
+  height: 64px;
+  vertical-align: top;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.calendar td.cal-empty { border: 0; background: transparent; }
+.cal-day { display: block; font-family: var(--font-figures); font-size: 0.8125rem; }
+.cal-label { display: block; font-size: 0.6875rem; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cal-flag { position: absolute; top: 2px; right: 5px; font-weight: 700; color: var(--red-text); }
+.calendar td.cal-today { box-shadow: inset 0 0 0 2px var(--text); }
+
+.cal--owner { background: var(--owner-bg) !important; color: var(--owner-text); }
+.cal--booking { background: var(--booking-bg) !important; color: var(--booking-text); }
+.cal--option1 { background: var(--amber-bg) !important; color: var(--amber-text); }
+.cal--option2 { background: repeating-linear-gradient(135deg, var(--amber-bg) 0 6px, var(--surface) 6px 10px) !important; color: var(--amber-text); }
+.calendar td.cal--clash,
+.cal-swatch.cal--clash { border: 2px solid var(--red-text); }
+.cal-swatch.cal--clash { background: var(--surface); }
+.cal-pill { border: 1px solid transparent; }
+
+.pill-row--tight { margin: 0; }
+
+@media (max-width: 559px) {
+  .calendar { border-spacing: 2px; }
+  .calendar td { height: 46px; padding: 2px 3px; }
+  .cal-label { display: none; }
 }
 
 /* ==========================================================================

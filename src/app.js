@@ -18,6 +18,8 @@ import * as proposalView from './views/proposal.js';
 import * as contractsView from './views/contracts.js';
 import * as preferencesView from './views/preferences.js';
 import * as fleetView from './views/fleet.js';
+import * as availabilityView from './views/availability.js';
+import { buildSampleAvailability } from './calc/availability.js';
 import { buildSamplePreferences } from './preferences.js';
 import { buildSampleContracts } from './contracts.js';
 import { buildSampleItineraries } from './calc/itinerary.js';
@@ -35,6 +37,7 @@ const VIEWS = {
   contracts: contractsView,
   preferences: preferencesView,
   fleet: fleetView,
+  availability: availabilityView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.
@@ -263,6 +266,13 @@ if (!hasCollection('preferences')) {
   if (response.ok) {
     const { sheets } = await response.json();
     saveCollection('preferences', buildSamplePreferences(sheets, getCollection('enquiries')));
+  }
+}
+if (!hasCollection('availability')) {
+  const response = await fetch('data/sample-availability.json');
+  if (response.ok) {
+    const { entries } = await response.json();
+    saveCollection('availability', buildSampleAvailability(entries, todayISO()));
   }
 }
 onChange(() => {

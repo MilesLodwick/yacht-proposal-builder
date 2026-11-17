@@ -434,6 +434,17 @@
       "note": "Red when overdue, amber when due within this many days."
     },
     {
+      "id": "alerts.optionExpirySoonDays",
+      "group": "Alerts and thresholds",
+      "label": "Options: amber when expiring within",
+      "value": 3,
+      "unit": "days",
+      "source": "Working rule",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Red once an option has expired, amber when it expires within this many days."
+    },
+    {
       "id": "currency.gbpPerEur",
       "group": "Currency rates (manual)",
       "label": "GBP per 1 EUR",

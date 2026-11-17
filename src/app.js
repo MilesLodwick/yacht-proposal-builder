@@ -5,13 +5,15 @@
 // work on GitHub Pages with no server set-up, and the browser's Back button
 // works as you would expect.
 
-import { load, onChange, getState, hasExampleData, clearExampleData, isStorageWorking } from './store.js';
+import { load, loadDefaultSettings, onChange, getState, hasExampleData, clearExampleData, isStorageWorking } from './store.js';
 import * as dataView from './views/data.js';
+import * as settingsView from './views/settings.js';
 
 // Screens that have been built. Each view file exports render(container).
 // Any screen not listed here shows a placeholder.
 const VIEWS = {
   data: dataView,
+  settings: settingsView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.
@@ -193,8 +195,10 @@ document.getElementById('clear-example-data').addEventListener('click', () => {
 
 window.addEventListener('hashchange', () => showScreen({ moveFocus: true }));
 
-// Start-up: load saved data, then draw the menu, banners and first screen.
+// Start-up: load saved data and the default settings, then draw the menu,
+// banners and first screen.
 load();
+await loadDefaultSettings();
 onChange(() => {
   updateBanners();
 });

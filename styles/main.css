@@ -327,6 +327,76 @@ input[type="file"] { font: inherit; max-width: 100%; }
 .status-message { min-height: 1.5em; }
 .status-message.is-error { color: var(--red-text); }
 
+.field input {
+  font: inherit;
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+}
+.field input[aria-invalid="true"] { border-color: var(--red-text); }
+.field input[type="file"] { min-height: 0; padding: 0; border: 0; background: none; }
+.field-error { margin: var(--space-1) 0 0; color: var(--red-text); font-size: 0.875rem; }
+.field-error:empty { display: none; }
+
+.form-grid { display: grid; gap: 0 var(--space-4); }
+@media (min-width: 640px) {
+  .form-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.button-row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+/* ==========================================================================
+   Settings screen
+   ========================================================================== */
+
+.settings-group h2 { margin-bottom: var(--space-2); }
+
+.setting { border-top: 1px solid var(--border); }
+.setting:first-of-type { border-top: 0; }
+
+/* Phone: "+" then the label, with the value and pill on a line below.
+   Wider screens: one row of label, value (right-aligned) and pill. */
+.setting summary {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-1) var(--space-3);
+  align-items: center;
+  padding: var(--space-3) 0;
+  cursor: pointer;
+  list-style: none;
+}
+.setting summary::-webkit-details-marker { display: none; }
+.setting summary::before {
+  content: "+";
+  grid-row: span 2;
+  align-self: start;
+  font-family: var(--font-figures);
+  color: var(--accent);
+  width: 1ch;
+}
+.setting[open] summary::before { content: "-"; }
+
+.setting-label { font-weight: 500; }
+.setting-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+.setting-value {
+  font-family: var(--font-figures);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 640px) {
+  .setting summary { grid-template-columns: auto 1fr auto 11rem; }
+  .setting summary::before { grid-row: auto; align-self: center; }
+  .setting-meta { display: contents; }
+  .setting-value { text-align: right; }
+  .setting summary .pill { justify-self: end; }
+}
+
+.setting-body { padding: 0 0 var(--space-4) calc(1ch + var(--space-3)); }
+
 /* Placeholder shown on screens that are not built yet */
 .placeholder {
   padding: var(--space-5);

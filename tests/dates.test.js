@@ -1,6 +1,12 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { parseDate, formatDate, daysBetween, addDays, isWeekend, addBankingDays } from '../src/calc/dates.js';
+import { parseDate, formatDate, formatDateRange, daysBetween, addDays, isWeekend, addBankingDays } from '../src/calc/dates.js';
+
+test('formatDateRange does not repeat the month or year', () => {
+  assert.equal(formatDateRange('2027-07-07', '2027-07-14'), '7 to 14 Jul 2027');
+  assert.equal(formatDateRange('2027-06-28', '2027-07-05'), '28 Jun to 5 Jul 2027');
+  assert.equal(formatDateRange('2026-12-28', '2027-01-04'), '28 Dec 2026 to 4 Jan 2027');
+});
 
 test('formatDate shows dates as 17 Nov 2026', () => {
   assert.equal(formatDate('2026-11-17'), '17 Nov 2026');

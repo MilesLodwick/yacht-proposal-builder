@@ -33,6 +33,21 @@ export function formatDate(iso) {
   return `${date.getUTCDate()} ${MONTHS[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
 }
 
+// A short date range that does not repeat the month or year:
+//   same month:  "7 to 14 Jul 2027"
+//   same year:   "28 Jun to 5 Jul 2027"
+//   otherwise:   "28 Dec 2026 to 4 Jan 2027"
+export function formatDateRange(fromIso, toIso) {
+  const from = parseDate(fromIso);
+  const to = parseDate(toIso);
+  if (!from || !to) return `${formatDate(fromIso)} to ${formatDate(toIso)}`;
+  const sameYear = from.getUTCFullYear() === to.getUTCFullYear();
+  const sameMonth = sameYear && from.getUTCMonth() === to.getUTCMonth();
+  if (sameMonth) return `${from.getUTCDate()} to ${formatDate(toIso)}`;
+  if (sameYear) return `${from.getUTCDate()} ${MONTHS[from.getUTCMonth()]} to ${formatDate(toIso)}`;
+  return `${formatDate(fromIso)} to ${formatDate(toIso)}`;
+}
+
 // Whole days from one date to another. Positive if "to" is later.
 // daysBetween("2026-11-17", "2026-11-24") -> 7
 export function daysBetween(from, to) {
@@ -73,6 +88,15 @@ export function addBankingDays(iso, bankingDays) {
 // Today's date in the user's own time zone, as "YYYY-MM-DD".
 // Not pure (it reads the clock), so calculations take "today" as an input
 // instead of calling this, which keeps them testable.
+// The current date and time in the user's own time zone, as
+// "YYYY-MM-DDTHH:MM" (the format of a date-and-time form box).
+// Not pure, for the same reason as todayISO below.
+export function nowLocalDateTime() {
+  const now = new Date();
+  const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  return `${todayISO()}T${time}`;
+}
+
 export function todayISO() {
   const now = new Date();
   const month = String(now.getMonth() + 1).padStart(2, '0');

@@ -7,14 +7,19 @@
 
 import { load, loadDefaultSettings, onChange, getState, hasExampleData, clearExampleData, isStorageWorking, hasCollection, saveCollection } from './store.js';
 import { KINDS, fetchPublished } from './yachts.js';
+import { buildSamples } from './enquiries.js';
+import { todayISO } from './calc/dates.js';
 import * as dataView from './views/data.js';
 import * as settingsView from './views/settings.js';
+import * as enquiriesView from './views/enquiries.js';
 
-// Screens that have been built. Each view file exports render(container).
-// Any screen not listed here shows a placeholder.
+// Screens that have been built. Each view file exports
+// render(container, param, heading). Any screen not listed here shows a
+// placeholder.
 const VIEWS = {
   data: dataView,
   settings: settingsView,
+  enquiries: enquiriesView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.
@@ -112,16 +117,19 @@ function buildNav() {
   }
 }
 
-// Read the screen name from the address, e.g. "#/fleet" gives "fleet".
-function currentScreenId() {
-  const id = location.hash.replace(/^#\/?/, '');
-  return ALL_SCREENS.some((s) => s.id === id) ? id : DEFAULT_SCREEN;
+// Read the screen from the address. "#/fleet" gives { id: 'fleet' }.
+// Some screens have sub-pages: "#/enquiries/new" gives
+// { id: 'enquiries', param: 'new' }.
+function currentRoute() {
+  const [id, param = null] = location.hash.replace(/^#\/?/, '').split('/');
+  return ALL_SCREENS.some((s) => s.id === id) ? { id, param } : { id: DEFAULT_SCREEN, param: null };
 }
 
 // Show the screen named in the address.
 // Until a screen is built, it shows a placeholder naming its build step.
 function showScreen({ moveFocus }) {
-  const screen = ALL_SCREENS.find((s) => s.id === currentScreenId());
+  const route = currentRoute();
+  const screen = ALL_SCREENS.find((s) => s.id === route.id);
 
   main.replaceChildren();
 
@@ -132,7 +140,8 @@ function showScreen({ moveFocus }) {
   main.append(title);
 
   if (VIEWS[screen.id]) {
-    VIEWS[screen.id].render(main);
+    // A view may change the heading for a sub-page, e.g. "New enquiry".
+    VIEWS[screen.id].render(main, route.param, title);
   } else {
     const placeholder = document.createElement('div');
     placeholder.className = 'placeholder';
@@ -141,7 +150,7 @@ function showScreen({ moveFocus }) {
       <p class="muted">Planned in build step ${screen.step}.</p>`;
     main.append(placeholder);
   }
-  document.title = `${screen.title} | Yacht Proposal Builder`;
+  document.title = `${title.textContent} | Yacht Proposal Builder`;
 
   // Highlight the current link (and tell screen readers which page this is).
   for (const link of nav.querySelectorAll('a')) {
@@ -208,6 +217,16 @@ for (const kind of Object.keys(KINDS)) {
   if (!hasCollection(kind)) {
     const result = await fetchPublished(kind);
     if (result.ok) saveCollection(kind, result.records);
+  }
+}
+
+// First visit: add the fictional sample enquiries (marked as examples, so
+// the Example data banner shows and one button removes them).
+if (!hasCollection('enquiries')) {
+  const response = await fetch('data/sample-enquiries.json');
+  if (response.ok) {
+    const { enquiries } = await response.json();
+    saveCollection('enquiries', buildSamples(enquiries, todayISO()));
   }
 }
 onChange(() => {

@@ -29,11 +29,24 @@
     <!-- The navigation links are built by src/app.js from one list of screens -->
     <nav id="site-nav" class="site-nav" aria-label="Main"></nav>
 
+    <div class="content">
+    <!-- Shown by src/app.js only when sample records are present -->
+    <div id="example-banner" class="banner" hidden>
+      <p><strong>Example data.</strong> Clients, guests, crew and owners shown here are fictional.</p>
+      <button type="button" class="button button--small" id="clear-example-data">Clear example data</button>
+    </div>
+
+    <!-- Shown only if the browser refuses to save -->
+    <div id="storage-warning" class="banner banner--warning" role="alert" hidden>
+      <p><strong>This browser is not saving your data.</strong> Use Import and export to download a copy before you close this tab.</p>
+    </div>
+
     <main id="main" class="main">
       <noscript>
         <p>This tool needs JavaScript turned on.</p>
       </noscript>
     </main>
+    </div>
   </div>
 </body>
 </html>

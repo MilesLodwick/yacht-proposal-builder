@@ -256,6 +256,77 @@ a:hover { color: var(--accent-hover); }
 .pill--amber { background: var(--amber-bg); color: var(--amber-text); }
 .pill--red   { background: var(--red-bg);   color: var(--red-text); }
 
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.button {
+  font: inherit;
+  font-weight: 500;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--on-accent);
+  cursor: pointer;
+}
+.button:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+.button--secondary {
+  background: var(--surface);
+  color: var(--accent);
+}
+.button--secondary:hover { background: var(--accent-soft); }
+
+.button--small { min-height: 36px; font-size: 0.875rem; padding: 0 var(--space-3); }
+
+/* ==========================================================================
+   Banners (example data, storage warning)
+   ========================================================================== */
+
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  max-width: var(--content-max);
+  margin: var(--space-4) var(--space-4) 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  background: var(--amber-bg);
+  color: var(--amber-text);
+}
+.banner[hidden] { display: none; }
+.banner p { margin: 0; }
+.banner--warning { background: var(--red-bg); color: var(--red-text); }
+
+@media (min-width: 900px) {
+  .banner { margin: var(--space-5) var(--space-6) 0; }
+}
+
+/* ==========================================================================
+   Sections and form controls
+   ========================================================================== */
+
+.section {
+  margin-bottom: var(--space-6);
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.section > :last-child { margin-bottom: 0; }
+
+.field { margin-bottom: var(--space-4); }
+.field label { display: block; font-weight: 500; margin-bottom: var(--space-1); }
+
+input[type="file"] { font: inherit; max-width: 100%; }
+
+.status-message { min-height: 1.5em; }
+.status-message.is-error { color: var(--red-text); }
+
 /* Placeholder shown on screens that are not built yet */
 .placeholder {
   padding: var(--space-5);
@@ -267,7 +338,7 @@ a:hover { color: var(--accent-hover); }
 
 /* Printing: hide the app chrome so printable screens fit one page */
 @media print {
-  .topbar, .site-nav, .skip-link { display: none !important; }
+  .topbar, .site-nav, .skip-link, .banner { display: none !important; }
   .layout { display: block; }
   .main { padding: 0; max-width: none; }
 }

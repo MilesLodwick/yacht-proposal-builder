@@ -5,6 +5,15 @@
 // work on GitHub Pages with no server set-up, and the browser's Back button
 // works as you would expect.
 
+import { load, onChange, getState, hasExampleData, clearExampleData, isStorageWorking } from './store.js';
+import * as dataView from './views/data.js';
+
+// Screens that have been built. Each view file exports render(container).
+// Any screen not listed here shows a placeholder.
+const VIEWS = {
+  data: dataView,
+};
+
 // Every screen in the app, grouped the same way as the job roles in the brief.
 // "step" is the step in BUILD_STEPS.md that builds it.
 const SECTIONS = [
@@ -55,7 +64,7 @@ const SECTIONS = [
     heading: 'Settings and data',
     screens: [
       { id: 'settings', title: 'Settings', step: '0.5' },
-      { id: 'data', title: 'Import and export', step: '0.6' },
+      { id: 'data', title: 'Import and export', step: '0.4' },
     ],
   },
 ];
@@ -117,13 +126,18 @@ function showScreen({ moveFocus }) {
   title.textContent = screen.title;
   title.tabIndex = -1; // lets us move keyboard focus here after navigating
 
-  const placeholder = document.createElement('div');
-  placeholder.className = 'placeholder';
-  placeholder.innerHTML = `
-    <p>This screen has not been built yet.</p>
-    <p class="muted">Planned in build step ${screen.step}.</p>`;
+  main.append(title);
 
-  main.append(title, placeholder);
+  if (VIEWS[screen.id]) {
+    VIEWS[screen.id].render(main);
+  } else {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'placeholder';
+    placeholder.innerHTML = `
+      <p>This screen has not been built yet.</p>
+      <p class="muted">Planned in build step ${screen.step}.</p>`;
+    main.append(placeholder);
+  }
   document.title = `${screen.title} | Yacht Proposal Builder`;
 
   // Highlight the current link (and tell screen readers which page this is).
@@ -160,7 +174,30 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
+// Banners: "Example data" when any sample record is present, and a warning
+// if the browser will not save.
+const exampleBanner = document.getElementById('example-banner');
+const storageWarning = document.getElementById('storage-warning');
+
+function updateBanners() {
+  exampleBanner.hidden = !hasExampleData(getState());
+  storageWarning.hidden = isStorageWorking();
+}
+
+document.getElementById('clear-example-data').addEventListener('click', () => {
+  const confirmed = window.confirm('Remove all example records? Your own records are kept.');
+  if (!confirmed) return;
+  clearExampleData();
+  showScreen({ moveFocus: true }); // redraw the current screen without the samples
+});
+
 window.addEventListener('hashchange', () => showScreen({ moveFocus: true }));
 
+// Start-up: load saved data, then draw the menu, banners and first screen.
+load();
+onChange(() => {
+  updateBanners();
+});
 buildNav();
+updateBanners();
 showScreen({ moveFocus: false });

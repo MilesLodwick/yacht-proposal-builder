@@ -131,7 +131,7 @@ function renderListing(container, saved) {
   };
 
   container.insertAdjacentHTML('beforeend', `
-    <p><a href="#/listings">Back to listings</a></p>
+    <p><a href="#/listings">Back to listings</a> · <a href="#/seller-view/${escapeHTML(saved.id)}">Compare with similar boats</a></p>
     <div id="listing-facts"></div>
 
     <form class="section" id="status-form" novalidate>

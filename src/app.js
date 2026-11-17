@@ -22,6 +22,9 @@ import * as availabilityView from './views/availability.js';
 import * as ownerReportView from './views/owner-report.js';
 import * as showBookletView from './views/show-booklet.js';
 import * as listingsView from './views/listings.js';
+import * as buyerBriefView from './views/buyer-brief.js';
+import * as sellerView from './views/seller-view.js';
+import { buildSampleBriefs } from './buyer.js';
 import { buildSampleBooklets } from './booklet.js';
 import { buildSampleAvailability } from './calc/availability.js';
 import { buildSamplePreferences } from './preferences.js';
@@ -45,6 +48,8 @@ const VIEWS = {
   'owner-report': ownerReportView,
   'show-booklet': showBookletView,
   listings: listingsView,
+  'buyer-brief': buyerBriefView,
+  'seller-view': sellerView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.
@@ -287,6 +292,13 @@ if (!hasCollection('booklets')) {
   if (response.ok) {
     const { booklets } = await response.json();
     saveCollection('booklets', buildSampleBooklets(booklets, todayISO()));
+  }
+}
+if (!hasCollection('buyerBriefs')) {
+  const response = await fetch('data/sample-briefs.json');
+  if (response.ok) {
+    const { briefs } = await response.json();
+    saveCollection('buyerBriefs', buildSampleBriefs(briefs));
   }
 }
 onChange(() => {

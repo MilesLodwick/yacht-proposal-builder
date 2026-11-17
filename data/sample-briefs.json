@@ -1,0 +1,16 @@
+{
+  "about": "A fictional sample buyer brief. The buyer is made up; the boats are real public listings from data/for-sale.csv.",
+  "briefs": [
+    {
+      "buyerName": "Example buyer (fictional): bluewater sailing yacht",
+      "currency": "USD",
+      "budget": 800000,
+      "type": "Sail",
+      "minLength": 14,
+      "maxLength": 18,
+      "minYear": 2005,
+      "boatIds": ["berthon-hallberg-rassy-44-carioca-ii", "berthon-discovery-55-3", "berthon-oyster-54"],
+      "notes": "Wants a yacht for an Atlantic crossing with family. Prefers a centre cockpit."
+    }
+  ]
+}

@@ -782,7 +782,10 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
 .owner-report > section + section { margin-top: var(--space-5); }
 .owner-report h3 { font-size: 1.05rem; }
 .owner-report .table-wrap { border: 0; background: none; }
-.report-table { min-width: 34rem; }
+.report-table { min-width: 40rem; }
+.report-table thead th { font-family: var(--font-text); white-space: nowrap; }
+.report-table tbody th { min-width: 11rem; }
+.report-table td { white-space: nowrap; }
 .report-table .num { text-align: right; padding-right: 0; padding-left: var(--space-3); white-space: nowrap; }
 .report-table .total-row > * { font-weight: 600; border-top: 2px solid var(--text); }
 
@@ -827,6 +830,23 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
 .spec-list dd { margin: 0; font-weight: 500; text-align: right; }
 .held-list dt { color: var(--text); }
 .held-list dd { font-weight: 400; color: var(--text-muted); white-space: nowrap; }
+
+/* Seller view: the "asking prices" label and the price-per-metre line */
+.asking-label { padding: var(--space-3) var(--space-4); border-left: 4px solid var(--amber-text); background: var(--amber-bg); color: var(--amber-text); border-radius: var(--radius); }
+.position-line { font-size: 1.05rem; }
+.range-line { position: relative; height: 56px; margin: var(--space-4) var(--space-4) 0; }
+.range-track { position: absolute; left: 0; right: 0; top: 26px; height: 4px; border-radius: 2px; background: var(--border); }
+.range-dot { position: absolute; top: 22px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: var(--text-muted); opacity: 0.7; }
+.range-median, .range-subject { position: absolute; top: 14px; width: 3px; height: 28px; margin-left: -1px; }
+.range-median { background: var(--text); }
+.range-subject { background: var(--accent); width: 5px; margin-left: -2px; }
+.range-median span, .range-subject span { position: absolute; left: 50%; transform: translateX(-50%); font-size: 0.75rem; white-space: nowrap; }
+.range-median span { top: 30px; }
+.range-subject span { top: -16px; color: var(--accent); font-weight: 600; }
+.at-end span { left: auto; right: 0; transform: none; }
+.at-start span { left: 0; transform: none; }
+.figure--range { font-family: var(--font-figures); font-variant-numeric: tabular-nums; }
+.range-ends { display: flex; justify-content: space-between; margin: 0 0 var(--space-4); font-size: 0.8125rem; color: var(--text-muted); }
 
 /* Listings */
 .listing-specs { max-width: 32rem; margin-bottom: var(--space-3); }

@@ -1,0 +1,21 @@
+{
+  "about": "A fictional sample itinerary for the fictional Ashworth enquiry. Distances are approximate straight-line figures in nautical miles, for illustration only. Dates are stored as days from today.",
+  "itineraries": [
+    {
+      "name": "Ashworth family: Amalfi Coast and Aeolian Islands",
+      "enquiryId": "sample-enquiry-1",
+      "startInDays": 232,
+      "embarkPort": "Naples",
+      "speedKnots": 12,
+      "days": [
+        { "toPort": "Capri", "nm": 17, "notes": "Afternoon swim stop at the Faraglioni." },
+        { "toPort": "Positano", "nm": 12, "notes": "Dinner ashore." },
+        { "toPort": "Amalfi", "nm": 6, "notes": "Watersports morning for the teenagers." },
+        { "toPort": "Stromboli", "nm": 112, "notes": "Long passage: early start. Evening view of the volcano from the sea." },
+        { "toPort": "Panarea", "nm": 11, "notes": "" },
+        { "toPort": "Lipari", "nm": 12, "notes": "" },
+        { "toPort": "Vulcano", "nm": 4, "notes": "Disembark the following morning." }
+      ]
+    }
+  ]
+}

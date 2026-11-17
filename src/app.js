@@ -13,6 +13,8 @@ import * as dataView from './views/data.js';
 import * as settingsView from './views/settings.js';
 import * as enquiriesView from './views/enquiries.js';
 import * as selectionView from './views/selection.js';
+import * as itineraryView from './views/itinerary.js';
+import { buildSampleItineraries } from './calc/itinerary.js';
 
 // Screens that have been built. Each view file exports
 // render(container, param, heading). Any screen not listed here shows a
@@ -22,6 +24,7 @@ const VIEWS = {
   settings: settingsView,
   enquiries: enquiriesView,
   selection: selectionView,
+  itinerary: itineraryView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.
@@ -229,6 +232,13 @@ if (!hasCollection('enquiries')) {
   if (response.ok) {
     const { enquiries } = await response.json();
     saveCollection('enquiries', buildSamples(enquiries, todayISO()));
+  }
+}
+if (!hasCollection('itineraries')) {
+  const response = await fetch('data/sample-itineraries.json');
+  if (response.ok) {
+    const { itineraries } = await response.json();
+    saveCollection('itineraries', buildSampleItineraries(itineraries, todayISO()));
   }
 }
 onChange(() => {

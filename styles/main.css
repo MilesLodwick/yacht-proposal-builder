@@ -201,7 +201,8 @@ a:hover { color: var(--accent-hover); }
 
   .layout {
     display: grid;
-    grid-template-columns: var(--nav-width) 1fr;
+    /* minmax(0, 1fr) stops wide content (e.g. a table) stretching the column */
+    grid-template-columns: var(--nav-width) minmax(0, 1fr);
     min-height: calc(100vh - 56px);
   }
 
@@ -277,6 +278,7 @@ a:hover { color: var(--accent-hover); }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
+  overflow-x: auto; /* a wide table scrolls inside its box, never the whole page */
 }
 
 .data-table { width: 100%; border-collapse: collapse; }
@@ -300,6 +302,8 @@ a:hover { color: var(--accent-hover); }
 .cell-sub { display: block; font-size: 0.8125rem; color: var(--text-muted); font-weight: 400; }
 
 @media (max-width: 759px) {
+  .data-table,
+  .data-table tbody { display: block; width: 100%; }
   .data-table thead { display: none; }
   .data-table tr { display: block; padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border); }
   .data-table tbody tr:last-child { border-bottom: 0; }
@@ -500,6 +504,59 @@ fieldset.section legend {
 .breakdown-table .num { text-align: right; padding-right: 0; padding-left: var(--space-3); }
 .breakdown-table .total-row > * { font-weight: 600; border-top: 2px solid var(--text); }
 .breakdown-extras { max-width: 720px; }
+
+/* ==========================================================================
+   Itinerary
+   ========================================================================== */
+
+.itinerary-table th,
+.itinerary-table td { padding: var(--space-2); vertical-align: middle; }
+.itinerary-table tbody th { white-space: nowrap; }
+.itinerary-table input {
+  font: inherit;
+  width: 100%;
+  min-width: 5.5rem;
+  min-height: 40px;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+}
+.itinerary-table .num-input {
+  font-family: var(--font-figures);
+  text-align: right;
+  width: 4.5rem;
+  min-width: 0;
+}
+.itinerary-table .field-error { display: block; text-align: left; }
+.itinerary-table td[data-cell="time"] { white-space: nowrap; }
+.itinerary-table tr.is-long-day > * { background: var(--amber-bg); }
+.itinerary-table tr.is-long-day td[data-cell="time"] { color: var(--amber-text); font-weight: 600; }
+.day-buttons { margin-top: var(--space-3); }
+.itinerary-summary { font-weight: 500; margin: var(--space-3) 0 0; }
+
+/* The itinerary has more columns than most tables, so it switches to one
+   card per day below 1100px rather than only on phones. */
+@media (max-width: 1099px) {
+  .itinerary-table,
+  .itinerary-table tbody { display: block; width: 100%; }
+  .itinerary-table thead { display: none; }
+  .itinerary-table tr { display: block; padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border); }
+  .itinerary-table tbody tr:last-child { border-bottom: 0; }
+  .itinerary-table th,
+  .itinerary-table td { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); padding: var(--space-1) 0; border: 0; text-align: right; }
+  .itinerary-table tbody th { display: block; text-align: left; font-size: 1.05rem; margin-bottom: var(--space-1); }
+  .itinerary-table tbody th .cell-sub { display: inline; margin-left: var(--space-2); }
+  .itinerary-table td::before { content: attr(data-label); font-family: var(--font-text); color: var(--text-muted); text-align: left; flex-shrink: 0; }
+  .itinerary-table td input { flex: 1; min-width: 0; max-width: 16rem; }
+  .itinerary-table td .num-input { flex: 0 0 5rem; }
+  .itinerary-table td .field-error { flex-basis: 100%; }
+  .itinerary-table td[data-cell="time"] { white-space: normal; }
+  .itinerary-table .time-value { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: var(--space-2); }
+  .itinerary-table tr.is-long-day { background: var(--amber-bg); }
+  .itinerary-table tr.is-long-day > * { background: transparent; }
+}
 
 .button-row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 

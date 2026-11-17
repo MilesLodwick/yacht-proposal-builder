@@ -390,6 +390,17 @@
       "note": null
     },
     {
+      "id": "itinerary.defaultSpeedKnots",
+      "group": "Alerts and thresholds",
+      "label": "Itinerary: default cruising speed",
+      "value": 12,
+      "unit": "knots",
+      "source": "Working rule. Use the yacht's own cruising speed when known.",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Used for new itineraries. Each itinerary can set its own speed."
+    },
+    {
       "id": "alerts.staleListingDays",
       "group": "Alerts and thresholds",
       "label": "Fleet: flag details older than",

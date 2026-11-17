@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Yacht Proposal Builder</title>
+  <meta name="description" content="A working demo of everyday shore-based yachting tasks: charter, charter management, brokerage and yacht management.">
+
+  <!-- Fonts: Archivo for headings, IBM Plex Sans for text, IBM Plex Mono for figures -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+  <link rel="stylesheet" href="styles/main.css">
+  <script type="module" src="src/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="topbar">
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
+      Menu
+    </button>
+    <a class="brand" href="#/dashboard">Yacht Proposal Builder</a>
+  </header>
+
+  <div class="layout">
+    <!-- The navigation links are built by src/app.js from one list of screens -->
+    <nav id="site-nav" class="site-nav" aria-label="Main"></nav>
+
+    <main id="main" class="main">
+      <noscript>
+        <p>This tool needs JavaScript turned on.</p>
+      </noscript>
+    </main>
+  </div>
+</body>
+</html>

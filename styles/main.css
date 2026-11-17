@@ -1,0 +1,273 @@
+/* ==========================================================================
+   Design tokens
+   Every colour, font and spacing value used in the app is defined here once.
+   Change a token and the whole app follows.
+   ========================================================================== */
+
+:root {
+  /* Fonts */
+  --font-heading: "Archivo", system-ui, sans-serif;
+  --font-text: "IBM Plex Sans", system-ui, sans-serif;
+  --font-figures: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --radius: 6px;
+  --nav-width: 248px;
+  --content-max: 1100px;
+
+  /* Light mode colours */
+  --bg: #f5f7f7;
+  --surface: #ffffff;
+  --text: #13201f;
+  --text-muted: #4b5c5b;
+  --border: #d5dedd;
+  --accent: #0b5e5f;          /* deep teal */
+  --accent-hover: #084647;
+  --accent-soft: #e2efee;
+  --on-accent: #ffffff;
+  --focus: #0b5e5f;
+
+  /* Status pills: green, amber, red (text and background pairs pass contrast) */
+  --green-bg: #dcf1e3;
+  --green-text: #145c2e;
+  --amber-bg: #fbecc8;
+  --amber-text: #6e4a00;
+  --red-bg: #f9dcdc;
+  --red-text: #8a1c1c;
+}
+
+/* Dark mode follows the phone or computer's own setting */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1615;
+    --surface: #15201f;
+    --text: #e6eeed;
+    --text-muted: #a2b4b2;
+    --border: #2b3c3a;
+    --accent: #5cbcb5;
+    --accent-hover: #7dd0ca;
+    --accent-soft: #1b3533;
+    --on-accent: #06211f;
+    --focus: #7dd0ca;
+
+    --green-bg: #173826;
+    --green-text: #9fe0b5;
+    --amber-bg: #3d2f0c;
+    --amber-text: #f3cf7a;
+    --red-bg: #431b1b;
+    --red-text: #f4a9a9;
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-text);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  margin: 0 0 var(--space-4);
+}
+h1 { font-size: 1.75rem; }
+h2 { font-size: 1.3rem; }
+h3 { font-size: 1.1rem; }
+
+p { margin: 0 0 var(--space-4); }
+
+a { color: var(--accent); }
+a:hover { color: var(--accent-hover); }
+
+/* A clear focus ring for keyboard users on everything */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Figures (money, dates, distances) use the mono font so columns line up */
+.num {
+  font-family: var(--font-figures);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.muted { color: var(--text-muted); }
+
+/* ==========================================================================
+   Skip link (hidden until a keyboard user tabs to it)
+   ========================================================================== */
+
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: -100px;
+  background: var(--accent);
+  color: var(--on-accent);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius);
+  z-index: 100;
+}
+.skip-link:focus { top: var(--space-2); }
+
+/* ==========================================================================
+   Top bar
+   ========================================================================== */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 56px;
+  padding: 0 var(--space-4);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.menu-button {
+  font: inherit;
+  font-weight: 500;
+  min-height: 44px;           /* comfortable tap target on a phone */
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Layout: menu hidden behind a button on phones, sidebar on wider screens
+   ========================================================================== */
+
+.layout { display: block; }
+
+.site-nav {
+  display: none;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-3) var(--space-4) var(--space-5);
+}
+.site-nav.is-open { display: block; }
+
+.main {
+  max-width: var(--content-max);
+  padding: var(--space-5) var(--space-4) var(--space-7);
+}
+
+@media (min-width: 900px) {
+  .menu-button { display: none; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: var(--nav-width) 1fr;
+    min-height: calc(100vh - 56px);
+  }
+
+  .site-nav {
+    display: block;
+    position: sticky;
+    top: 56px;
+    align-self: start;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+    border-bottom: 0;
+    border-right: 1px solid var(--border);
+  }
+
+  .main { padding: var(--space-6) var(--space-6) var(--space-7); }
+}
+
+/* Navigation groups and links */
+.nav-group { margin-top: var(--space-4); }
+.nav-group:first-child { margin-top: 0; }
+
+.nav-heading {
+  font-family: var(--font-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 var(--space-1);
+  padding: 0 var(--space-3);
+}
+
+.nav-list { list-style: none; margin: 0; padding: 0; }
+
+.nav-list a {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  color: var(--text);
+  text-decoration: none;
+}
+.nav-list a:hover { background: var(--accent-soft); }
+.nav-list a[aria-current="page"] {
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Status pills: used for anything with a deadline
+   ========================================================================== */
+
+.pill {
+  display: inline-block;
+  padding: 2px var(--space-2);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.pill--green { background: var(--green-bg); color: var(--green-text); }
+.pill--amber { background: var(--amber-bg); color: var(--amber-text); }
+.pill--red   { background: var(--red-bg);   color: var(--red-text); }
+
+/* Placeholder shown on screens that are not built yet */
+.placeholder {
+  padding: var(--space-5);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.placeholder p:last-child { margin-bottom: 0; }
+
+/* Printing: hide the app chrome so printable screens fit one page */
+@media print {
+  .topbar, .site-nav, .skip-link { display: none !important; }
+  .layout { display: block; }
+  .main { padding: 0; max-width: none; }
+}

@@ -863,6 +863,18 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
   .cert-table td:last-child .button-row { flex-direction: column; align-items: stretch; }
 }
 
+/* Monthly management report */
+.key-points { list-style: none; margin: 0; padding: 0; }
+.key-point { padding: var(--space-2) var(--space-3); margin-bottom: var(--space-2); border-left: 4px solid var(--border); border-radius: var(--radius); background: var(--bg); }
+.key-point--red { border-left-color: var(--red-text); background: var(--red-bg); color: var(--red-text); }
+.key-point--amber { border-left-color: var(--amber-text); background: var(--amber-bg); color: var(--amber-text); }
+.key-point--green { border-left-color: var(--green-text); background: var(--green-bg); color: var(--green-text); }
+.report-two-col { display: grid; gap: var(--space-5); margin-top: var(--space-5); }
+@media (min-width: 900px) { .report-two-col { grid-template-columns: 1fr 1fr; } }
+.notes-text { white-space: pre-wrap; }
+.monthly-report .report-table td .pill { white-space: nowrap; }
+.monthly-report .report-table thead th { white-space: normal; vertical-align: bottom; }
+
 /* Budget */
 .month-pick { margin-bottom: var(--space-4); }
 .budget-table .pill { white-space: nowrap; }
@@ -975,6 +987,12 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
   .handover-alert { border: 2pt solid #000; background: #fff; color: #000; }
   .allergy-cell { color: #000; }
   .handover-table { font-size: 8.5pt; }
+  .report-two-col { grid-template-columns: 1fr 1fr; gap: 6mm; margin-top: 4mm; }
+  .key-point { padding: 1.5mm 3mm; margin-bottom: 1.5mm; background: #fff; color: #000; border-left-width: 3pt; }
+  .key-point--red { border-left-color: #000; font-weight: 600; }
+  .key-point--amber { border-left-color: #777; }
+  .key-point--green { border-left-color: #bbb; }
+  .monthly-report .plain-list, .monthly-report p { font-size: 8.5pt; }
   .booklet-pages { display: block; margin: 0; }
   .booklet-page { border: 0; padding: 0; break-after: page; }
   .booklet-page:last-child { break-after: auto; }

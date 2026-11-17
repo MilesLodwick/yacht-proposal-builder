@@ -29,6 +29,7 @@ import * as dealsView from './views/deals.js';
 import * as complianceView from './views/compliance.js';
 import * as crewView from './views/crew.js';
 import * as budgetView from './views/budget.js';
+import * as monthlyReportView from './views/monthly-report.js';
 import { buildSampleBudget } from './budget.js';
 import { buildSampleCrew } from './crew.js';
 import { buildSampleManaged } from './compliance.js';
@@ -65,6 +66,7 @@ const VIEWS = {
   compliance: complianceView,
   crew: crewView,
   budget: budgetView,
+  'monthly-report': monthlyReportView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.

@@ -44,7 +44,7 @@ Each step is small enough to build, test and explain in one sitting. Steps that 
 - [x] **4.2 Compliance tracker.**
 - [x] **4.3 Crew records.** Fictional crew and certificates.
 - [x] **4.4 Budget vs actual.**
-- [ ] **4.5 Monthly management report.** Printable page.
+- [x] **4.5 Monthly management report.** Printable page.
 
 ## Phase 5: Pulling it together
 

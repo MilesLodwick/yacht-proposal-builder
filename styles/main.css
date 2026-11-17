@@ -848,6 +848,14 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
 .figure--range { font-family: var(--font-figures); font-variant-numeric: tabular-nums; }
 .range-ends { display: flex; justify-content: space-between; margin: 0 0 var(--space-4); font-size: 0.8125rem; color: var(--text-muted); }
 
+/* Viewings */
+.plain-list { margin: 0; padding-left: var(--space-5); }
+.plain-list li { margin-bottom: var(--space-1); }
+.feedback-list { margin: 0; padding-left: var(--space-5); }
+.feedback-list li { margin-bottom: var(--space-2); }
+.feedback-text { white-space: normal; text-align: left; max-width: 28rem; }
+[data-viewing-only][hidden] { display: none; }
+
 /* Listings */
 .listing-specs { max-width: 32rem; margin-bottom: var(--space-3); }
 .price-history { margin-bottom: var(--space-3); }

@@ -24,6 +24,8 @@ import * as showBookletView from './views/show-booklet.js';
 import * as listingsView from './views/listings.js';
 import * as buyerBriefView from './views/buyer-brief.js';
 import * as sellerView from './views/seller-view.js';
+import * as viewingsView from './views/viewings.js';
+import { buildSampleActivity } from './activity.js';
 import { buildSampleBriefs } from './buyer.js';
 import { buildSampleBooklets } from './booklet.js';
 import { buildSampleAvailability } from './calc/availability.js';
@@ -50,6 +52,7 @@ const VIEWS = {
   listings: listingsView,
   'buyer-brief': buyerBriefView,
   'seller-view': sellerView,
+  viewings: viewingsView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.
@@ -299,6 +302,13 @@ if (!hasCollection('buyerBriefs')) {
   if (response.ok) {
     const { briefs } = await response.json();
     saveCollection('buyerBriefs', buildSampleBriefs(briefs));
+  }
+}
+if (!hasCollection('saleActivity')) {
+  const response = await fetch('data/sample-activity.json');
+  if (response.ok) {
+    const { entries } = await response.json();
+    saveCollection('saleActivity', buildSampleActivity(entries, todayISO()));
   }
 }
 onChange(() => {

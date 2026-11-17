@@ -20,6 +20,8 @@ import * as preferencesView from './views/preferences.js';
 import * as fleetView from './views/fleet.js';
 import * as availabilityView from './views/availability.js';
 import * as ownerReportView from './views/owner-report.js';
+import * as showBookletView from './views/show-booklet.js';
+import { buildSampleBooklets } from './booklet.js';
 import { buildSampleAvailability } from './calc/availability.js';
 import { buildSamplePreferences } from './preferences.js';
 import { buildSampleContracts } from './contracts.js';
@@ -40,6 +42,7 @@ const VIEWS = {
   fleet: fleetView,
   availability: availabilityView,
   'owner-report': ownerReportView,
+  'show-booklet': showBookletView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.
@@ -275,6 +278,13 @@ if (!hasCollection('availability')) {
   if (response.ok) {
     const { entries } = await response.json();
     saveCollection('availability', buildSampleAvailability(entries, todayISO()));
+  }
+}
+if (!hasCollection('booklets')) {
+  const response = await fetch('data/sample-booklets.json');
+  if (response.ok) {
+    const { booklets } = await response.json();
+    saveCollection('booklets', buildSampleBooklets(booklets, todayISO()));
   }
 }
 onChange(() => {

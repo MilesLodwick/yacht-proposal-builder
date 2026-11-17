@@ -1,0 +1,11 @@
+{
+  "about": "A fictional sample show booklet. The show name is made up; the yachts are real public listings from data/yachts.csv.",
+  "booklets": [
+    {
+      "showName": "Example winter charter show",
+      "showInDays": 20,
+      "yachtIds": ["burgess-santosha", "tww-yachts-te-manu", "tww-yachts-dakota"],
+      "notes": "Caribbean and Bahamas yachts with winter dates still open."
+    }
+  ]
+}

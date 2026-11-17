@@ -791,6 +791,30 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
 .bar-key--owner { background: var(--owner-bg); border: 1px solid var(--border); }
 
 /* ==========================================================================
+   Show booklet
+   ========================================================================== */
+
+.chosen-list { list-style: none; margin: 0 0 var(--space-4); padding: 0; }
+.chosen-list li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-2); padding: var(--space-2) 0; border-bottom: 1px solid var(--border); }
+.pick-box { max-height: 18rem; overflow-y: auto; margin: 0 0 var(--space-4); padding: var(--space-3); border: 1px solid var(--border); border-radius: var(--radius); }
+.pick-box .field { margin-bottom: var(--space-2); flex-wrap: nowrap; }
+
+.booklet-pages { display: grid; gap: var(--space-5); margin-top: var(--space-5); }
+.booklet-page { padding: var(--space-5); border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.booklet-page h3 { font-size: 1rem; margin: var(--space-4) 0 var(--space-2); }
+.booklet-cover h2 { font-size: 2rem; }
+.booklet-date { font-size: 1.15rem; font-weight: 500; }
+.booklet-contents { padding-left: var(--space-5); }
+.booklet-grid { display: grid; gap: 0 var(--space-6); }
+@media (min-width: 760px) { .booklet-grid { grid-template-columns: 1fr 1fr; } }
+.spec-list { margin: 0; }
+.spec-list > div { display: flex; justify-content: space-between; gap: var(--space-4); padding: var(--space-1) 0; border-bottom: 1px solid var(--border); }
+.spec-list dt { color: var(--text-muted); }
+.spec-list dd { margin: 0; font-weight: 500; text-align: right; }
+.held-list dt { color: var(--text); }
+.held-list dd { font-weight: 400; color: var(--text-muted); white-space: nowrap; }
+
+/* ==========================================================================
    Preference sheet
    ========================================================================== */
 
@@ -870,6 +894,11 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
   .handover-alert { border: 2pt solid #000; background: #fff; color: #000; }
   .allergy-cell { color: #000; }
   .handover-table { font-size: 8.5pt; }
+  .booklet-pages { display: block; margin: 0; }
+  .booklet-page { border: 0; padding: 0; break-after: page; }
+  .booklet-page:last-child { break-after: auto; }
+  .booklet-grid { grid-template-columns: 1fr 1fr; gap: 0 10mm; }
+  .booklet-cover h2 { font-size: 26pt; margin-top: 30mm; }
   .report-figures { grid-template-columns: repeat(4, 1fr); margin-bottom: 4mm; gap: 3mm; }
   .report-figures > div { padding: 2mm 3mm; }
   .figure, .figure--main { font-size: 12pt; }

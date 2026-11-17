@@ -24,6 +24,16 @@ You need [Node.js](https://nodejs.org) (version 22 or later). There are no packa
 node --test
 ```
 
+## Updating the yacht data
+
+The yachts come from the research spreadsheet `Target Firm Charter Fleets.xlsx`. After editing it, run:
+
+```bash
+python3 tools/sheet_to_csv.py "Target Firm Charter Fleets.xlsx"
+```
+
+This rewrites `data/yachts.csv` (Fleets tab) and `data/for-sale.csv` (For sale tab). It keeps the web link behind each Source cell, which Excel's own "Save as CSV" would drop. A browser that has already opened the app keeps its own copy: use **Restore published list** on the Import and export screen to pick up the new files.
+
 ## Sources
 
 To follow: job adverts the modules are based on, and the sources for every setting.

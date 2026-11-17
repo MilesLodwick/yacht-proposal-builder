@@ -5,7 +5,8 @@
 // work on GitHub Pages with no server set-up, and the browser's Back button
 // works as you would expect.
 
-import { load, loadDefaultSettings, onChange, getState, hasExampleData, clearExampleData, isStorageWorking } from './store.js';
+import { load, loadDefaultSettings, onChange, getState, hasExampleData, clearExampleData, isStorageWorking, hasCollection, saveCollection } from './store.js';
+import { KINDS, fetchPublished } from './yachts.js';
 import * as dataView from './views/data.js';
 import * as settingsView from './views/settings.js';
 
@@ -199,6 +200,16 @@ window.addEventListener('hashchange', () => showScreen({ moveFocus: true }));
 // banners and first screen.
 load();
 await loadDefaultSettings();
+
+// First visit: load the published yacht lists from data/*.csv so there is
+// something to work with. After that, the browser's own copy is used, so
+// the user's edits and imports are never overwritten.
+for (const kind of Object.keys(KINDS)) {
+  if (!hasCollection(kind)) {
+    const result = await fetchPublished(kind);
+    if (result.ok) saveCollection(kind, result.records);
+  }
+}
 onChange(() => {
   updateBanners();
 });

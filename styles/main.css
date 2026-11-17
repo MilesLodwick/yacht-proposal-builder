@@ -349,6 +349,14 @@ input[type="file"] { font: inherit; max-width: 100%; }
 
 .button-row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 
+.import-field { margin-top: var(--space-4); margin-bottom: 0; }
+
+.data-kind { padding: var(--space-4) 0; border-top: 1px solid var(--border); }
+.data-kind h3 { margin-bottom: var(--space-2); }
+.data-kind .pill { margin-left: var(--space-1); }
+
+code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anywhere; }
+
 /* ==========================================================================
    Settings screen
    ========================================================================== */

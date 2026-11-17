@@ -11,7 +11,7 @@ Each step is small enough to build, test and explain in one sitting. Steps that 
 - [x] **0.3 Date and currency helpers.** `src/calc/dates.js` (format as 17 Nov 2026, days between, add days, banking days) and `src/calc/currency.js` (convert EUR, GBP, USD with the rate date). Tests.
 - [x] **0.4 Store.** `src/store.js`: save and load from localStorage, export everything as JSON, import JSON, "Example data" banner when sample records are present, "Clear example data" button.
 - [x] **0.5 Settings screen.** Edit every setting, see its source and date checked, reset to defaults.
-- [ ] **0.6 Yacht data.** Import `data/yachts.csv` (from your research sheet), CSV import screen, export CSV. Each yacht keeps its source link and date checked.
+- [x] **0.6 Yacht data.** Import `data/yachts.csv` (from your research sheet), CSV import screen, export CSV. Each yacht keeps its source link and date checked.
 
 ## Phase 1: Charter retail
 

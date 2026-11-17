@@ -217,6 +217,12 @@ export function getState() {
   return state;
 }
 
+// True once a collection has ever been saved, even if it is now empty.
+// Used to load the published yacht list on a first visit only.
+export function hasCollection(name) {
+  return name in state.collections;
+}
+
 export function getCollection(name) {
   return state.collections[name] ?? [];
 }

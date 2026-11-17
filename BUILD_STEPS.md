@@ -15,7 +15,7 @@ Each step is small enough to build, test and explain in one sitting. Steps that 
 
 ## Phase 1: Charter retail
 
-- [ ] **1.1 Charter maths.** `src/calc/charter.js`: pro rata fee, VAT by cruising area, APA, delivery fee, extras, total, budget band (within / up to 10% over / out), payment schedule from settings. Tests for every function.
+- [x] **1.1 Charter maths.** `src/calc/charter.js`: pro rata fee, VAT by cruising area, APA, delivery fee, extras, total, budget band (within / up to 10% over / out), payment schedule from settings. Tests for every function.
 - [ ] **1.2 Enquiry log.** Add, edit and list enquiries with the status pipeline and a reason when Lost. Fictional sample enquiries.
 - [ ] **1.3 Yacht selection.** Filters (guests, region, season, budget, type), cost breakdown per yacht, budget band pill, currency switch showing the rate date.
 - [ ] **1.4 Itinerary builder.** Day by day ports, nautical miles, cruising time at chosen speed, long day flag over 6 hours.
@@ -60,3 +60,9 @@ Each step is small enough to build, test and explain in one sitting. Steps that 
 4. **Sources and dates:** never invented. Anything Miles has not confirmed shows "to be checked".
 5. **Job ad sources:** no links available. The README names the firms and the duties only, with no links.
 6. **Research sheet import (step 0.6):** source is `Target Firm Charter Fleets.xlsx` (Fleets and For sale tabs). Import every row. Rows whose "Your check" is not "Verified" show a "Not yet verified" pill. Keep duplicate yachts listed by different firms as separate listings. Missing cruising area shows as "Area not stated"; missing type, rate or currency is left empty, never guessed.
+
+## Charter maths decisions (17 Nov 2026, step 1.1)
+
+1. **VAT base:** VAT is charged on the charter fee and any delivery or redelivery fee. It is not charged on extras. It is not charged on APA by default, but each embarkation country has a "VAT on APA" setting (default off) because some countries charge it. Gratuity never has VAT.
+2. **Budget band:** the client's budget is compared with the all-in total (charter fee, delivery, redelivery, extras, VAT, APA and any VAT on APA), not including the gratuity guide. On the cost breakdown, APA is labelled "refundable if unspent".
+3. **VAT country:** VAT uses the rate of the embarkation country. The breakdown shows this note: "VAT uses the rate of the country where the charter starts. Some countries, such as Croatia, charge VAT on days spent in their waters, so multi-country charters can differ."

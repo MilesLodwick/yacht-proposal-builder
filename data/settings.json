@@ -1,5 +1,5 @@
 {
-  "about": "Default values for every rule of thumb in the app. Each setting has a source and the date it was checked. A dateChecked of null means 'to be checked'. Percentages are stored as written (20 means 20%). Dates are stored as YYYY-MM-DD and shown as 17 Nov 2026.",
+  "about": "Default values for every rule of thumb in the app. Each setting has a source and the date it was checked. A dateChecked of null means 'to be checked'. Percentages are stored as written (20 means 20%). On/off settings are true or false. Dates are stored as YYYY-MM-DD and shown as 17 Nov 2026.",
   "version": 1,
   "settings": [
     {
@@ -112,7 +112,94 @@
       "dateChecked": null,
       "note": "Sources disagree on the Bahamas rate (10% or 14%), so both are shown. Check before quoting."
     },
-
+    {
+      "id": "vatOnApa.france",
+      "group": "VAT on APA by embarkation country",
+      "label": "France",
+      "value": false,
+      "unit": "on/off",
+      "source": null,
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Off by default: VAT is normally not charged on the APA. Turn on if this country charges VAT on it."
+    },
+    {
+      "id": "vatOnApa.italy",
+      "group": "VAT on APA by embarkation country",
+      "label": "Italy",
+      "value": false,
+      "unit": "on/off",
+      "source": null,
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Off by default: VAT is normally not charged on the APA. Turn on if this country charges VAT on it."
+    },
+    {
+      "id": "vatOnApa.spain",
+      "group": "VAT on APA by embarkation country",
+      "label": "Spain",
+      "value": false,
+      "unit": "on/off",
+      "source": null,
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Off by default: VAT is normally not charged on the APA. Turn on if this country charges VAT on it."
+    },
+    {
+      "id": "vatOnApa.croatia",
+      "group": "VAT on APA by embarkation country",
+      "label": "Croatia",
+      "value": false,
+      "unit": "on/off",
+      "source": null,
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Off by default: VAT is normally not charged on the APA. Turn on if this country charges VAT on it."
+    },
+    {
+      "id": "vatOnApa.greece",
+      "group": "VAT on APA by embarkation country",
+      "label": "Greece",
+      "value": false,
+      "unit": "on/off",
+      "source": null,
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Off by default: VAT is normally not charged on the APA. Turn on if this country charges VAT on it."
+    },
+    {
+      "id": "vatOnApa.montenegro",
+      "group": "VAT on APA by embarkation country",
+      "label": "Montenegro",
+      "value": false,
+      "unit": "on/off",
+      "source": null,
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Off by default: VAT is normally not charged on the APA. Turn on if this country charges VAT on it."
+    },
+    {
+      "id": "vatOnApa.caribbean",
+      "group": "VAT on APA by embarkation country",
+      "label": "Caribbean (most islands)",
+      "value": false,
+      "unit": "on/off",
+      "source": null,
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Off by default: VAT is normally not charged on the APA. Turn on if this country charges VAT on it."
+    },
+    {
+      "id": "vatOnApa.bahamas",
+      "group": "VAT on APA by embarkation country",
+      "label": "Bahamas",
+      "value": false,
+      "unit": "on/off",
+      "source": null,
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Off by default: VAT is normally not charged on the APA. Turn on if this country charges VAT on it."
+    },
     {
       "id": "apa.default",
       "group": "Charter costs",
@@ -159,7 +246,6 @@
       "dateChecked": null,
       "note": "Yachts within budget are 'Within budget', up to this much over are 'Slightly over', anything above is 'Out'."
     },
-
     {
       "id": "payment.depositPercent",
       "group": "Charter payment schedule",
@@ -193,7 +279,6 @@
       "dateChecked": null,
       "note": "Terms vary by contract. Always check the signed contract."
     },
-
     {
       "id": "commission.total",
       "group": "Charter commission",
@@ -227,7 +312,6 @@
       "dateChecked": null,
       "note": "Part of the total commission, not on top of it."
     },
-
     {
       "id": "sale.depositPercent",
       "group": "Brokerage sales",
@@ -283,7 +367,6 @@
       "dateChecked": null,
       "note": null
     },
-
     {
       "id": "alerts.enquiryReplyHours",
       "group": "Alerts and thresholds",
@@ -328,7 +411,6 @@
       "dateChecked": null,
       "note": "Red when overdue, amber within this many days, green otherwise."
     },
-
     {
       "id": "currency.gbpPerEur",
       "group": "Currency rates (manual)",

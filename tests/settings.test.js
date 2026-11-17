@@ -25,10 +25,20 @@ test('setting ids are unique', () => {
   assert.equal(new Set(ids).size, ids.length);
 });
 
-test('values are numbers, or null when not yet set', () => {
+test('values are numbers (or null when not yet set); on/off settings are true or false', () => {
   for (const s of settings) {
-    assert.ok(s.value === null || typeof s.value === 'number', `${s.id} value is not a number`);
+    if (s.unit === 'on/off') {
+      assert.equal(typeof s.value, 'boolean', `${s.id} should be true or false`);
+    } else {
+      assert.ok(s.value === null || typeof s.value === 'number', `${s.id} value is not a number`);
+    }
   }
+});
+
+test('VAT on APA is off by default for every country', () => {
+  const apaVat = settings.filter((s) => s.id.startsWith('vatOnApa.'));
+  assert.equal(apaVat.length, 8);
+  assert.ok(apaVat.every((s) => s.value === false));
 });
 
 test('percentages are between 0 and 100', () => {

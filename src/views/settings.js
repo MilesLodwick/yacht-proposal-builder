@@ -88,7 +88,7 @@ function settingHTML(s, open) {
         ${defaultNote}
         <form data-id="${escapeHTML(id)}" novalidate>
           <div class="form-grid">
-            ${field(id, 'value', `Value (${s.unit})`, s.value ?? '', 'text', 'inputmode="decimal"')}
+            ${s.unit === 'on/off' ? tickBox(id, s.label, s.value) : field(id, 'value', `Value (${s.unit})`, s.value ?? '', 'text', 'inputmode="decimal"')}
             ${field(id, 'dateChecked', 'Date checked', s.dateChecked ?? '', 'date', `max="${todayISO()}"`)}
             ${field(id, 'source', 'Source name', s.source ?? '', 'text')}
             ${field(id, 'sourceUrl', 'Source link', s.sourceUrl ?? '', 'url', 'placeholder="https://"')}
@@ -110,6 +110,19 @@ function field(settingId, name, label, value, type, extra = '') {
       <label for="${escapeHTML(inputId)}">${escapeHTML(label)}</label>
       <input id="${escapeHTML(inputId)}" name="${name}" type="${type}" value="${escapeHTML(value)}" ${extra}
              aria-describedby="${escapeHTML(inputId)}-error">
+      <p class="field-error" id="${escapeHTML(inputId)}-error"></p>
+    </div>`;
+}
+
+// A labelled tick box for on/off settings. The country is the setting's own
+// label, shown just above, so the box reads "Charge VAT on APA".
+function tickBox(settingId, label, checked) {
+  const inputId = `${settingId}-value`;
+  return `
+    <div class="field field--tick">
+      <input id="${escapeHTML(inputId)}" name="value" type="checkbox" ${checked ? 'checked' : ''}
+             aria-describedby="${escapeHTML(inputId)}-error">
+      <label for="${escapeHTML(inputId)}">Charge VAT on APA <span class="visually-hidden">(${escapeHTML(label)})</span></label>
       <p class="field-error" id="${escapeHTML(inputId)}-error"></p>
     </div>`;
 }

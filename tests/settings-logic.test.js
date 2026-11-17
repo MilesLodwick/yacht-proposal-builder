@@ -93,6 +93,14 @@ test('date checked must be real and not in the future', () => {
   assert.equal(validateSettingInput(apa, { ...form, dateChecked: '2026-11-17' }, TODAY).ok, true);
 });
 
+test('on/off settings: ticked is on, unticked (nothing sent) is off', () => {
+  const vatOnApa = mergeSettings([{ id: 'vatOnApa.italy', label: 'Italy', value: false, unit: 'on/off', source: null, sourceUrl: null, dateChecked: null }], {})[0];
+  assert.equal(validateSettingInput(vatOnApa, { value: 'on' }, TODAY).fields.value, true);
+  assert.equal(validateSettingInput(vatOnApa, {}, TODAY).fields.value, false);
+  assert.equal(formatSettingValue({ ...vatOnApa, value: true }), 'On');
+  assert.equal(formatSettingValue(vatOnApa), 'Off');
+});
+
 test('formatSettingValue reads naturally', () => {
   assert.equal(formatSettingValue(apa), '30% of charter fee');
   assert.equal(formatSettingValue(bankingDays), '4 banking days');

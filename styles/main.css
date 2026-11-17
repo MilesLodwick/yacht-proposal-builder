@@ -114,6 +114,16 @@ a:hover { color: var(--accent-hover); }
 
 .muted { color: var(--text-muted); }
 
+/* Read by screen readers but not shown, e.g. which country a tick box is for */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 /* ==========================================================================
    Skip link (hidden until a keyboard user tabs to it)
    ========================================================================== */
@@ -339,6 +349,12 @@ input[type="file"] { font: inherit; max-width: 100%; }
 }
 .field input[aria-invalid="true"] { border-color: var(--red-text); }
 .field input[type="file"] { min-height: 0; padding: 0; border: 0; background: none; }
+
+/* Tick box with its label beside it */
+.field--tick { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); grid-column: 1 / -1; }
+.field--tick input[type="checkbox"] { width: 22px; height: 22px; min-height: 0; margin: 0; accent-color: var(--accent); }
+.field--tick label { margin: 0; }
+.field--tick .field-error { flex-basis: 100%; }
 .field-error { margin: var(--space-1) 0 0; color: var(--red-text); font-size: 0.875rem; }
 .field-error:empty { display: none; }
 

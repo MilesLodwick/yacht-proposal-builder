@@ -114,15 +114,19 @@ export function validateSettingInput(setting, input, today) {
   const fields = {};
   const unit = setting.unit;
 
-  // Value. Settings whose default is empty (currency rates) may be left empty.
-  const rawValue = String(input.value ?? '').trim().replace(/,/g, '');
-  const valueMayBeEmpty = setting.defaults ? setting.defaults.value === null : setting.value === null;
-  if (rawValue === '') {
-    if (valueMayBeEmpty) fields.value = null;
-    else errors.value = 'Enter a number.';
+  // Value.
+  if (unit === 'on/off') {
+    // A tick box. A ticked box sends "on"; an unticked box sends nothing.
+    fields.value = input.value === 'on' || input.value === true;
   } else {
+    // A number. Settings whose default is empty (currency rates) may be left empty.
+    const rawValue = String(input.value ?? '').trim().replace(/,/g, '');
+    const valueMayBeEmpty = setting.defaults ? setting.defaults.value === null : setting.value === null;
     const number = Number(rawValue);
-    if (!Number.isFinite(number)) {
+    if (rawValue === '') {
+      if (valueMayBeEmpty) fields.value = null;
+      else errors.value = 'Enter a number.';
+    } else if (!Number.isFinite(number)) {
       errors.value = 'Enter a number, e.g. 30 or 5.2.';
     } else if (number < 0) {
       errors.value = 'This cannot be negative.';
@@ -160,6 +164,7 @@ export function validateSettingInput(setting, input, today) {
 // How a setting's value reads on screen: "30% of charter fee", "4 banking days",
 // "1.08", or "Not set".
 export function formatSettingValue(setting) {
+  if (setting.unit === 'on/off') return setting.value ? 'On' : 'Off';
   if (setting.value === null || setting.value === undefined) return 'Not set';
   const number = setting.value.toLocaleString('en-GB', { maximumFractionDigits: 4 });
   if (setting.unit === 'rate') return number;

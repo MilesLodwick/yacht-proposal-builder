@@ -5,7 +5,7 @@
 // work on GitHub Pages with no server set-up, and the browser's Back button
 // works as you would expect.
 
-import { load, loadDefaultSettings, onChange, getState, hasExampleData, clearExampleData, isStorageWorking, hasCollection, saveCollection } from './store.js';
+import { load, loadDefaultSettings, onChange, getState, hasExampleData, clearExampleData, isStorageWorking, hasCollection, saveCollection, getCollection } from './store.js';
 import { KINDS, fetchPublished } from './yachts.js';
 import { buildSamples } from './enquiries.js';
 import { todayISO } from './calc/dates.js';
@@ -16,6 +16,8 @@ import * as selectionView from './views/selection.js';
 import * as itineraryView from './views/itinerary.js';
 import * as proposalView from './views/proposal.js';
 import * as contractsView from './views/contracts.js';
+import * as preferencesView from './views/preferences.js';
+import { buildSamplePreferences } from './preferences.js';
 import { buildSampleContracts } from './contracts.js';
 import { buildSampleItineraries } from './calc/itinerary.js';
 
@@ -30,6 +32,7 @@ const VIEWS = {
   itinerary: itineraryView,
   proposal: proposalView,
   contracts: contractsView,
+  preferences: preferencesView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.
@@ -251,6 +254,13 @@ if (!hasCollection('contracts')) {
   if (response.ok) {
     const { contracts } = await response.json();
     saveCollection('contracts', buildSampleContracts(contracts, todayISO()));
+  }
+}
+if (!hasCollection('preferences')) {
+  const response = await fetch('data/sample-preferences.json');
+  if (response.ok) {
+    const { sheets } = await response.json();
+    saveCollection('preferences', buildSamplePreferences(sheets, getCollection('enquiries')));
   }
 }
 onChange(() => {

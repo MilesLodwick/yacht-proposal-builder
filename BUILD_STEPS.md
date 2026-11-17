@@ -21,7 +21,7 @@ Each step is small enough to build, test and explain in one sitting. Steps that 
 - [x] **1.4 Itinerary builder.** Day by day ports, nautical miles, cruising time at chosen speed, long day flag over 6 hours.
 - [x] **1.5 Proposal.** One-page printable proposal of the top three yachts, copy-to-Claude prompt, fallback email template.
 - [x] **1.6 Contract and payment checklist.** Checklist items, payment schedule with due dates and "check the signed contract" notice.
-- [ ] **1.7 Preference sheet.** Form plus one-page captain handover summary.
+- [x] **1.7 Preference sheet.** Form plus one-page captain handover summary.
 
 ## Phase 2: Charter management
 

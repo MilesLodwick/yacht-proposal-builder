@@ -1,0 +1,28 @@
+{
+  "about": "A fictional sample preference sheet for the fictional Whitcombe enquiry. Every name is made up. Dates are stored as days of the charter.",
+  "sheets": [
+    {
+      "enquiryId": "sample-enquiry-7",
+      "guests": [
+        { "name": "Richard Whitcombe", "age": 68, "dietary": "Low salt" },
+        { "name": "Helen Whitcombe", "age": 66, "allergies": "Shellfish (severe, carries an adrenaline pen)" },
+        { "name": "James Whitcombe", "age": 41 },
+        { "name": "Priya Whitcombe", "age": 39, "dietary": "Vegetarian" },
+        { "name": "Oliver Whitcombe", "age": 12 },
+        { "name": "Maya Whitcombe", "age": 6, "allergies": "Peanuts and tree nuts" },
+        { "name": "Claire Fenwick", "age": 37, "dietary": "Gluten free (coeliac)" },
+        { "name": "Tom Fenwick", "age": 38 },
+        { "name": "Ella Fenwick", "age": 9 },
+        { "name": "Sam Fenwick", "age": 7, "dietary": "No spicy food" }
+      ],
+      "arrival": { "dayOffset": 0, "time": "15:30", "place": "Nassau, Lynden Pindling Airport (transfer to the yacht)" },
+      "activities": ["Swimming", "Snorkelling", "Paddleboarding and kayaking", "Fishing", "Beach clubs"],
+      "otherActivities": "Swimming pigs at Big Major Cay",
+      "occasions": [
+        { "charterDay": 3, "occasion": "Richard's 69th birthday", "guest": "Richard Whitcombe" },
+        { "charterDay": 6, "occasion": "Helen and Richard's 45th wedding anniversary", "guest": "Helen Whitcombe" }
+      ],
+      "notes": "Helen prefers a cabin away from the engine room. The children need a life jacket in each tender. Early dinners (18:30) for the children, adults later."
+    }
+  ]
+}

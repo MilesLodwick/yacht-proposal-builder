@@ -1,0 +1,52 @@
+{
+  "about": "Fictional crew for the fictional managed yacht. Every name and certificate number is made up. Expiry dates are days from today, so some are always expired, some due soon and some fine.",
+  "crew": [
+    { "yachtId": "managed-example-1", "name": "Tom Hadley", "role": "Captain", "joinedDaysAgo": 1460,
+      "certificates": [
+        { "type": "stcw", "detail": "Basic safety training", "expiresInDays": 410 },
+        { "type": "eng1", "expiresInDays": 210 },
+        { "type": "coc", "detail": "Master (Yachts) 3000 GT", "number": "COC-EX-101", "expiresInDays": 900 }
+      ] },
+    { "yachtId": "managed-example-1", "name": "Ana Moreno", "role": "Chief Officer", "joinedDaysAgo": 700,
+      "certificates": [
+        { "type": "stcw", "detail": "Basic safety training", "expiresInDays": 31 },
+        { "type": "eng1", "expiresInDays": 300 },
+        { "type": "coc", "detail": "Chief Mate (Yachts) 3000 GT", "number": "COC-EX-102", "expiresInDays": 640 }
+      ] },
+    { "yachtId": "managed-example-1", "name": "Piet de Wit", "role": "Chief Engineer", "joinedDaysAgo": 1100,
+      "certificates": [
+        { "type": "stcw", "detail": "Basic safety training", "expiresInDays": 520 },
+        { "type": "eng1", "expiresInDays": -5 },
+        { "type": "coc", "detail": "Chief Engineer (Yachts)", "number": "COC-EX-103", "expiresInDays": 1000 }
+      ] },
+    { "yachtId": "managed-example-1", "name": "Liam Doherty", "role": "Second Engineer", "joinedDaysAgo": 300,
+      "certificates": [
+        { "type": "stcw", "detail": "Basic safety training", "expiresInDays": 700 },
+        { "type": "eng1", "expiresInDays": 44 },
+        { "type": "coc", "detail": "Engineering officer (Yachts)", "number": "COC-EX-104", "expiresInDays": 230 }
+      ] },
+    { "yachtId": "managed-example-1", "name": "Kai Tanaka", "role": "Bosun", "joinedDaysAgo": 520,
+      "certificates": [
+        { "type": "stcw", "detail": "Basic safety training", "expiresInDays": 260 },
+        { "type": "eng1", "expiresInDays": 125 },
+        { "type": "other", "detail": "Powerboat Level 2", "expiresInDays": 800 }
+      ] },
+    { "yachtId": "managed-example-1", "name": "Sam Okafor", "role": "Deckhand", "joinedDaysAgo": 40,
+      "notes": "New this season. ENG1 copy requested.",
+      "certificates": [
+        { "type": "stcw", "detail": "Basic safety training", "expiresInDays": 1700 }
+      ] },
+    { "yachtId": "managed-example-1", "name": "Chloé Martin", "role": "Chief Stew", "joinedDaysAgo": 900,
+      "certificates": [
+        { "type": "stcw", "detail": "Basic safety training", "expiresInDays": 350 },
+        { "type": "eng1", "expiresInDays": 95 },
+        { "type": "other", "detail": "Food hygiene level 2", "expiresInDays": 400 }
+      ] },
+    { "yachtId": "managed-example-1", "name": "Marco Bellini", "role": "Chef", "joinedDaysAgo": 600,
+      "certificates": [
+        { "type": "stcw", "detail": "Basic safety training", "expiresInDays": 600 },
+        { "type": "eng1", "expiresInDays": 15 },
+        { "type": "other", "detail": "Ship's cook certificate", "expiresInDays": 1200 }
+      ] }
+  ]
+}

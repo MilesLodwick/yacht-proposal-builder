@@ -856,6 +856,13 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
 .category-chip.is-green { border-left-color: var(--green-text); background: var(--green-bg); }
 .category-name { display: block; font-weight: 500; }
 
+/* Crew certificates: on a phone, drop the date column (the status pill
+   already says it) and let the buttons wrap under the pill. */
+@media (max-width: 559px) {
+  .cert-table th:nth-child(2), .cert-table td:nth-child(2) { display: none; }
+  .cert-table td:last-child .button-row { flex-direction: column; align-items: stretch; }
+}
+
 /* Deal tracker: one card per MOA stage */
 .stage-list { list-style: none; margin: var(--space-5) 0 0; padding: 0; }
 .stage { margin-bottom: var(--space-4); border-left: 4px solid var(--border); }

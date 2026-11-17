@@ -42,7 +42,7 @@ Each step is small enough to build, test and explain in one sitting. Steps that 
 
 - [x] **4.1 Management maths.** `src/calc/management.js`: red / amber / green expiry status (60 days, a setting), budget variance, full-year forecast. Tests.
 - [x] **4.2 Compliance tracker.**
-- [ ] **4.3 Crew records.** Fictional crew and certificates.
+- [x] **4.3 Crew records.** Fictional crew and certificates.
 - [ ] **4.4 Budget vs actual.**
 - [ ] **4.5 Monthly management report.** Printable page.
 

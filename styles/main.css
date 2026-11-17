@@ -752,12 +752,43 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
 .cal-pill { border: 1px solid transparent; }
 
 .pill-row--tight { margin: 0; }
+.form-grid--span { grid-column: 1 / -1; }
+.form-grid--span[hidden] { display: none; }
 
 @media (max-width: 559px) {
   .calendar { border-spacing: 2px; }
   .calendar td { height: 46px; padding: 2px 3px; }
   .cal-label { display: none; }
 }
+
+/* ==========================================================================
+   Owner report
+   ========================================================================== */
+
+.owner-report > section + section { margin-top: var(--space-5); }
+.owner-report h3 { font-size: 1.05rem; }
+.owner-report .table-wrap { border: 0; background: none; }
+.report-table { min-width: 34rem; }
+.report-table .num { text-align: right; padding-right: 0; padding-left: var(--space-3); white-space: nowrap; }
+.report-table .total-row > * { font-weight: 600; border-top: 2px solid var(--text); }
+
+.report-figures { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); margin-bottom: var(--space-5); }
+.report-figures > div { padding: var(--space-3); border: 1px solid var(--border); border-radius: var(--radius); }
+.figure-label { display: block; font-size: 0.8125rem; color: var(--text-muted); }
+.figure { display: block; font-size: 1.2rem; font-weight: 500; text-align: left; }
+.figure--main { color: var(--accent); font-size: 1.35rem; }
+
+.utilisation-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.utilisation-table th, .utilisation-table td { padding: var(--space-1) var(--space-2) var(--space-1) 0; border-bottom: 1px solid var(--border); text-align: left; font-weight: 400; }
+.utilisation-table thead th { font-weight: 600; color: var(--text-muted); }
+.utilisation-table .num { text-align: right; padding-right: var(--space-4); }
+.bar { position: relative; display: inline-flex; width: calc(100% - 3.5rem); max-width: 22rem; height: 12px; border-radius: 6px; background: var(--bg); border: 1px solid var(--border); overflow: hidden; vertical-align: middle; }
+.bar__fill { background: var(--booking-bg); height: 100%; }
+.bar__owner { background: var(--owner-bg); height: 100%; }
+.bar-value { display: inline-block; width: 3rem; text-align: right; }
+.bar-key { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: middle; margin: 0 var(--space-1) 0 var(--space-3); }
+.bar-key--fill { background: var(--booking-bg); margin-left: 0; }
+.bar-key--owner { background: var(--owner-bg); border: 1px solid var(--border); }
 
 /* ==========================================================================
    Preference sheet
@@ -839,5 +870,20 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
   .handover-alert { border: 2pt solid #000; background: #fff; color: #000; }
   .allergy-cell { color: #000; }
   .handover-table { font-size: 8.5pt; }
+  .report-figures { grid-template-columns: repeat(4, 1fr); margin-bottom: 4mm; gap: 3mm; }
+  .report-figures > div { padding: 2mm 3mm; }
+  .figure, .figure--main { font-size: 12pt; }
+  .owner-report .cell-sub { display: inline; margin-left: 2mm; }
+  .report-table th, .report-table td, .utilisation-table th, .utilisation-table td, .owner-report .breakdown-table th, .owner-report .breakdown-table td { padding-top: 1px; padding-bottom: 1px; }
+  .owner-report .proposal-head { margin-bottom: 3mm; padding-bottom: 2mm; }
+  .owner-report h3 { margin-bottom: 1.5mm; }
+  .owner-report .proposal-notes li { margin-bottom: 0; }
+  .owner-report > section + section { margin-top: 4mm; }
+  .report-table, .utilisation-table, .owner-report .breakdown-table { font-size: 8.5pt; }
+  .bar { border-color: #999; }
+  .bar__fill { background: #333; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .bar__owner { background: #bbb; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .bar-key--fill { background: #333; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .bar-key--owner { background: #bbb; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   a { color: inherit; }
 }

@@ -27,7 +27,7 @@ Each step is small enough to build, test and explain in one sitting. Steps that 
 
 - [x] **2.1 Fleet records.** Specs, seasonal rates, bases, crew notes, listing links, "over 90 days old" flag.
 - [x] **2.2 Availability calendar.** Bookings, owner use, first and second options with expiry, clash and expired option detection (logic in `calc`, with tests).
-- [ ] **2.3 Owner report.** Weeks booked, gross income, commission split from settings, net to owner, utilisation. Printable. Tests for the commission maths.
+- [x] **2.3 Owner report.** Weeks booked, gross income, commission split from settings, net to owner, utilisation. Printable. Tests for the commission maths.
 - [ ] **2.4 Show booklet.** One printable page per yacht for a chosen boat show.
 
 ## Phase 3: Brokerage sales

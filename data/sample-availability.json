@@ -2,9 +2,12 @@
   "about": "Fictional sample calendar entries on real yachts from data/yachts.csv. Client names are made up. Dates are days from today. Some problems are included on purpose so the clash and expiry checks have something to find.",
   "entries": [
     { "yachtId": "burgess-santosha", "type": "owner", "startInDays": 40, "days": 7, "label": "Owner's Christmas" },
-    { "yachtId": "burgess-santosha", "type": "booking", "startInDays": 58, "days": 7, "label": "Whitcombe family" },
+    { "yachtId": "burgess-santosha", "type": "booking", "startInDays": 58, "days": 7, "label": "Whitcombe family", "charterFee": 400000, "retailBroker": "Saltmarsh Yacht Agency" },
     { "yachtId": "burgess-santosha", "type": "option1", "startInDays": 68, "days": 7, "label": "Marchetti party", "expiresInDays": 2 },
     { "yachtId": "burgess-santosha", "type": "owner", "startInDays": 72, "days": 5, "label": "Owner's guests" },
+    { "yachtId": "burgess-santosha", "type": "booking", "startInDays": 90, "days": 7, "label": "Haldane party", "charterFee": 420000, "retailBroker": "Saltmarsh Yacht Agency" },
+    { "yachtId": "burgess-santosha", "type": "booking", "startInDays": 110, "days": 10, "label": "Okonkwo family" },
+    { "yachtId": "burgess-santosha", "type": "booking", "startInDays": 135, "days": 7, "label": "Varga", "charterFee": 400000, "retailBroker": "Kestrel Charter Partners" },
 
     { "yachtId": "tww-yachts-te-manu", "type": "booking", "startInDays": 36, "days": 7, "label": "Ruiz" },
     { "yachtId": "tww-yachts-te-manu", "type": "option1", "startInDays": 50, "days": 7, "label": "Kowalski", "expiresInDays": -1 },

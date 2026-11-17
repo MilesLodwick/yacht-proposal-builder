@@ -19,6 +19,7 @@ import * as contractsView from './views/contracts.js';
 import * as preferencesView from './views/preferences.js';
 import * as fleetView from './views/fleet.js';
 import * as availabilityView from './views/availability.js';
+import * as ownerReportView from './views/owner-report.js';
 import { buildSampleAvailability } from './calc/availability.js';
 import { buildSamplePreferences } from './preferences.js';
 import { buildSampleContracts } from './contracts.js';
@@ -38,6 +39,7 @@ const VIEWS = {
   preferences: preferencesView,
   fleet: fleetView,
   availability: availabilityView,
+  'owner-report': ownerReportView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.

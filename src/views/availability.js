@@ -10,6 +10,7 @@ import {
   ENTRY_TYPES, typeLabel, optionStatus, findClashes, expiredOptions, dayStatus, monthGrid, validateEntry,
 } from '../calc/availability.js';
 import { formatDate, formatDateRange, todayISO } from '../calc/dates.js';
+import { formatMoney } from '../calc/currency.js';
 import { escapeHTML } from './html.js';
 
 const COLLECTION = 'availability';
@@ -144,6 +145,10 @@ function renderYacht(container, yacht) {
         ${field('start', 'Start (embarkation)', 'date')}
         ${field('end', 'End (disembarkation)', 'date')}
         <div id="expiry-field">${field('expiresOn', 'Option expires on', 'date')}</div>
+        <div id="booking-fields" class="form-grid form-grid--span">
+          ${field('charterFee', `Charter fee in the contract (${yacht.currency ?? 'yacht\'s currency'}, optional)`)}
+          ${field('retailBroker', 'Retail broker (leave empty if booked direct)')}
+        </div>
       </div>
       <p class="status-message" role="status" id="entry-status"></p>
       <div class="button-row">
@@ -154,7 +159,12 @@ function renderYacht(container, yacht) {
   `);
 
   const form = container.querySelector('#entry-form');
-  const showExpiry = () => { container.querySelector('#expiry-field').hidden = !form.elements.type.value.startsWith('option'); };
+  // Options need an expiry date; bookings can record the fee and broker
+  // (used by the owner report).
+  const showExpiry = () => {
+    container.querySelector('#expiry-field').hidden = !form.elements.type.value.startsWith('option');
+    container.querySelector('#booking-fields').hidden = form.elements.type.value !== 'booking';
+  };
   form.elements.type.addEventListener('change', showExpiry);
   showExpiry();
 
@@ -207,7 +217,9 @@ function renderYacht(container, yacht) {
               return `<tr>
                 <th scope="row" data-label="Dates">${formatDateRange(e.start, e.end)}</th>
                 <td data-label="What"><span class="pill cal-pill cal--${e.type}">${escapeHTML(typeLabel(e.type))}</span>${inClash ? ' <span class="pill pill--red">Clash</span>' : ''}</td>
-                <td data-label="Who">${escapeHTML(e.label || '-')}</td>
+                <td data-label="Who"><span>${escapeHTML(e.label || '-')}${e.type === 'booking'
+                  ? `<span class="cell-sub">${e.charterFee != null ? `Fee ${formatMoney(e.charterFee, yacht.currency)}` : 'Fee not recorded'} · ${e.retailBroker ? `via ${escapeHTML(e.retailBroker)}` : 'direct'}</span>`
+                  : ''}</span></td>
                 <td data-label="Option">${status ? `<span class="pill pill--${status.tone}">${escapeHTML(status.text)}</span>` : '-'}</td>
                 <td data-label="Actions"><span class="button-row">
                   ${e.type === 'option2' ? `<button type="button" class="button button--secondary button--small" data-promote="${escapeHTML(e.id)}">Make first option</button>` : ''}
@@ -252,7 +264,7 @@ function renderYacht(container, yacht) {
       container.querySelector('#entry-status').textContent = 'Removed.';
     } else {
       editingId = id;
-      for (const name of ['type', 'label', 'start', 'end', 'expiresOn']) form.elements[name].value = e[name] ?? '';
+      for (const name of ['type', 'label', 'start', 'end', 'expiresOn', 'charterFee', 'retailBroker']) form.elements[name].value = e[name] ?? '';
       showExpiry();
       container.querySelector('#form-heading').textContent = 'Edit entry';
       container.querySelector('#save-entry').textContent = 'Save changes';
@@ -290,9 +302,13 @@ function renderYacht(container, yacht) {
       first.focus();
       return;
     }
+    const isBooking = input.type === 'booking';
+    const fee = String(input.charterFee ?? '').replace(/[,\s]/g, '');
     const record = {
       yachtId: yacht.id, type: input.type, start: input.start, end: input.end,
       label: input.label.trim(), expiresOn: input.expiresOn || null,
+      charterFee: isBooking && fee !== '' ? Number(fee) : null,
+      retailBroker: isBooking ? (input.retailBroker.trim() || null) : null,
     };
     const all = getCollection(COLLECTION);
     if (editingId) {

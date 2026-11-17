@@ -129,6 +129,10 @@ export function validateEntry(input) {
   if ((input.type === 'option1' || input.type === 'option2') && !parseDate(input.expiresOn)) {
     errors.expiresOn = 'Options need an expiry date.';
   }
+  // The contract's charter fee is optional; the owner report estimates it
+  // from the yacht's rate when it is missing.
+  const fee = String(input.charterFee ?? '').replace(/[,\s]/g, '');
+  if (fee !== '' && !(Number(fee) >= 0)) errors.charterFee = 'Enter the charter fee as a number.';
   return Object.keys(errors).length ? { ok: false, errors } : { ok: true };
 }
 
@@ -143,5 +147,7 @@ export function buildSampleAvailability(templates, today) {
     end: addDays(today, t.startInDays + t.days),
     label: t.label ?? '',
     expiresOn: t.expiresInDays == null ? null : addDays(today, t.expiresInDays),
+    charterFee: t.charterFee ?? null,
+    retailBroker: t.retailBroker ?? null,
   }));
 }

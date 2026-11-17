@@ -1,0 +1,9 @@
+{
+  "name": "yacht-proposal-builder",
+  "private": true,
+  "type": "module",
+  "description": "No dependencies. This file only tells Node to treat .js files as ES modules, the same as the browser does.",
+  "scripts": {
+    "test": "node --test"
+  }
+}

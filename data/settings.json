@@ -1,0 +1,355 @@
+{
+  "about": "Default values for every rule of thumb in the app. Each setting has a source and the date it was checked. A dateChecked of null means 'to be checked'. Percentages are stored as written (20 means 20%). Dates are stored as YYYY-MM-DD and shown as 17 Nov 2026.",
+  "version": 1,
+  "settings": [
+    {
+      "id": "vat.france",
+      "group": "Charter VAT by cruising area",
+      "label": "France",
+      "value": 20,
+      "unit": "%",
+      "source": "TWW Yachts and IYC VAT guides",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": null
+    },
+    {
+      "id": "vat.italy",
+      "group": "Charter VAT by cruising area",
+      "label": "Italy",
+      "value": 22,
+      "unit": "%",
+      "source": "TWW Yachts and IYC VAT guides",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": null
+    },
+    {
+      "id": "vat.spain",
+      "group": "Charter VAT by cruising area",
+      "label": "Spain",
+      "value": 21,
+      "unit": "%",
+      "source": "TWW Yachts and IYC VAT guides",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": null
+    },
+    {
+      "id": "vat.croatia",
+      "group": "Charter VAT by cruising area",
+      "label": "Croatia",
+      "value": 13,
+      "unit": "%",
+      "source": "TWW Yachts and IYC VAT guides",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": null
+    },
+    {
+      "id": "vat.greece.eligible",
+      "group": "Charter VAT by cruising area",
+      "label": "Greece (eligible charters)",
+      "value": 5.2,
+      "unit": "%",
+      "source": "TWW Yachts and IYC VAT guides",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Reduced rate ranges from 5.2% to 13% depending on eligibility. Tick 'Greek VAT eligible' on the enquiry to use this rate."
+    },
+    {
+      "id": "vat.greece.standard",
+      "group": "Charter VAT by cruising area",
+      "label": "Greece (not eligible)",
+      "value": 24,
+      "unit": "%",
+      "source": "TWW Yachts and IYC VAT guides",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Used when the charter does not qualify for the reduced rate."
+    },
+    {
+      "id": "vat.montenegro",
+      "group": "Charter VAT by cruising area",
+      "label": "Montenegro",
+      "value": 0,
+      "unit": "%",
+      "source": "TWW Yachts and IYC VAT guides",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": null
+    },
+    {
+      "id": "vat.caribbean",
+      "group": "Charter VAT by cruising area",
+      "label": "Caribbean (most islands)",
+      "value": 0,
+      "unit": "%",
+      "source": "TWW Yachts and IYC VAT guides",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Most Caribbean islands charge no charter VAT. Check the specific island."
+    },
+    {
+      "id": "vat.bahamas.lower",
+      "group": "Charter VAT by cruising area",
+      "label": "Bahamas (lower figure)",
+      "value": 10,
+      "unit": "%",
+      "source": "TWW Yachts and IYC VAT guides",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Sources disagree on the Bahamas rate (10% or 14%), so both are shown. Check before quoting."
+    },
+    {
+      "id": "vat.bahamas.higher",
+      "group": "Charter VAT by cruising area",
+      "label": "Bahamas (higher figure)",
+      "value": 14,
+      "unit": "%",
+      "source": "TWW Yachts and IYC VAT guides",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Sources disagree on the Bahamas rate (10% or 14%), so both are shown. Check before quoting."
+    },
+
+    {
+      "id": "apa.default",
+      "group": "Charter costs",
+      "label": "APA (Advance Provisioning Allowance) default",
+      "value": 30,
+      "unit": "% of charter fee",
+      "min": 25,
+      "max": 40,
+      "source": "IYC",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Usually 25% to 40% of the charter fee. Covers fuel, food, drink, berthing and other running costs during the charter."
+    },
+    {
+      "id": "gratuity.low",
+      "group": "Charter costs",
+      "label": "Crew gratuity guide (low)",
+      "value": 10,
+      "unit": "% of charter fee",
+      "source": "YachtCharterFleet",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "A guide only. Gratuity is at the client's discretion and is not part of the contract."
+    },
+    {
+      "id": "gratuity.high",
+      "group": "Charter costs",
+      "label": "Crew gratuity guide (high)",
+      "value": 20,
+      "unit": "% of charter fee",
+      "source": "YachtCharterFleet",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "A guide only. Gratuity is at the client's discretion and is not part of the contract."
+    },
+    {
+      "id": "budget.overTolerance",
+      "group": "Charter costs",
+      "label": "Budget tolerance: 'up to X% over'",
+      "value": 10,
+      "unit": "% over budget",
+      "source": "Working rule (project brief)",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Yachts within budget are 'Within budget', up to this much over are 'Slightly over', anything above is 'Out'."
+    },
+
+    {
+      "id": "payment.depositPercent",
+      "group": "Charter payment schedule",
+      "label": "Deposit on signing",
+      "value": 50,
+      "unit": "% of charter fee",
+      "source": "Placeholder, to be confirmed by Miles",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Terms vary by contract. Always check the signed contract."
+    },
+    {
+      "id": "payment.balanceDaysBefore",
+      "group": "Charter payment schedule",
+      "label": "Balance due before embarkation",
+      "value": 30,
+      "unit": "days",
+      "source": "Placeholder, to be confirmed by Miles",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Terms vary by contract. Always check the signed contract."
+    },
+    {
+      "id": "payment.apaDaysBefore",
+      "group": "Charter payment schedule",
+      "label": "APA due before embarkation",
+      "value": 30,
+      "unit": "days",
+      "source": "Placeholder, to be confirmed by Miles",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Terms vary by contract. Always check the signed contract."
+    },
+
+    {
+      "id": "commission.total",
+      "group": "Charter commission",
+      "label": "Total commission",
+      "value": 20,
+      "unit": "% of charter fee",
+      "source": "IYC charter management page",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Example split. Paid by the owner out of the charter fee."
+    },
+    {
+      "id": "commission.retailBroker",
+      "group": "Charter commission",
+      "label": "Retail broker share",
+      "value": 15,
+      "unit": "% of charter fee",
+      "source": "IYC charter management page",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Part of the total commission, not on top of it."
+    },
+    {
+      "id": "commission.centralAgent",
+      "group": "Charter commission",
+      "label": "Central agent share",
+      "value": 5,
+      "unit": "% of charter fee",
+      "source": "IYC charter management page",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Part of the total commission, not on top of it."
+    },
+
+    {
+      "id": "sale.depositPercent",
+      "group": "Brokerage sales",
+      "label": "MOA deposit",
+      "value": 10,
+      "unit": "% of purchase price",
+      "source": "Breeze Yachting guide to the MYBA MOA",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Check against the current MYBA MOA. Sea trial and survey take place before acceptance."
+    },
+    {
+      "id": "sale.depositBankingDays",
+      "group": "Brokerage sales",
+      "label": "MOA deposit due within",
+      "value": 4,
+      "unit": "banking days",
+      "source": "Breeze Yachting guide to the MYBA MOA",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Counted from MOA signing. Check against the current MYBA MOA."
+    },
+    {
+      "id": "sale.runningCostPercent",
+      "group": "Brokerage sales",
+      "label": "Annual running cost estimate",
+      "value": 10,
+      "unit": "% of yacht value per year",
+      "source": "Industry rule of thumb",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "A rough guide only. Real costs depend on size, age, crew and use."
+    },
+    {
+      "id": "sale.compLengthPercent",
+      "group": "Brokerage sales",
+      "label": "Comparables: length range",
+      "value": 15,
+      "unit": "% plus or minus",
+      "source": "Working rule (project brief)",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": null
+    },
+    {
+      "id": "sale.compYears",
+      "group": "Brokerage sales",
+      "label": "Comparables: build year range",
+      "value": 7,
+      "unit": "years plus or minus",
+      "source": "Working rule (project brief)",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": null
+    },
+
+    {
+      "id": "alerts.enquiryReplyHours",
+      "group": "Alerts and thresholds",
+      "label": "Flag enquiries not answered within",
+      "value": 24,
+      "unit": "hours",
+      "source": "Working rule (project brief)",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": null
+    },
+    {
+      "id": "alerts.longDayHours",
+      "group": "Alerts and thresholds",
+      "label": "Itinerary: flag legs longer than",
+      "value": 6,
+      "unit": "hours cruising",
+      "source": "Working rule (project brief)",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": null
+    },
+    {
+      "id": "alerts.staleListingDays",
+      "group": "Alerts and thresholds",
+      "label": "Fleet: flag details older than",
+      "value": 90,
+      "unit": "days",
+      "source": "Working rule (project brief)",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": null
+    },
+    {
+      "id": "alerts.expiryAmberDays",
+      "group": "Alerts and thresholds",
+      "label": "Certificates: amber when expiring within",
+      "value": 60,
+      "unit": "days",
+      "source": "Working rule (project brief)",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Red when overdue, amber within this many days, green otherwise."
+    },
+
+    {
+      "id": "currency.gbpPerEur",
+      "group": "Currency rates (manual)",
+      "label": "GBP per 1 EUR",
+      "value": null,
+      "unit": "rate",
+      "source": null,
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Enter today's rate and the date. Totals are only shown in GBP once a rate is set."
+    },
+    {
+      "id": "currency.usdPerEur",
+      "group": "Currency rates (manual)",
+      "label": "USD per 1 EUR",
+      "value": null,
+      "unit": "rate",
+      "source": null,
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Enter today's rate and the date. Totals are only shown in USD once a rate is set."
+    }
+  ]
+}

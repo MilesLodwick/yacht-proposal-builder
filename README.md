@@ -18,11 +18,11 @@ Then open http://localhost:8000 in a browser.
 
 ## Run the tests
 
+You need [Node.js](https://nodejs.org) (version 22 or later). There are no packages to install.
+
 ```bash
 node --test
 ```
-
-(Tests arrive from step 0.3.)
 
 ## Sources
 

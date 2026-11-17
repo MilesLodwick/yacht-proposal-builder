@@ -110,7 +110,7 @@ function renderContract(container, enquiry) {
   const proposalIds = getCollection('proposals').find((p) => p.enquiryId === enquiry.id)?.yachtIds ?? [];
   const choices = [
     ...proposalIds.map((id) => yachts.find((y) => y.id === id)).filter(Boolean),
-    ...yachts.filter((y) => y.rateFromWeekly != null && !proposalIds.includes(y.id)).sort((a, b) => a.name.localeCompare(b.name)),
+    ...yachts.filter((y) => (y.rateFromWeekly ?? y.summerRate ?? y.winterRate) != null && !proposalIds.includes(y.id)).sort((a, b) => a.name.localeCompare(b.name)),
   ];
 
   container.insertAdjacentHTML('beforeend', `

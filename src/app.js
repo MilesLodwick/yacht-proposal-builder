@@ -17,6 +17,7 @@ import * as itineraryView from './views/itinerary.js';
 import * as proposalView from './views/proposal.js';
 import * as contractsView from './views/contracts.js';
 import * as preferencesView from './views/preferences.js';
+import * as fleetView from './views/fleet.js';
 import { buildSamplePreferences } from './preferences.js';
 import { buildSampleContracts } from './contracts.js';
 import { buildSampleItineraries } from './calc/itinerary.js';
@@ -33,6 +34,7 @@ const VIEWS = {
   proposal: proposalView,
   contracts: contractsView,
   preferences: preferencesView,
+  fleet: fleetView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.

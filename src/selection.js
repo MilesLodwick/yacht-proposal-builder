@@ -76,6 +76,21 @@ export function seasonForDate(iso) {
   return month >= 5 && month <= 10 ? 'Summer' : 'Winter';
 }
 
+// The weekly rate to quote for a charter starting on a date:
+//   1. the yacht's rate for that season, if entered on its fleet record
+//   2. otherwise the rate listed in the research sheet
+//   3. otherwise the other season's rate, flagged as such
+// Returns { rate, label, otherSeason } or null if there is no rate at all.
+export function weeklyRateFor(yacht, startDate) {
+  const season = startDate ? seasonForDate(startDate) : null;
+  const seasonal = season === 'Summer' ? yacht.summerRate : season === 'Winter' ? yacht.winterRate : null;
+  if (seasonal != null) return { rate: seasonal, label: `${season} rate`, otherSeason: false };
+  if (yacht.rateFromWeekly != null) return { rate: yacht.rateFromWeekly, label: 'Listed rate', otherSeason: false };
+  if (yacht.summerRate != null) return { rate: yacht.summerRate, label: 'Summer rate', otherSeason: season === 'Winter' };
+  if (yacht.winterRate != null) return { rate: yacht.winterRate, label: 'Winter rate', otherSeason: season === 'Summer' };
+  return null;
+}
+
 // ---------------------------------------------------------------------------
 // Filtering
 // ---------------------------------------------------------------------------
@@ -124,7 +139,8 @@ export function filterYachts(yachts, { guests = null, regionId = null, type = nu
 // then the total is converted for display and for the budget check.
 // The Bahamas gives two breakdowns (10% and 14% VAT).
 export function quoteYacht(yacht, charter, settings, rates, extras = {}) {
-  if (yacht.rateFromWeekly == null || !yacht.currency) {
+  const weekly = weeklyRateFor(yacht, charter.startDate);
+  if (!weekly || !yacht.currency) {
     return { ok: false, reason: 'Rate on enquiry' };
   }
   const vatOptions = vatRatesFor(charter.countryId, settings, { greekEligible: charter.greekEligible });
@@ -135,7 +151,7 @@ export function quoteYacht(yacht, charter, settings, rates, extras = {}) {
 
   const options = vatOptions.map((v) => {
     const breakdown = costBreakdown({
-      weeklyRate: yacht.rateFromWeekly,
+      weeklyRate: weekly.rate,
       days: charter.days,
       vatRate: v.rate,
       apaPercent: cs.apaPercent,
@@ -166,14 +182,22 @@ export function quoteYacht(yacht, charter, settings, rates, extras = {}) {
     else band = budgetBand(inBudgetCurrency, charter.budget, cs.budgetTolerancePercent);
   }
 
-  // Flag a rate listed for the other season.
-  const listedSeason = rateSeason(yacht);
+  // Flag a rate that is for the other season.
   const charterSeason = charter.startDate ? seasonForDate(charter.startDate) : null;
-  const seasonWarning = listedSeason && charterSeason && listedSeason !== charterSeason
-    ? `Listed rate is a ${listedSeason.toLowerCase()} rate. The ${charterSeason.toLowerCase()} rate may differ.`
-    : null;
+  let seasonWarning = null;
+  if (weekly.otherSeason) {
+    seasonWarning = `Only a ${weekly.label.toLowerCase()} is recorded. The ${charterSeason.toLowerCase()} rate may differ.`;
+  } else if (weekly.label === 'Listed rate') {
+    const listedSeason = rateSeason(yacht);
+    if (listedSeason && charterSeason && listedSeason !== charterSeason) {
+      seasonWarning = `Listed rate is a ${listedSeason.toLowerCase()} rate. The ${charterSeason.toLowerCase()} rate may differ.`;
+    }
+  }
 
-  return { ok: true, currency: yacht.currency, options, band, bandNote, seasonWarning };
+  return {
+    ok: true, currency: yacht.currency, weeklyRate: weekly.rate, rateLabel: weekly.label,
+    options, band, bandNote, seasonWarning,
+  };
 }
 
 // Sort order for results: within budget first, then slightly over, then

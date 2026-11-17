@@ -35,6 +35,14 @@ const CHARTER_COLUMNS = [
   { key: 'sourceUrl', header: 'Source URL', type: 'text' },
   { key: 'dateChecked', header: 'Checked', type: 'date' },
   { key: 'notes', header: 'Notes', type: 'text' },
+  // Fleet record fields (step 2.1). Not in the research sheet, so they
+  // start empty and are filled in on the Fleet records screen.
+  { key: 'summerRate', header: 'Summer rate p/w', type: 'number' },
+  { key: 'winterRate', header: 'Winter rate p/w', type: 'number' },
+  { key: 'summerBase', header: 'Summer base', type: 'text' },
+  { key: 'winterBase', header: 'Winter base', type: 'text' },
+  { key: 'crewNotes', header: 'Crew notes', type: 'text' },
+  { key: 'otherLinks', header: 'Other listing links', type: 'text' },
 ];
 
 const SALE_COLUMNS = [

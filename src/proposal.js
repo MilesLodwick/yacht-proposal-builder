@@ -109,7 +109,7 @@ export function proposalContent({ enquiry, picks, settings, rates, itinerary = n
     return {
       ...base,
       ok: true,
-      weeklyRate: `${formatMoney(yacht.rateFromWeekly, cur)} a week`,
+      weeklyRate: `${formatMoney(quote.weeklyRate, cur)} a week`,
       lines,
       total: money('total'),
       clientTotal,

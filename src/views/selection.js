@@ -248,7 +248,7 @@ function totalHTML(quote, charter, yacht) {
   return `
     <span class="total-label">Total</span>
     <span class="total-figure num">${totals.join(' to ')}</span>
-    <span class="cell-sub num">from ${formatMoney(yacht.rateFromWeekly, quote.currency)} a week</span>`;
+    <span class="cell-sub num">${escapeHTML(quote.rateLabel)}: ${formatMoney(quote.weeklyRate, quote.currency)} a week</span>`;
 }
 
 // The line-by-line cost, in the yacht's own currency, with boxes for

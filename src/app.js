@@ -28,6 +28,8 @@ import * as viewingsView from './views/viewings.js';
 import * as dealsView from './views/deals.js';
 import * as complianceView from './views/compliance.js';
 import * as crewView from './views/crew.js';
+import * as budgetView from './views/budget.js';
+import { buildSampleBudget } from './budget.js';
 import { buildSampleCrew } from './crew.js';
 import { buildSampleManaged } from './compliance.js';
 import { buildSampleDeals } from './deals.js';
@@ -62,6 +64,7 @@ const VIEWS = {
   deals: dealsView,
   compliance: complianceView,
   crew: crewView,
+  budget: budgetView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.
@@ -340,6 +343,13 @@ if (!hasCollection('crew')) {
   if (response.ok) {
     const { crew } = await response.json();
     saveCollection('crew', buildSampleCrew(crew, todayISO()));
+  }
+}
+if (!hasCollection('budgets')) {
+  const response = await fetch('data/sample-budget.json');
+  if (response.ok) {
+    const { budget } = await response.json();
+    saveCollection('budgets', [buildSampleBudget(budget, todayISO())]);
   }
 }
 onChange(() => {

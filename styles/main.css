@@ -863,6 +863,10 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
   .cert-table td:last-child .button-row { flex-direction: column; align-items: stretch; }
 }
 
+/* Budget */
+.month-pick { margin-bottom: var(--space-4); }
+.budget-table .pill { white-space: nowrap; }
+
 /* Deal tracker: one card per MOA stage */
 .stage-list { list-style: none; margin: var(--space-5) 0 0; padding: 0; }
 .stage { margin-bottom: var(--space-4); border-left: 4px solid var(--border); }

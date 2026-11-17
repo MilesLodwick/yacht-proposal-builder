@@ -1,0 +1,27 @@
+{
+  "about": "A fictional operating budget for the fictional managed yacht. Figures are illustrative, not industry data. Each month's actual is the budget for that month times the factor shown, so the refit overrun and fuel overspend are deliberate.",
+  "budget": {
+    "yachtId": "managed-example-1",
+    "currency": "EUR",
+    "categories": [
+      { "id": "crew", "annual": 1100000,
+        "factors": [1, 1, 1, 1, 1.02, 1.03, 1.03, 1.03, 1.02, 1, 1, 1] },
+      { "id": "insurance", "annual": 120000,
+        "factors": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] },
+      { "id": "berthing", "annual": 180000,
+        "monthly": [10000, 10000, 10000, 12000, 18000, 22000, 26000, 26000, 18000, 10000, 9000, 9000],
+        "factors": [1, 1, 1, 0.95, 0.9, 0.95, 1, 1.05, 0.9, 1, 1, 1] },
+      { "id": "fuel", "annual": 220000,
+        "monthly": [6000, 6000, 8000, 15000, 25000, 32000, 38000, 38000, 25000, 12000, 8000, 7000],
+        "factors": [1, 1, 1.1, 1.05, 1.08, 1.06, 1.04, 1.05, 1.03, 1.02, 1, 1] },
+      { "id": "maintenance", "annual": 500000,
+        "monthly": [110000, 110000, 90000, 30000, 15000, 10000, 10000, 10000, 15000, 30000, 30000, 40000],
+        "factors": [1.12, 1.18, 1.25, 1, 0.9, 1, 0.8, 1.1, 1, 1.05, 1, 1] },
+      { "id": "provisions", "annual": 90000,
+        "monthly": [3000, 3000, 4000, 6000, 10000, 12000, 14000, 14000, 10000, 6000, 4000, 4000],
+        "factors": [1, 0.9, 1, 0.95, 0.9, 0.95, 1, 0.9, 0.95, 1, 1, 1] },
+      { "id": "admin", "annual": 60000,
+        "factors": [1, 1, 1.1, 0.9, 1, 1, 1, 1.2, 0.9, 1, 1, 1] }
+    ]
+  }
+}

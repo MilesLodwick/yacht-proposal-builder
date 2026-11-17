@@ -252,6 +252,16 @@ document.getElementById('clear-example-data').addEventListener('click', () => {
   showScreen({ moveFocus: true }); // redraw the current screen without the samples
 });
 
+// "Skip to main content" moves keyboard focus to the screen's heading. It
+// must not follow its #main link, because the part after # chooses the
+// screen: following it would leave the current screen.
+document.querySelector('.skip-link').addEventListener('click', (event) => {
+  event.preventDefault();
+  const heading = main.querySelector('h1');
+  heading.focus();
+  heading.scrollIntoView({ block: 'start' });
+});
+
 window.addEventListener('hashchange', () => showScreen({ moveFocus: true }));
 
 // Start-up: load saved data and the default settings, then draw the menu,

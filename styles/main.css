@@ -29,6 +29,7 @@
   --text: #13201f;
   --text-muted: #4b5c5b;
   --border: #d5dedd;
+  --input-border: #768786;    /* form box edges: at least 3:1 against the page */
   --accent: #0b5e5f;          /* deep teal */
   --accent-hover: #084647;
   --accent-soft: #e2efee;
@@ -58,6 +59,7 @@
     --text: #e6eeed;
     --text-muted: #a2b4b2;
     --border: #2b3c3a;
+    --input-border: #677d7b;
     --accent: #5cbcb5;
     --accent-hover: #7dd0ca;
     --accent-soft: #1b3533;
@@ -181,7 +183,7 @@ a:hover { color: var(--accent-hover); }
   font-weight: 500;
   min-height: 44px;           /* comfortable tap target on a phone */
   padding: 0 var(--space-4);
-  border: 1px solid var(--border);
+  border: 1px solid var(--input-border);
   border-radius: var(--radius);
   background: var(--surface);
   color: var(--text);
@@ -290,6 +292,7 @@ a:hover { color: var(--accent-hover); }
   border-radius: var(--radius);
   background: var(--surface);
   overflow-x: auto; /* a wide table scrolls inside its box, never the whole page */
+  position: relative; /* keeps screen-reader-only text inside the box too */
 }
 
 .data-table { width: 100%; border-collapse: collapse; }
@@ -433,7 +436,7 @@ input[type="file"] { font: inherit; max-width: 100%; }
   width: 100%;
   min-height: 44px;
   padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--border);
+  border: 1px solid var(--input-border);
   border-radius: var(--radius);
   background: var(--bg);
   color: var(--text);
@@ -543,7 +546,7 @@ fieldset.section legend {
   min-width: 5.5rem;
   min-height: 40px;
   padding: var(--space-1) var(--space-2);
-  border: 1px solid var(--border);
+  border: 1px solid var(--input-border);
   border-radius: var(--radius);
   background: var(--bg);
   color: var(--text);
@@ -708,7 +711,7 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
   font: inherit;
   min-height: 40px;
   padding: var(--space-1) var(--space-2);
-  border: 1px solid var(--border);
+  border: 1px solid var(--input-border);
   border-radius: var(--radius);
   background: var(--bg);
   color: var(--text);
@@ -993,7 +996,7 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
   font-size: 0.8125rem;
   line-height: 1.5;
   padding: var(--space-3);
-  border: 1px solid var(--border);
+  border: 1px solid var(--input-border);
   border-radius: var(--radius);
   background: var(--bg);
   color: var(--text);

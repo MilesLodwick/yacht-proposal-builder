@@ -62,6 +62,11 @@ const SALE_COLUMNS = [
   { key: 'sourceUrl', header: 'Source URL', type: 'text' },
   { key: 'dateChecked', header: 'Checked', type: 'date' },
   { key: 'notes', header: 'Notes', type: 'text' },
+  // Listing fields (step 3.2). Price history is a list, so it is kept in
+  // the JSON backup rather than the CSV.
+  { key: 'status', header: 'Status', type: 'text' },
+  { key: 'listedOn', header: 'Listed on', type: 'date' },
+  { key: 'statusDate', header: 'Status date', type: 'date' },
 ];
 
 export const KINDS = {

@@ -312,6 +312,20 @@ a:hover { color: var(--accent-hover); }
 
 .cell-sub { display: block; font-size: 0.8125rem; color: var(--text-muted); font-weight: 400; }
 
+/* Tables with many columns switch to cards earlier, below 1100px. */
+@media (max-width: 1099px) {
+  .data-table--wide,
+  .data-table--wide tbody { display: block; width: 100%; }
+  .data-table--wide thead { display: none; }
+  .data-table--wide tr { display: block; padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border); }
+  .data-table--wide tbody tr:last-child { border-bottom: 0; }
+  .data-table--wide th,
+  .data-table--wide td { display: flex; justify-content: space-between; gap: var(--space-4); padding: var(--space-1) 0; border: 0; text-align: right; }
+  .data-table--wide tbody th { display: block; text-align: left; font-size: 1.05rem; margin-bottom: var(--space-1); }
+  .data-table--wide td::before { content: attr(data-label); font-family: var(--font-text); color: var(--text-muted); text-align: left; flex-shrink: 0; }
+  .data-table--wide .cell-sub { display: block; }
+}
+
 @media (max-width: 759px) {
   .data-table,
   .data-table tbody { display: block; width: 100%; }
@@ -813,6 +827,12 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
 .spec-list dd { margin: 0; font-weight: 500; text-align: right; }
 .held-list dt { color: var(--text); }
 .held-list dd { font-weight: 400; color: var(--text-muted); white-space: nowrap; }
+
+/* Listings */
+.listing-specs { max-width: 32rem; margin-bottom: var(--space-3); }
+.price-history { margin-bottom: var(--space-3); }
+.price-history .num { text-align: right; padding-right: var(--space-3); white-space: nowrap; }
+#price-form h3 { margin-top: var(--space-4); }
 
 /* ==========================================================================
    Preference sheet

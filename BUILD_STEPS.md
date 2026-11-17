@@ -33,7 +33,7 @@ Each step is small enough to build, test and explain in one sitting. Steps that 
 ## Phase 3: Brokerage sales
 
 - [x] **3.1 Sales maths.** `src/calc/sales.js`: price per metre, running cost estimate, comparables filter (±15% length, ±7 years, same type), median and range, MOA deposit and due date. Tests.
-- [ ] **3.2 Listings.** Status, asking price, price history log, days on market.
+- [x] **3.2 Listings.** Status, asking price, price history log, days on market.
 - [ ] **3.3 Buyer brief and seller view.** Shortlist table and comparables view labelled "asking prices, not sold prices".
 - [ ] **3.4 Viewings and owner activity report.**
 - [ ] **3.5 Deal tracker.** MYBA MOA stages, each with a date and document checklist.

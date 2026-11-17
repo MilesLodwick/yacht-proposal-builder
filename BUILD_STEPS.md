@@ -48,7 +48,7 @@ Each step is small enough to build, test and explain in one sitting. Steps that 
 
 ## Phase 5: Pulling it together
 
-- [ ] **5.1 Dashboard.** Today's to-do list and pipeline counts. Built last because it reads from every module.
+- [x] **5.1 Dashboard.** Today's to-do list and pipeline counts. Built last because it reads from every module.
 - [ ] **5.2 Accessibility and phone check.** Keyboard pass, labels, contrast, 390px check on every screen, em dash check.
 - [ ] **5.3 README and publish.** What it is, how to run it, job ad sources, data sources, then GitHub Pages.
 

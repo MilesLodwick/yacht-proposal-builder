@@ -863,6 +863,41 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
   .cert-table td:last-child .button-row { flex-direction: column; align-items: stretch; }
 }
 
+/* Dashboard */
+.dashboard-date { font-size: 1.05rem; color: var(--text-muted); margin-top: calc(var(--space-3) * -1); }
+.todo-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); }
+.todo-head h2 { margin: 0; }
+.todo-list { list-style: none; margin: 0; padding: 0; }
+.todo {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-2);
+  border-left: 4px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+.todo--red { border-left-color: var(--red-text); }
+.todo--amber { border-left-color: var(--amber-text); }
+.todo-area { font-size: 0.8125rem; color: var(--text-muted); padding-top: 2px; }
+.todo a { color: var(--text); text-decoration-color: var(--border); }
+.todo a:hover { color: var(--accent); }
+@media (max-width: 559px) { .todo { grid-template-columns: 1fr; } }
+
+.pipeline-grid { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+.pipeline-card { padding: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.pipeline-card h3 { margin-bottom: var(--space-3); }
+.pipeline-counts { margin: 0; }
+.pipeline-counts > div { display: grid; grid-template-columns: 1fr 6.5rem; gap: var(--space-2); align-items: center; padding: 3px 0; font-size: 0.875rem; }
+.pipeline-counts dt { color: var(--text-muted); }
+.pipeline-counts dd { margin: 0; display: flex; align-items: center; gap: var(--space-2); justify-content: flex-end; }
+.pipe-bar { flex: 1; height: 8px; border-radius: 4px; background: var(--bg); overflow: hidden; }
+.pipe-bar span { display: block; height: 100%; background: var(--accent); }
+.pipeline-card .pill-row { justify-content: flex-end; }
+.pipeline-card dl .pill-row { margin: 0; }
+.pipeline-counts > div:has(.pill-row) { grid-template-columns: auto 1fr; }
+
 /* Monthly management report */
 .key-points { list-style: none; margin: 0; padding: 0; }
 .key-point { padding: var(--space-2) var(--space-3); margin-bottom: var(--space-2); border-left: 4px solid var(--border); border-radius: var(--radius); background: var(--bg); }

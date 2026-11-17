@@ -625,9 +625,76 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
 }
 .placeholder p:last-child { margin-bottom: 0; }
 
-/* Printing: hide the app chrome so printable screens fit one page */
+/* ==========================================================================
+   Proposal
+   ========================================================================== */
+
+.notice--warn { border-left-color: var(--amber-text); background: var(--amber-bg); color: var(--amber-text); }
+.notice ul { margin: var(--space-1) 0 0; padding-left: var(--space-5); }
+.notice p:last-child { margin-bottom: 0; }
+
+.proposal-slot { padding-bottom: var(--space-2); border-bottom: 1px solid var(--border); margin-bottom: var(--space-4); }
+
+.proposal-doc {
+  margin: var(--space-5) 0;
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.proposal-head { border-bottom: 2px solid var(--accent); padding-bottom: var(--space-3); margin-bottom: var(--space-4); }
+.proposal-kicker { margin: 0; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.proposal-head h2 { font-size: 1.6rem; margin: var(--space-1) 0 var(--space-3); }
+.proposal-facts { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin: 0; }
+.proposal-facts dt { font-size: 0.75rem; color: var(--text-muted); }
+.proposal-facts dd { margin: 0; font-weight: 500; }
+.proposal-example { margin: var(--space-3) 0 0; font-size: 0.8125rem; color: var(--text-muted); }
+
+.proposal-yachts { display: grid; gap: var(--space-4); }
+@media (min-width: 1100px) { .proposal-yachts { grid-template-columns: repeat(3, 1fr); } }
+.proposal-yacht { padding: var(--space-3) var(--space-4); border: 1px solid var(--border); border-radius: var(--radius); }
+.proposal-yacht h3 { margin-bottom: var(--space-1); }
+.proposal-yacht p { margin-bottom: var(--space-2); font-size: 0.875rem; }
+.proposal-rate { font-weight: 500; }
+.proposal-yacht .breakdown-table { font-size: 0.875rem; margin: var(--space-2) 0; }
+
+.proposal-itinerary,
+.proposal-notes { margin-top: var(--space-5); font-size: 0.875rem; }
+.proposal-itinerary ol,
+.proposal-notes ul { margin: 0; padding-left: var(--space-5); }
+.proposal-itinerary li { margin-bottom: 2px; }
+.proposal-itinerary .num { margin-right: var(--space-2); }
+
+.copy-box {
+  width: 100%;
+  font-family: var(--font-figures);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  margin-bottom: var(--space-3);
+}
+
+/* Printing: hide the app chrome and controls so a printable screen (such as
+   the proposal) fits one page, in black on white whatever the theme. */
 @media print {
-  .topbar, .site-nav, .skip-link, .banner { display: none !important; }
+  :root {
+    --bg: #fff; --surface: #fff; --text: #000; --text-muted: #444; --border: #bbb;
+    --accent: #0b5e5f; --amber-bg: #fff; --amber-text: #000;
+  }
+  @page { size: A4; margin: 12mm; }
+  body { font-size: 9.5pt; }
+  .topbar, .site-nav, .skip-link, .banner, .no-print { display: none !important; }
   .layout { display: block; }
   .main { padding: 0; max-width: none; }
+  .proposal-doc { margin: 0; padding: 0; border: 0; }
+  .proposal-head h2 { font-size: 16pt; }
+  .proposal-yachts { grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+  .proposal-yacht { padding: 3mm; break-inside: avoid; }
+  .proposal-yacht p, .proposal-yacht .breakdown-table { font-size: 8.5pt; }
+  .proposal-itinerary, .proposal-notes { font-size: 8.5pt; margin-top: 4mm; }
+  a { color: inherit; }
 }

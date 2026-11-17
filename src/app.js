@@ -14,6 +14,7 @@ import * as settingsView from './views/settings.js';
 import * as enquiriesView from './views/enquiries.js';
 import * as selectionView from './views/selection.js';
 import * as itineraryView from './views/itinerary.js';
+import * as proposalView from './views/proposal.js';
 import { buildSampleItineraries } from './calc/itinerary.js';
 
 // Screens that have been built. Each view file exports
@@ -25,6 +26,7 @@ const VIEWS = {
   enquiries: enquiriesView,
   selection: selectionView,
   itinerary: itineraryView,
+  proposal: proposalView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.

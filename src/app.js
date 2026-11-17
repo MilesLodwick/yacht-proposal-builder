@@ -12,6 +12,7 @@ import { todayISO } from './calc/dates.js';
 import * as dataView from './views/data.js';
 import * as settingsView from './views/settings.js';
 import * as enquiriesView from './views/enquiries.js';
+import * as selectionView from './views/selection.js';
 
 // Screens that have been built. Each view file exports
 // render(container, param, heading). Any screen not listed here shows a
@@ -20,6 +21,7 @@ const VIEWS = {
   data: dataView,
   settings: settingsView,
   enquiries: enquiriesView,
+  selection: selectionView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.

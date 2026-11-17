@@ -1,0 +1,25 @@
+{
+  "about": "A fictional managed yacht and its compliance items. The yacht does not exist; it is not one of the real listings. References are made up. Dates are days from today, so some items are always expired, some due soon and some fine.",
+  "yachts": [
+    {
+      "id": "managed-example-1",
+      "name": "Example Yacht (fictional)",
+      "lengthM": 48,
+      "flag": "Example flag state",
+      "classSociety": "Example classification society",
+      "notes": "Private and charter use. Managed from Antibes."
+    }
+  ],
+  "items": [
+    { "yachtId": "managed-example-1", "category": "ism", "title": "Safety Management Certificate", "reference": "SMC-EX-001", "expiresInDays": 540 },
+    { "yachtId": "managed-example-1", "category": "ism", "title": "ISM internal audit", "expiresInDays": 24, "notes": "Book the auditor and confirm with the captain." },
+    { "yachtId": "managed-example-1", "category": "isps", "title": "International Ship Security Certificate", "reference": "ISSC-EX-001", "expiresInDays": 410 },
+    { "yachtId": "managed-example-1", "category": "isps", "title": "Ship security drill record review", "expiresInDays": -6, "notes": "Overdue: captain to send the drill log." },
+    { "yachtId": "managed-example-1", "category": "mlc", "title": "Maritime Labour Certificate", "reference": "MLC-EX-001", "expiresInDays": 47 },
+    { "yachtId": "managed-example-1", "category": "class", "title": "Annual class survey", "expiresInDays": 95 },
+    { "yachtId": "managed-example-1", "category": "class", "title": "Class certificate", "reference": "CLS-EX-001", "expiresInDays": 900 },
+    { "yachtId": "managed-example-1", "category": "flag", "title": "Certificate of Registry", "reference": "REG-EX-001", "expiresInDays": 700 },
+    { "yachtId": "managed-example-1", "category": "insurance", "title": "Hull and machinery policy", "reference": "HM-EX-001", "expiresInDays": 12, "notes": "Renewal quotes requested from two underwriters." },
+    { "yachtId": "managed-example-1", "category": "insurance", "title": "P&I cover", "reference": "PI-EX-001", "expiresInDays": 12 }
+  ]
+}

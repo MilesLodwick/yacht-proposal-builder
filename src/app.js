@@ -26,6 +26,8 @@ import * as buyerBriefView from './views/buyer-brief.js';
 import * as sellerView from './views/seller-view.js';
 import * as viewingsView from './views/viewings.js';
 import * as dealsView from './views/deals.js';
+import * as complianceView from './views/compliance.js';
+import { buildSampleManaged } from './compliance.js';
 import { buildSampleDeals } from './deals.js';
 import { buildSampleActivity } from './activity.js';
 import { buildSampleBriefs } from './buyer.js';
@@ -56,6 +58,7 @@ const VIEWS = {
   'seller-view': sellerView,
   viewings: viewingsView,
   deals: dealsView,
+  compliance: complianceView,
 };
 
 // Every screen in the app, grouped the same way as the job roles in the brief.
@@ -319,6 +322,14 @@ if (!hasCollection('deals')) {
   if (response.ok) {
     const { deals } = await response.json();
     saveCollection('deals', buildSampleDeals(deals, todayISO()));
+  }
+}
+if (!hasCollection('managedYachts')) {
+  const response = await fetch('data/sample-managed.json');
+  if (response.ok) {
+    const sample = buildSampleManaged(await response.json(), todayISO());
+    saveCollection('managedYachts', sample.yachts);
+    saveCollection('compliance', sample.items);
   }
 }
 onChange(() => {

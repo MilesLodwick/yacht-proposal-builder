@@ -12,9 +12,18 @@ import { planItinerary, formatHours, validateItinerary } from '../calc/itinerary
 import { charterDays } from '../enquiries.js';
 import { formatDate, formatDateRange, addDays } from '../calc/dates.js';
 import { escapeHTML } from './html.js';
+import { estimateLegNm, portLabel } from '../calc/ports.js';
 
 const COLLECTION = 'itineraries';
 let flash = null;
+
+// The port list with each harbour's position, loaded once when an
+// itinerary is first opened. Used to estimate the distance of each leg.
+let portsPromise = null;
+function loadPorts() {
+  portsPromise ??= fetch('data/ports.json').then((r) => r.json()).catch(() => ({ ports: [] }));
+  return portsPromise;
+}
 
 function setting(id) {
   return getSettings().find((s) => s.id === id)?.value;
@@ -78,6 +87,8 @@ function renderList(container) {
 
 function renderEditor(container, saved) {
   const longDayHours = setting('alerts.longDayHours');
+  const allowance = setting('itinerary.routeAllowancePercent');
+  let ports = [];
 
   // A working copy. Nothing is saved until the Save button.
   const draft = saved ? structuredClone(saved) : {
@@ -105,14 +116,15 @@ function renderEditor(container, saved) {
             <p class="hint">Choosing one fills in the dates and number of days.</p>
           </div>
           ${field('startDate', 'Embarkation date', draft.startDate, 'date')}
-          ${field('embarkPort', 'Embarkation port', draft.embarkPort)}
+          ${field('embarkPort', 'Embarkation port', draft.embarkPort, 'text', 'list="port-list" autocomplete="off"', 'Pick from the list to have distances worked out for you.')}
           ${field('speedKnots', 'Cruising speed (knots)', draft.speedKnots, 'text', 'inputmode="decimal"', 'Use the yacht\'s own cruising speed if you know it.')}
         </div>
       </fieldset>
 
       <fieldset class="section">
         <legend>Day by day</legend>
-        <p class="hint">Cruising time is distance ÷ speed at a steady speed. Weather, sea state and time in and out of port add to it, so check passages with the captain. Legs over ${longDayHours} hours are flagged as long days.</p>
+        <datalist id="port-list"></datalist>
+        <p class="hint">Distances fill in by themselves when both ports are in the port list: the straight line between the harbours plus ${allowance}% for going round headlands and islands. Type over any distance to use your own figure. Cruising time is distance ÷ speed at a steady speed. Weather, sea state and time in and out of port add to it, so check passages with the captain. Legs over ${longDayHours} hours are flagged as long days.</p>
         <div class="table-wrap">
           <table class="data-table itinerary-table">
             <caption class="visually-hidden">Day by day itinerary</caption>
@@ -152,9 +164,10 @@ function renderEditor(container, saved) {
         <th scope="row" data-label="Day">Day ${n}<span class="cell-sub" data-cell="date"></span></th>
         <td data-label="From" data-cell="from"></td>
         <td data-label="To"><label class="visually-hidden" for="day-${n}-toPort">Day ${n} to</label>
-          <input id="day-${n}-toPort" name="day-${n}-toPort" value="${escapeHTML(d.toPort)}"></td>
+          <input id="day-${n}-toPort" name="day-${n}-toPort" value="${escapeHTML(d.toPort)}" list="port-list" autocomplete="off"></td>
         <td data-label="Distance (nm)" class="num"><label class="visually-hidden" for="day-${n}-nm">Day ${n} distance in nautical miles</label>
-          <input id="day-${n}-nm" name="day-${n}-nm" class="num-input" inputmode="decimal" value="${escapeHTML(d.nm)}" aria-describedby="day-${n}-nm-error">
+          <input id="day-${n}-nm" name="day-${n}-nm" class="num-input" inputmode="decimal" value="${escapeHTML(d.nm)}" aria-describedby="day-${n}-nm-note day-${n}-nm-error">
+          <span class="cell-sub" id="day-${n}-nm-note" data-cell="nm-note"></span>
           <span class="field-error" id="day-${n}-nm-error"></span></td>
         <td data-label="Cruising time" class="num" data-cell="time"></td>
         <td data-label="Notes"><label class="visually-hidden" for="day-${n}-notes">Day ${n} notes</label>
@@ -173,13 +186,44 @@ function renderEditor(container, saved) {
     draft.embarkPort = form.elements.embarkPort.value;
     draft.speedKnots = form.elements.speedKnots.value;
     draft.days = draft.days.map((d, i) => ({
+      ...d,
       toPort: form.elements[`day-${i + 1}-toPort`].value,
       nm: form.elements[`day-${i + 1}-nm`].value,
       notes: form.elements[`day-${i + 1}-notes`].value,
     }));
   };
 
-  const update = () => {
+  // Fill in estimated distances. A leg is worked out when its distance box
+  // is empty or holds an earlier estimate; a figure the user typed is left
+  // alone, and so is the box being typed in (editingDay), so it can be
+  // cleared and retyped.
+  const fillDistances = (editingDay = null) => {
+    let fromPort = draft.embarkPort;
+    draft.days.forEach((d, i) => {
+      const n = i + 1;
+      const box = form.elements[`day-${n}-nm`];
+      const note = rowsEl.querySelector(`[data-day="${n}"] [data-cell="nm-note"]`);
+      const estimate = estimateLegNm(fromPort, d.toPort, ports, allowance);
+      fromPort = d.toPort;
+      // 0 counts as empty: blank days are saved as 0, and a day that stays
+      // in port works out at 0 anyway.
+      const empty = ['', '0'].includes(String(d.nm).trim());
+      if (n !== editingDay && (d.nmEstimated || empty)) {
+        if (estimate.nm !== null) {
+          d.nm = String(estimate.nm);
+          d.nmEstimated = true;
+        } else if (d.nmEstimated) {
+          d.nm = '';
+          d.nmEstimated = false;
+        }
+        box.value = d.nm;
+      }
+      note.textContent = d.nmEstimated ? 'Estimated' : (['', '0'].includes(String(d.nm).trim()) ? estimate.reason : '');
+    });
+  };
+
+  const update = (editingDay = null) => {
+    if (ports.length) fillDistances(editingDay);
     const plan = planItinerary({ ...draft, speedKnots: Number(draft.speedKnots) }, longDayHours);
     plan.days.forEach((d) => {
       const row = rowsEl.querySelector(`[data-day="${d.day}"]`);
@@ -193,7 +237,13 @@ function renderEditor(container, saved) {
       : `Total ${plan.totalNm} nm, about ${formatHours(plan.totalHours)} under way. ${plan.longDays ? `${plan.longDays} long day${plan.longDays > 1 ? 's' : ''}.` : 'No long days.'}`;
   };
 
-  form.addEventListener('input', () => { readForm(); update(); });
+  form.addEventListener('input', (event) => {
+    readForm();
+    // Typing in a distance box means the user's own figure from now on.
+    const typed = /^day-(\d+)-nm$/.exec(event.target.name ?? '');
+    if (typed) draft.days[typed[1] - 1].nmEstimated = false;
+    update(typed ? Number(typed[1]) : null);
+  });
 
   // Linking an enquiry fills in the start date, a name and one row per day.
   form.elements.enquiryId.addEventListener('change', () => {
@@ -246,7 +296,9 @@ function renderEditor(container, saved) {
       startDate: draft.startDate || null,
       embarkPort: draft.embarkPort.trim(),
       speedKnots: Number(draft.speedKnots),
-      days: draft.days.map((d) => ({ toPort: d.toPort.trim(), nm: Number(d.nm) || 0, notes: d.notes.trim() })),
+      days: draft.days.map((d) => ({
+        toPort: d.toPort.trim(), nm: Number(d.nm) || 0, notes: d.notes.trim(), ...(d.nmEstimated ? { nmEstimated: true } : {}),
+      })),
     };
     const list = getCollection(COLLECTION);
     if (saved) {
@@ -266,6 +318,13 @@ function renderEditor(container, saved) {
   });
 
   drawRows();
+
+  loadPorts().then((data) => {
+    ports = data.ports;
+    form.querySelector('#port-list').innerHTML = ports
+      .map((p) => `<option value="${escapeHTML(portLabel(p))}"></option>`).join('');
+    update();
+  });
 }
 
 function field(name, label, value, type = 'text', extra = '', hint = '') {

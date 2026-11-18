@@ -412,6 +412,17 @@
       "note": "Used for new itineraries. Each itinerary can set its own speed."
     },
     {
+      "id": "itinerary.routeAllowancePercent",
+      "group": "Alerts and thresholds",
+      "label": "Itinerary: route allowance on estimated distances",
+      "value": 10,
+      "unit": "% over straight line",
+      "source": "Working rule. Coastal passages round headlands can be 20% or more longer than the straight line.",
+      "sourceUrl": null,
+      "dateChecked": null,
+      "note": "Added to the straight-line distance between two ports when the itinerary estimates a leg."
+    },
+    {
       "id": "alerts.staleListingDays",
       "group": "Alerts and thresholds",
       "label": "Fleet: flag details older than",

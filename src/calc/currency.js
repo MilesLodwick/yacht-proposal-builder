@@ -1,8 +1,11 @@
 // Currency helpers. Pure functions.
 //
-// The app works in euros. GBP and USD use manual rates typed into
-// Settings, each with the date it was checked, because a public site
-// cannot call a live rates service without an API key.
+// The app works in euros. GBP and USD rates come from the European
+// Central Bank's daily reference rates. A GitHub Action
+// (.github/workflows/update-rates.yml) fetches them each weekday and
+// saves them into data/settings.json, so the site never calls an API
+// itself. A rate typed into Settings is used until a newer daily rate
+// arrives.
 //
 // Rates are stored as "how many of the other currency for 1 EUR",
 // e.g. USD 1.08 means EUR 1 = USD 1.08.
@@ -17,7 +20,7 @@ const SYMBOLS = { EUR: '€', GBP: '£', USD: '$' };
 // { EUR: { perEur: 1, dateChecked: null }, GBP: { perEur: 0.87, dateChecked: '2026-11-17' }, ... }
 // A rate that has not been entered yet is null.
 export function ratesFromSettings(settings) {
-  const find = (id) => settings.find((s) => s.id === id) || { value: null, dateChecked: null };
+  const find = (id) => newestRate(settings.find((s) => s.id === id) || { value: null, dateChecked: null });
   const gbp = find('currency.gbpPerEur');
   const usd = find('currency.usdPerEur');
   return {
@@ -25,6 +28,34 @@ export function ratesFromSettings(settings) {
     GBP: { perEur: gbp.value, dateChecked: gbp.dateChecked },
     USD: { perEur: usd.value, dateChecked: usd.dateChecked },
   };
+}
+
+// A rate typed into Settings wins until the daily ECB rate saved in
+// data/settings.json is newer, so a hand-typed rate never goes stale.
+function newestRate(setting) {
+  const daily = setting.defaults;
+  if (setting.changed && daily?.value && (daily.dateChecked ?? '') > (setting.dateChecked ?? '')) {
+    return { value: daily.value, dateChecked: daily.dateChecked };
+  }
+  return { value: setting.value, dateChecked: setting.dateChecked };
+}
+
+// Read the GBP and USD rates out of the ECB daily reference rates file
+// (https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml).
+// Returns { date: '2026-11-17', GBP: 0.8712, USD: 1.0812 }, or null if
+// the file is not in the expected shape, so a bad download never
+// overwrites a good rate.
+export function parseEcbRates(xml) {
+  const date = /<Cube\s+time=['"](\d{4}-\d{2}-\d{2})['"]/.exec(xml)?.[1];
+  const rate = (code) => {
+    const match = new RegExp(`<Cube\\s+currency=['"]${code}['"]\\s+rate=['"]([\\d.]+)['"]`).exec(xml);
+    const value = Number(match?.[1]);
+    return value > 0 ? value : null;
+  };
+  const GBP = rate('GBP');
+  const USD = rate('USD');
+  if (!date || !GBP || !USD) return null;
+  return { date, GBP, USD };
 }
 
 // Convert an amount between any two of EUR, GBP and USD.

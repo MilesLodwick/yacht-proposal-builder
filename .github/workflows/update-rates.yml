@@ -1,0 +1,30 @@
+# Each weekday, fetch the European Central Bank's euro reference rates
+# and save GBP and USD into data/settings.json. Committing the change
+# to main makes GitHub Pages republish the site with the new rates.
+name: Update currency rates
+
+on:
+  schedule:
+    - cron: '17 16 * * 1-5'   # 16:17 UTC, after the ECB publishes
+  workflow_dispatch:           # "Run workflow" button on the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/update-rates.js
+      - run: node --test
+      - name: Commit if the rates changed
+        run: |
+          git diff --quiet data/settings.json && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Update currency rates from the ECB"
+          git push

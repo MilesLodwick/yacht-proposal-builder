@@ -468,25 +468,25 @@
     },
     {
       "id": "currency.gbpPerEur",
-      "group": "Currency rates (manual)",
+      "group": "Currency rates",
       "label": "GBP per 1 EUR",
       "value": null,
       "unit": "rate",
       "source": null,
       "sourceUrl": null,
       "dateChecked": null,
-      "note": "Enter today's rate and the date. Totals are only shown in GBP once a rate is set."
+      "note": "Indicative. Updated each weekday from the European Central Bank reference rate. A rate you type here is used until a newer daily rate arrives."
     },
     {
       "id": "currency.usdPerEur",
-      "group": "Currency rates (manual)",
+      "group": "Currency rates",
       "label": "USD per 1 EUR",
       "value": null,
       "unit": "rate",
       "source": null,
       "sourceUrl": null,
       "dateChecked": null,
-      "note": "Enter today's rate and the date. Totals are only shown in USD once a rate is set."
+      "note": "Indicative. Updated each weekday from the European Central Bank reference rate. A rate you type here is used until a newer daily rate arrives."
     }
   ]
 }

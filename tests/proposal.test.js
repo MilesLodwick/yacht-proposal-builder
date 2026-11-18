@@ -13,7 +13,7 @@ const { settings } = JSON.parse(read('../data/settings.json'));
 const yachts = importCSV('yachts', read('../data/yachts.csv')).records;
 const enquiries = buildSamples(JSON.parse(read('../data/sample-enquiries.json')).enquiries, '2026-11-17');
 const [itinerary] = buildSampleItineraries(JSON.parse(read('../data/sample-itineraries.json')).itineraries, '2026-11-17');
-const noRates = ratesFromSettings(settings);
+const noRates = ratesFromSettings([]); // no GBP or USD rate, whatever the daily rates in settings.json say
 const testRates = { EUR: { perEur: 1 }, GBP: { perEur: 0.8, dateChecked: '2026-11-17' }, USD: { perEur: 1.25, dateChecked: '2026-11-17' } };
 
 const ashworth = enquiries.find((e) => e.clientName === 'The Ashworth family'); // Italy, 10 guests, EUR 600,000

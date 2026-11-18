@@ -12,7 +12,7 @@ import { EMBARKATION_COUNTRIES } from '../src/calc/charter.js';
 const { settings } = JSON.parse(readFileSync(new URL('../data/settings.json', import.meta.url), 'utf8'));
 const realYachts = importCSV('yachts', readFileSync(new URL('../data/yachts.csv', import.meta.url), 'utf8')).records;
 
-const noRates = ratesFromSettings(settings); // GBP and USD not set yet
+const noRates = ratesFromSettings([]); // no GBP or USD rate, whatever the daily rates in settings.json say
 const testRates = { EUR: { perEur: 1 }, GBP: { perEur: 0.8, dateChecked: '2026-11-17' }, USD: { perEur: 1.25, dateChecked: '2026-11-17' } };
 
 const yacht = (fields) => ({ id: 'x', name: 'Test', guests: 12, rateFromWeekly: 350000, currency: 'EUR', cruisingArea: null, notes: null, ...fields });

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { ratesFromSettings, convert, formatMoney, rateNote, groupThousands } from '../src/calc/currency.js';
+import { ratesFromSettings, convert, formatMoney, rateNote, groupThousands, parseEcbRates } from '../src/calc/currency.js';
 
 // Made-up round rates for testing only. Real rates live in Settings.
 const rates = {
@@ -73,4 +73,31 @@ test('groupThousands adds commas as an amount is typed', () => {
   assert.equal(groupThousands('€250k'), '250');
   assert.equal(groupThousands(''), '');
   assert.equal(groupThousands(null), '');
+});
+
+const ECB_SAMPLE = `<Cube><Cube time='2026-11-17'>
+  <Cube currency='USD' rate='1.0812'/><Cube currency='JPY' rate='162.10'/><Cube currency='GBP' rate='0.8712'/>
+</Cube></Cube>`;
+
+test('parseEcbRates reads the date and the GBP and USD rates', () => {
+  assert.deepEqual(parseEcbRates(ECB_SAMPLE), { date: '2026-11-17', GBP: 0.8712, USD: 1.0812 });
+});
+
+test('parseEcbRates returns null for a broken download, so good rates are kept', () => {
+  assert.equal(parseEcbRates('<html>Service unavailable</html>'), null);
+  assert.equal(parseEcbRates(ECB_SAMPLE.replace(/<Cube currency='GBP'[^>]*>/, '')), null);
+});
+
+test('a typed rate is used until a newer daily rate arrives', () => {
+  const setting = (typed, daily) => ({
+    id: 'currency.usdPerEur', changed: true, ...typed, defaults: daily,
+  });
+  const daily = { value: 1.08, dateChecked: '2026-11-17' };
+  // Typed today, after the daily rate: the typed rate wins.
+  assert.equal(ratesFromSettings([setting({ value: 1.1, dateChecked: '2026-11-18' }, daily)]).USD.perEur, 1.1);
+  // Typed last week: the newer daily rate wins.
+  const r = ratesFromSettings([setting({ value: 1.1, dateChecked: '2026-11-10' }, daily)]).USD;
+  assert.deepEqual(r, { perEur: 1.08, dateChecked: '2026-11-17' });
+  // No daily rate yet: the typed rate is used.
+  assert.equal(ratesFromSettings([setting({ value: 1.1, dateChecked: '2026-11-10' }, { value: null, dateChecked: null })]).USD.perEur, 1.1);
 });

@@ -9,6 +9,16 @@ The full brief is in [BRIEF.md](BRIEF.md). The agreed order of work is in [BUILD
 - Simple, readable code over clever code. Short comments wherever yachting logic lives (VAT, APA, commission, payment schedules, MOA deposit).
 - Tick the step off in BUILD_STEPS.md when it is done.
 
+## Going live
+
+Miles wants every change he asks for to go straight to the live site. GitHub Pages builds from `main`, so after each change:
+
+1. Run `node --test` and check the change in a browser. Do not go live if anything fails.
+2. Commit on the working branch, then merge it into `main` and push `main` (as well as the working branch).
+3. Tell Miles it is live, and that Pages takes a minute or two to update.
+
+This is standing permission to push to `main`. Never force-push `main`.
+
 ## Hard rules
 
 1. No API keys or secrets. AI features build a prompt for the user to copy into Claude. Never call an API from the browser.

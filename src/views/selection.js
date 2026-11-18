@@ -38,6 +38,7 @@ const openBreakdowns = new Set();
 
 let resultsEl;
 let summaryEl;
+let showButton;
 
 export function render(container) {
   const openEnquiries = getCollection('enquiries').filter((e) => !['Completed', 'Lost'].includes(e.status));
@@ -79,6 +80,9 @@ export function render(container) {
         <input type="checkbox" id="hideOverBudget" name="hideOverBudget" ${state.hideOverBudget ? 'checked' : ''}>
         <label for="hideOverBudget">Hide yachts more than the tolerance over budget</label>
       </div>
+      <div class="button-row">
+        <button type="submit" class="button" id="show-yachts">Show yachts</button>
+      </div>
     </form>
 
     <div class="notice">
@@ -86,13 +90,23 @@ export function render(container) {
       <p>${escapeHTML(VAT_NOTE)}</p>
     </div>
 
-    <p class="results-summary" id="results-summary" role="status"></p>
+    <p class="results-summary" id="results-summary" role="status" tabindex="-1"></p>
     <div id="results" class="yacht-list"></div>
   `);
 
   resultsEl = container.querySelector('#results');
   summaryEl = container.querySelector('#results-summary');
   const form = container.querySelector('#selection-form');
+  showButton = container.querySelector('#show-yachts');
+
+  // The list already updates as you type, but on a phone the results sit
+  // well below the filters. This button jumps down to them.
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    drawResults();
+    summaryEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    summaryEl.focus({ preventScroll: true });
+  });
 
   form.addEventListener('input', (event) => onFormChange(form, event));
   form.addEventListener('change', (event) => onFormChange(form, event));
@@ -160,6 +174,7 @@ function drawResults() {
   if (!days || days < 1 || !Number.isInteger(days)) {
     summaryEl.textContent = 'Enter the number of charter days (a whole number) to see costs.';
     resultsEl.replaceChildren();
+    showButton.textContent = 'Show yachts';
     return;
   }
 
@@ -191,6 +206,7 @@ function drawResults() {
   if (needRate) parts.push(`${needRate} priced in another currency (add its rate in Settings to compare)`);
   if (noRate) parts.push(`${noRate} with rate on enquiry`);
   summaryEl.textContent = `${parts.join(', ')}.`;
+  showButton.textContent = `Show ${items.length} ${items.length === 1 ? 'yacht' : 'yachts'}`;
 
   const note = rateNote(state.displayCurrency, rates);
   resultsEl.innerHTML = `

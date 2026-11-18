@@ -499,7 +499,7 @@ fieldset.section legend {
    Yacht selection results
    ========================================================================== */
 
-.results-summary { font-weight: 500; margin-top: var(--space-5); }
+.results-summary { font-weight: 500; margin-top: var(--space-5); scroll-margin-top: 6rem; }
 
 .yacht-list { display: grid; gap: var(--space-4); }
 

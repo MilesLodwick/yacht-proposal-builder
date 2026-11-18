@@ -61,3 +61,15 @@ export function rateNote(currency, rates) {
   if (!rate?.perEur) return `No ${currency} rate set. Add one in Settings.`;
   return `EUR 1 = ${currency} ${rate.perEur}, rate checked ${formatDate(rate.dateChecked)}`;
 }
+
+// Put commas into a typed amount so it is easier to read, e.g.
+// "250000" becomes "250,000". Anything that is not a digit or the first
+// decimal point is dropped, so "€250k" becomes "250". Pennies are kept
+// (up to two places). Empty in, empty out.
+export function groupThousands(text) {
+  const cleaned = String(text ?? '').replace(/[^\d.]/g, '');
+  if (cleaned === '') return '';
+  const [whole, ...rest] = cleaned.split('.');
+  const grouped = whole.replace(/^0+(?=\d)/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return rest.length ? `${grouped || '0'}.${rest.join('').slice(0, 2)}` : grouped;
+}

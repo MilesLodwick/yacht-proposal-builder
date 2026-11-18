@@ -9,7 +9,7 @@ import { STATUSES, SOURCES, statusTone, charterDays, validateEnquiry, newEnquiry
 import { EMBARKATION_COUNTRIES } from '../calc/charter.js';
 import { CURRENCIES, formatMoney } from '../calc/currency.js';
 import { formatDateRange, nowLocalDateTime } from '../calc/dates.js';
-import { escapeHTML } from './html.js';
+import { escapeHTML, groupThousandsAsYouType } from './html.js';
 
 const COLLECTION = 'enquiries';
 
@@ -186,6 +186,7 @@ function renderForm(container, enquiry) {
   `);
 
   const form = container.querySelector('#enquiry-form');
+  groupThousandsAsYouType(form.elements.budget);
 
   // Show the broker name, Greek VAT tick box and lost reason only when they apply.
   const toggle = () => {

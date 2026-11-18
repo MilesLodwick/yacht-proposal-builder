@@ -7,9 +7,9 @@ import { charterDays } from '../enquiries.js';
 import { checkPill } from '../yachts.js';
 import { REGIONS, REGION_FOR_COUNTRY, filterYachts, quoteYacht, sortQuotes, yachtType } from '../selection.js';
 import { EMBARKATION_COUNTRIES, LINE_LABELS, VAT_NOTE } from '../calc/charter.js';
-import { CURRENCIES, ratesFromSettings, formatMoney, rateNote } from '../calc/currency.js';
+import { CURRENCIES, ratesFromSettings, formatMoney, rateNote, groupThousands } from '../calc/currency.js';
 import { formatDate } from '../calc/dates.js';
-import { escapeHTML } from './html.js';
+import { escapeHTML, groupThousandsAsYouType } from './html.js';
 
 // What the user has entered. Kept while the app is open, so moving to
 // another screen and back does not lose it.
@@ -98,6 +98,7 @@ export function render(container) {
   summaryEl = container.querySelector('#results-summary');
   const form = container.querySelector('#selection-form');
   showButton = container.querySelector('#show-yachts');
+  groupThousandsAsYouType(form.elements.budget);
 
   // The list already updates as you type, but on a phone the results sit
   // well below the filters. This button jumps down to them.
@@ -143,7 +144,7 @@ function onFormChange(form, event) {
     if (e) {
       Object.assign(state, {
         startDate: e.startDate, days: charterDays(e), guests: e.guests, countryId: e.embarkationCountry,
-        greekEligible: e.greekEligible, budget: e.budget ?? '', budgetCurrency: e.budgetCurrency,
+        greekEligible: e.greekEligible, budget: groupThousands(e.budget), budgetCurrency: e.budgetCurrency,
         displayCurrency: e.budgetCurrency, regionId: REGION_FOR_COUNTRY[e.embarkationCountry] ?? '',
       });
       for (const name of ['startDate', 'days', 'guests', 'countryId', 'budget', 'budgetCurrency', 'displayCurrency', 'regionId']) {

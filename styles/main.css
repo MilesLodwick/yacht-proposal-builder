@@ -24,17 +24,17 @@
   --content-max: 1100px;
 
   /* Light mode colours */
-  --bg: #f5f7f7;
+  --bg: #eef5fc;
   --surface: #ffffff;
-  --text: #13201f;
-  --text-muted: #4b5c5b;
-  --border: #d5dedd;
-  --input-border: #768786;    /* form box edges: at least 3:1 against the page */
-  --accent: #0b5e5f;          /* deep teal */
-  --accent-hover: #084647;
-  --accent-soft: #e2efee;
+  --text: #0f2236;
+  --text-muted: #4a5d72;
+  --border: #cfe0f1;
+  --input-border: #7189a3;    /* form box edges: at least 3:1 against the page */
+  --accent: #1f63b0;          /* sky blue: deep enough to read on white */
+  --accent-hover: #174d8a;
+  --accent-soft: #e1eefb;
   --on-accent: #ffffff;
-  --focus: #0b5e5f;
+  --focus: #1f63b0;
 
   /* Status pills: green, amber, red (text and background pairs pass contrast) */
   --green-bg: #dcf1e3;
@@ -44,27 +44,27 @@
   --red-bg: #f9dcdc;
   --red-text: #8a1c1c;
 
-  /* Availability calendar: owner use (purple), booked (teal), options (amber) */
+  /* Availability calendar: owner use (purple), booked (blue), options (amber) */
   --owner-bg: #e6def5;
   --owner-text: #3e2a6e;
-  --booking-bg: #0b5e5f;
+  --booking-bg: #1f63b0;
   --booking-text: #ffffff;
 }
 
 /* Dark mode follows the phone or computer's own setting */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0e1615;
-    --surface: #15201f;
-    --text: #e6eeed;
-    --text-muted: #a2b4b2;
-    --border: #2b3c3a;
-    --input-border: #677d7b;
-    --accent: #5cbcb5;
-    --accent-hover: #7dd0ca;
-    --accent-soft: #1b3533;
-    --on-accent: #06211f;
-    --focus: #7dd0ca;
+    --bg: #0b1724;
+    --surface: #12212f;
+    --text: #e6eef7;
+    --text-muted: #a5b7ca;
+    --border: #24384c;
+    --input-border: #6a8299;
+    --accent: #8cc4f2;
+    --accent-hover: #b0d7f7;
+    --accent-soft: #17324a;
+    --on-accent: #08223a;
+    --focus: #b0d7f7;
 
     --green-bg: #173826;
     --green-text: #9fe0b5;
@@ -75,8 +75,8 @@
 
     --owner-bg: #2f2547;
     --owner-text: #d4c6f5;
-    --booking-bg: #5cbcb5;
-    --booking-text: #06211f;
+    --booking-bg: #8cc4f2;
+    --booking-text: #08223a;
   }
 }
 
@@ -1008,7 +1008,7 @@ code { font-family: var(--font-figures); font-size: 0.875em; overflow-wrap: anyw
 @media print {
   :root {
     --bg: #fff; --surface: #fff; --text: #000; --text-muted: #444; --border: #bbb;
-    --accent: #0b5e5f; --amber-bg: #fff; --amber-text: #000;
+    --accent: #1f63b0; --amber-bg: #fff; --amber-text: #000;
   }
   @page { size: A4; margin: 12mm; }
   body { font-size: 9.5pt; }

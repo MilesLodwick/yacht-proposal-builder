@@ -36,17 +36,18 @@
   --on-accent: #ffffff;
   --focus: #1f63b0;
 
-  /* Status pills: green, amber, red (text and background pairs pass contrast) */
-  --green-bg: #dcf1e3;
-  --green-text: #145c2e;
-  --amber-bg: #fbecc8;
-  --amber-text: #6e4a00;
-  --red-bg: #f9dcdc;
-  --red-text: #8a1c1c;
+  /* Status pills, all in blue: palest = fine ("green"), mid = due soon ("amber"),
+     darkest = act now ("red"). The token names keep their traffic-light meaning. */
+  --green-bg: #e8f2fc;
+  --green-text: #245a92;
+  --amber-bg: #cfe2f7;
+  --amber-text: #123f75;
+  --red-bg: #9fc6ef;
+  --red-text: #0a2a52;
 
-  /* Availability calendar: owner use (purple), booked (blue), options (amber) */
-  --owner-bg: #e6def5;
-  --owner-text: #3e2a6e;
+  /* Availability calendar: owner use (navy), booked (solid blue), options (pale blue) */
+  --owner-bg: #0f2236;
+  --owner-text: #ffffff;
   --booking-bg: #1f63b0;
   --booking-text: #ffffff;
 }
@@ -66,15 +67,15 @@
     --on-accent: #08223a;
     --focus: #b0d7f7;
 
-    --green-bg: #173826;
-    --green-text: #9fe0b5;
-    --amber-bg: #3d2f0c;
-    --amber-text: #f3cf7a;
-    --red-bg: #431b1b;
-    --red-text: #f4a9a9;
+    --green-bg: #15293d;
+    --green-text: #a9cdf0;
+    --amber-bg: #1d3f63;
+    --amber-text: #d3e6fa;
+    --red-bg: #2f639b;
+    --red-text: #f2f8fe;
 
-    --owner-bg: #2f2547;
-    --owner-text: #d4c6f5;
+    --owner-bg: #d6e8fa;
+    --owner-text: #0b1724;
     --booking-bg: #8cc4f2;
     --booking-text: #08223a;
   }

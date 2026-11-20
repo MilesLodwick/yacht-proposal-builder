@@ -237,7 +237,15 @@ function setMenuOpen(open) {
 }
 
 menuButton.addEventListener('click', () => {
-  setMenuOpen(menuButton.getAttribute('aria-expanded') !== 'true');
+  const open = menuButton.getAttribute('aria-expanded') !== 'true';
+  setMenuOpen(open);
+  // The phone menu opens at the top of the page, so take the user there
+  // rather than leave them scrolled down past it. Smooth unless the
+  // phone asks for reduced motion.
+  if (open) {
+    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+  }
 });
 
 // Escape closes the phone menu and returns focus to the Menu button.

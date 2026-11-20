@@ -37,6 +37,10 @@ const perYacht = new Map();
 // does not close them.
 const openBreakdowns = new Set();
 
+// Each yacht's own page on its firm's website, loaded once.
+let yachtPages = {};
+let yachtPagesLoaded = null;
+
 let resultsEl;
 let summaryEl;
 let showButton;
@@ -87,7 +91,7 @@ export function render(container) {
     </form>
 
     <div class="notice">
-      <p>Select a yacht's name to see its photos and full details on the firm's website. To link straight to a yacht's own page, add it under "Other listing links" on its Fleet record.</p>
+      <p>Select a yacht's name to see its photos and full details on the firm's website. Where a firm's site could not be checked, the name searches that site instead. A link saved under "Other listing links" on a yacht's Fleet record is used first.</p>
       <p>Rates are indicative "from" weekly rates as listed by each firm on the date shown. They are not an offer. Totals include VAT and APA but not the gratuity.</p>
       <p>${escapeHTML(VAT_NOTE)}</p>
     </div>
@@ -136,6 +140,9 @@ export function render(container) {
   });
 
   drawResults();
+
+  yachtPagesLoaded ??= fetch('data/yacht-pages.json').then((r) => r.json()).then((d) => { yachtPages = d.pages; }).catch(() => {});
+  yachtPagesLoaded.then(() => { if (resultsEl?.isConnected) drawResults(); });
 }
 
 function onFormChange(form, event) {
@@ -260,9 +267,9 @@ function cardHTML({ yacht, notStated, quote }, charter) {
 // The yacht's name, linked to its own page (or a search of its firm's
 // site for it), opening in a new tab.
 function nameLinkHTML(yacht) {
-  const link = yachtPageLink(yacht);
+  const link = yachtPageLink(yacht, yachtPages);
   if (!link) return escapeHTML(yacht.name);
-  const hint = link.kind === 'listing' ? 'opens its listing in a new tab' : `finds it on the ${yacht.firm ?? 'firm'} website, in a new tab`;
+  const hint = link.kind === 'listing' ? `opens its page on the ${yacht.firm ?? 'firm'} website in a new tab` : `finds it on the ${yacht.firm ?? 'firm'} website, in a new tab`;
   return `<a href="${escapeHTML(link.url)}" target="_blank" rel="noopener" title="${escapeHTML(hint)}">${escapeHTML(yacht.name)}<span class="visually-hidden"> (${escapeHTML(hint)})</span></a>`;
 }
 

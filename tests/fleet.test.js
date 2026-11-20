@@ -130,3 +130,23 @@ test('with no source link either, the search uses the firm name', () => {
   assert.equal(new URL(link.url).searchParams.get('q'), '"Lady S" Edmiston yacht charter');
   assert.equal(yachtPageLink({ name: '' }), null);
 });
+
+test('a yacht name links to its own page on the firm website when known', () => {
+  const yacht = { id: 'edmiston-lady-s', name: 'Lady S', firm: 'Edmiston', sourceUrl: 'https://www.edmiston.com/yachts-for-charter' };
+  assert.deepEqual(yachtPageLink(yacht, { 'edmiston-lady-s': 'https://www.edmiston.com/877/lady-s-yacht-charter/' }),
+    { url: 'https://www.edmiston.com/877/lady-s-yacht-charter/', kind: 'listing' });
+  // A link saved on the Fleet record still wins.
+  assert.equal(yachtPageLink({ ...yacht, otherLinks: 'https://example.com/lady-s' }, { 'edmiston-lady-s': 'https://www.edmiston.com/x/' }).url, 'https://example.com/lady-s');
+});
+
+test('every yacht page link is on the website of the firm that lists the yacht', () => {
+  const { pages } = JSON.parse(read('../data/yacht-pages.json'));
+  const yachts = importCSV('yachts', read('../data/yachts.csv')).records;
+  const byId = new Map(yachts.map((y) => [y.id, y]));
+  assert.ok(Object.keys(pages).length > 100);
+  for (const [id, url] of Object.entries(pages)) {
+    const yacht = byId.get(id);
+    assert.ok(yacht, `${id} is not a yacht in the list`);
+    assert.equal(new URL(url).hostname, new URL(yacht.sourceUrl).hostname, `${id} links to another firm`);
+  }
+});

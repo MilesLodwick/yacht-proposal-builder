@@ -82,15 +82,16 @@ export function validateFleetRecord(input, today) {
 
 // Where clicking a yacht's name goes, so the user can see its photos and
 // full details.
-//   1. The first link in "Other listing links", if one has been saved:
-//      that is a page for this yacht.
-//   2. Otherwise a web search for the yacht's name on its firm's own site.
-//      The research sheet only links each firm's fleet page, so the search
-//      is what finds the yacht's own page there.
+//   1. The first link in "Other listing links", if one has been saved on
+//      the yacht's Fleet record.
+//   2. The yacht's own page on its firm's website, from
+//      data/yacht-pages.json (`pages`, keyed by yacht id).
+//   3. Otherwise a web search for the yacht's name on its firm's site.
 // Returns { url, kind: 'listing' | 'search' }, or null with nothing to go on.
-export function yachtPageLink(yacht) {
+export function yachtPageLink(yacht, pages = {}) {
   const saved = parseLinks(yacht.otherLinks)[0];
   if (saved) return { url: saved, kind: 'listing' };
+  if (pages[yacht.id]) return { url: pages[yacht.id], kind: 'listing' };
   if (!yacht.name) return null;
   let site = '';
   try {

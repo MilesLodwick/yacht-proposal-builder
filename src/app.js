@@ -164,6 +164,19 @@ function buildNav() {
     group.append(list);
     nav.append(group);
   }
+
+  // Which version of the site this is: the time the page was last
+  // published. If a change does not show up, compare this with the time
+  // it went live; an older time means the browser is showing a saved copy.
+  const published = new Date(document.lastModified);
+  if (!Number.isNaN(published.getTime())) {
+    const version = document.createElement('p');
+    version.className = 'site-version';
+    const time = published.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    const day = published.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    version.textContent = `Version: ${day}, ${time}`;
+    nav.append(version);
+  }
 }
 
 // Read the screen from the address. "#/fleet" gives { id: 'fleet' }.
@@ -282,70 +295,70 @@ for (const kind of Object.keys(KINDS)) {
 // First visit: add the fictional sample enquiries (marked as examples, so
 // the Example data banner shows and one button removes them).
 if (!hasCollection('enquiries')) {
-  const response = await fetch('data/sample-enquiries.json');
+  const response = await fetch('data/sample-enquiries.json', { cache: 'no-cache' });
   if (response.ok) {
     const { enquiries } = await response.json();
     saveCollection('enquiries', buildSamples(enquiries, todayISO()));
   }
 }
 if (!hasCollection('itineraries')) {
-  const response = await fetch('data/sample-itineraries.json');
+  const response = await fetch('data/sample-itineraries.json', { cache: 'no-cache' });
   if (response.ok) {
     const { itineraries } = await response.json();
     saveCollection('itineraries', buildSampleItineraries(itineraries, todayISO()));
   }
 }
 if (!hasCollection('contracts')) {
-  const response = await fetch('data/sample-contracts.json');
+  const response = await fetch('data/sample-contracts.json', { cache: 'no-cache' });
   if (response.ok) {
     const { contracts } = await response.json();
     saveCollection('contracts', buildSampleContracts(contracts, todayISO()));
   }
 }
 if (!hasCollection('preferences')) {
-  const response = await fetch('data/sample-preferences.json');
+  const response = await fetch('data/sample-preferences.json', { cache: 'no-cache' });
   if (response.ok) {
     const { sheets } = await response.json();
     saveCollection('preferences', buildSamplePreferences(sheets, getCollection('enquiries')));
   }
 }
 if (!hasCollection('availability')) {
-  const response = await fetch('data/sample-availability.json');
+  const response = await fetch('data/sample-availability.json', { cache: 'no-cache' });
   if (response.ok) {
     const { entries } = await response.json();
     saveCollection('availability', buildSampleAvailability(entries, todayISO()));
   }
 }
 if (!hasCollection('booklets')) {
-  const response = await fetch('data/sample-booklets.json');
+  const response = await fetch('data/sample-booklets.json', { cache: 'no-cache' });
   if (response.ok) {
     const { booklets } = await response.json();
     saveCollection('booklets', buildSampleBooklets(booklets, todayISO()));
   }
 }
 if (!hasCollection('buyerBriefs')) {
-  const response = await fetch('data/sample-briefs.json');
+  const response = await fetch('data/sample-briefs.json', { cache: 'no-cache' });
   if (response.ok) {
     const { briefs } = await response.json();
     saveCollection('buyerBriefs', buildSampleBriefs(briefs));
   }
 }
 if (!hasCollection('saleActivity')) {
-  const response = await fetch('data/sample-activity.json');
+  const response = await fetch('data/sample-activity.json', { cache: 'no-cache' });
   if (response.ok) {
     const { entries } = await response.json();
     saveCollection('saleActivity', buildSampleActivity(entries, todayISO()));
   }
 }
 if (!hasCollection('deals')) {
-  const response = await fetch('data/sample-deals.json');
+  const response = await fetch('data/sample-deals.json', { cache: 'no-cache' });
   if (response.ok) {
     const { deals } = await response.json();
     saveCollection('deals', buildSampleDeals(deals, todayISO()));
   }
 }
 if (!hasCollection('managedYachts')) {
-  const response = await fetch('data/sample-managed.json');
+  const response = await fetch('data/sample-managed.json', { cache: 'no-cache' });
   if (response.ok) {
     const sample = buildSampleManaged(await response.json(), todayISO());
     saveCollection('managedYachts', sample.yachts);
@@ -353,14 +366,14 @@ if (!hasCollection('managedYachts')) {
   }
 }
 if (!hasCollection('crew')) {
-  const response = await fetch('data/sample-crew.json');
+  const response = await fetch('data/sample-crew.json', { cache: 'no-cache' });
   if (response.ok) {
     const { crew } = await response.json();
     saveCollection('crew', buildSampleCrew(crew, todayISO()));
   }
 }
 if (!hasCollection('budgets')) {
-  const response = await fetch('data/sample-budget.json');
+  const response = await fetch('data/sample-budget.json', { cache: 'no-cache' });
   if (response.ok) {
     const { budget } = await response.json();
     saveCollection('budgets', [buildSampleBudget(budget, todayISO())]);

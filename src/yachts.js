@@ -206,7 +206,7 @@ export function summarise(records) {
 // ---------------------------------------------------------------------------
 
 export async function fetchPublished(kind) {
-  const response = await fetch(KINDS[kind].file);
+  const response = await fetch(KINDS[kind].file, { cache: 'no-cache' });
   if (!response.ok) return { ok: false, error: `Could not load ${KINDS[kind].file}.` };
   return importCSV(kind, await response.text());
 }

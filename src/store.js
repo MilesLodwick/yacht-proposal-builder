@@ -257,7 +257,7 @@ export function importJSON(text) {
 let defaultSettings = [];
 
 export async function loadDefaultSettings(url = 'data/settings.json') {
-  const response = await fetch(url);
+  const response = await fetch(url, { cache: 'no-cache' });
   const data = await response.json();
   defaultSettings = data.settings;
 }

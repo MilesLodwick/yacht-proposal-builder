@@ -204,6 +204,7 @@ a:hover { color: var(--accent-hover); }
   padding: var(--space-3) var(--space-4) var(--space-5);
 }
 .site-nav.is-open { display: block; }
+.site-version { margin: var(--space-5) var(--space-3) var(--space-3); font-size: 0.8125rem; color: var(--text-muted); }
 
 .main {
   max-width: var(--content-max);

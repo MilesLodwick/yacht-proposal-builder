@@ -151,7 +151,7 @@ export function render(container) {
 
   drawResults();
 
-  yachtPagesLoaded ??= fetch('data/yacht-pages.json').then((r) => r.json()).then((d) => { yachtPages = d.pages; yachtPhotos = d.images ?? {}; }).catch(() => {});
+  yachtPagesLoaded ??= fetch('data/yacht-pages.json', { cache: 'no-cache' }).then((r) => r.json()).then((d) => { yachtPages = d.pages; yachtPhotos = d.images ?? {}; }).catch(() => {});
   yachtPagesLoaded.then(() => { if (resultsEl?.isConnected) drawResults(); });
 }
 

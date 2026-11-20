@@ -21,7 +21,7 @@ let flash = null;
 // itinerary is first opened. Used to estimate the distance of each leg.
 let portsPromise = null;
 function loadPorts() {
-  portsPromise ??= fetch('data/ports.json').then((r) => r.json()).catch(() => ({ ports: [] }));
+  portsPromise ??= fetch('data/ports.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => ({ ports: [] }));
   return portsPromise;
 }
 

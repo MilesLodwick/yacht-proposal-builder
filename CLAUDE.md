@@ -15,7 +15,7 @@ Miles wants every change he asks for to go straight to the live site. GitHub Pag
 
 1. Run `node --test` and check the change in a browser. Do not go live if anything fails.
 2. Commit on the working branch, then merge it into `main` and push `main` (as well as the working branch).
-3. Tell Miles it is live, and that Pages takes a minute or two to update.
+3. Tell Miles it is live, and that Pages takes a minute or two to update. Open pages reload themselves onto the new version (src/update.js), and the menu shows the published time ("Version: ...") so he can check which version he has.
 
 This is standing permission to push to `main`. Never force-push `main`.
 

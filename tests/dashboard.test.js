@@ -91,7 +91,12 @@ test('pipelines: enquiries, listings, deals and yacht management', () => {
   // Proposal sent, Option held and Lost; one at every other stage.
   assert.deepEqual(p.charter.counts.map((c) => c.count), [5, 2, 2, 1, 1, 1, 1, 1, 2]);
   assert.deepEqual(p.sales.counts.map((c) => c.count), [134, 0, 0, 0]);
-  assert.deepEqual(p.deals.counts, [{ status: 'Next: Survey', count: 1 }]);
+  // One deal waiting for its MOA, one at survey, one completed.
+  assert.deepEqual(p.deals.counts, [
+    { status: 'Next: MOA signed', count: 1 },
+    { status: 'Next: Survey', count: 1 },
+    { status: 'Complete', count: 1 },
+  ]);
   assert.deepEqual(p.management.compliance, { red: 1, amber: 4, green: 5 });
   assert.deepEqual(p.management.crew, { red: 1, amber: 4, green: 3 });
 });

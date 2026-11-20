@@ -75,7 +75,8 @@ export function buildSampleItineraries(templates, today) {
     startDate: addDays(today, t.startInDays),
     embarkPort: t.embarkPort,
     speedKnots: t.speedKnots,
-    days: t.days.map((d) => ({ toPort: d.toPort, nm: d.nm, notes: d.notes ?? '' })),
+    days: t.days.map((d) => ({ toPort: d.toPort, nm: d.nm, notes: d.notes ?? '', ...(d.nmEstimated ? { nmEstimated: true } : {}) })),
+    ...(t.addedIn ? { addedIn: t.addedIn } : {}),
   }));
 }
 

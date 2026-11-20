@@ -8,14 +8,164 @@
       "embarkPort": "Naples",
       "speedKnots": 12,
       "days": [
-        { "toPort": "Capri", "nm": 17, "notes": "Afternoon swim stop at the Faraglioni." },
-        { "toPort": "Positano", "nm": 12, "notes": "Dinner ashore." },
-        { "toPort": "Amalfi", "nm": 6, "notes": "Watersports morning for the teenagers." },
-        { "toPort": "Stromboli", "nm": 112, "notes": "Long passage: early start. Evening view of the volcano from the sea." },
-        { "toPort": "Panarea", "nm": 11, "notes": "" },
-        { "toPort": "Lipari", "nm": 12, "notes": "" },
-        { "toPort": "Vulcano", "nm": 4, "notes": "Disembark the following morning." }
+        {
+          "toPort": "Capri",
+          "nm": 17,
+          "notes": "Afternoon swim stop at the Faraglioni."
+        },
+        {
+          "toPort": "Positano",
+          "nm": 12,
+          "notes": "Dinner ashore."
+        },
+        {
+          "toPort": "Amalfi",
+          "nm": 6,
+          "notes": "Watersports morning for the teenagers."
+        },
+        {
+          "toPort": "Stromboli",
+          "nm": 112,
+          "notes": "Long passage: early start. Evening view of the volcano from the sea."
+        },
+        {
+          "toPort": "Panarea",
+          "nm": 11,
+          "notes": ""
+        },
+        {
+          "toPort": "Lipari",
+          "nm": 12,
+          "notes": ""
+        },
+        {
+          "toPort": "Vulcano",
+          "nm": 4,
+          "notes": "Disembark the following morning."
+        }
       ]
+    },
+    {
+      "name": "Pemberton: Ionian islands from Corfu",
+      "enquiryId": "sample-enquiry-11",
+      "startInDays": 215,
+      "embarkPort": "Corfu",
+      "speedKnots": 12,
+      "days": [
+        {
+          "toPort": "Paxos",
+          "nm": 31,
+          "nmEstimated": true,
+          "notes": "Lunch at anchor off Antipaxos, night in Gaios."
+        },
+        {
+          "toPort": "Lefkada",
+          "nm": 36,
+          "nmEstimated": true,
+          "notes": "Through the Lefkada canal."
+        },
+        {
+          "toPort": "Fiskardo",
+          "nm": 26,
+          "nmEstimated": true,
+          "notes": "Dinner ashore in the harbour."
+        },
+        {
+          "toPort": "Ithaca",
+          "nm": 10,
+          "nmEstimated": true,
+          "notes": "Swim stop in a quiet bay, night in Vathy."
+        },
+        {
+          "toPort": "Lefkada",
+          "nm": 31,
+          "nmEstimated": true,
+          "notes": "Slow day, watersports."
+        },
+        {
+          "toPort": "Paxos",
+          "nm": 36,
+          "nmEstimated": true,
+          "notes": "Sea caves on the west coast by tender."
+        },
+        {
+          "toPort": "Corfu",
+          "nm": 31,
+          "nmEstimated": true,
+          "notes": "Disembark after breakfast."
+        }
+      ],
+      "addedIn": "2026-11-20"
+    },
+    {
+      "name": "Okonkwo: Christmas in the Exumas",
+      "enquiryId": "sample-enquiry-13",
+      "startInDays": 36,
+      "embarkPort": "Nassau",
+      "speedKnots": 14,
+      "days": [
+        {
+          "toPort": "Highbourne Cay",
+          "nm": 39,
+          "nmEstimated": true,
+          "notes": "Easy first day, snorkelling."
+        },
+        {
+          "toPort": "Norman's Cay",
+          "nm": 8,
+          "nmEstimated": true,
+          "notes": "Plane wreck snorkel."
+        },
+        {
+          "toPort": "Warderick Wells",
+          "nm": 17,
+          "nmEstimated": true,
+          "notes": "Exuma Cays Land and Sea Park."
+        },
+        {
+          "toPort": "Compass Cay",
+          "nm": 11,
+          "nmEstimated": true,
+          "notes": "Nurse sharks at the marina."
+        },
+        {
+          "toPort": "Staniel Cay",
+          "nm": 7,
+          "nmEstimated": true,
+          "notes": "Christmas Day: Thunderball Grotto and swimming pigs."
+        },
+        {
+          "toPort": "Staniel Cay",
+          "nm": 0,
+          "nmEstimated": true,
+          "notes": "Day at anchor, no passage."
+        },
+        {
+          "toPort": "George Town",
+          "nm": 59,
+          "nmEstimated": true,
+          "notes": "Longest leg: leave early."
+        },
+        {
+          "toPort": "Staniel Cay",
+          "nm": 59,
+          "nmEstimated": true,
+          "notes": "New Year preparations."
+        },
+        {
+          "toPort": "Highbourne Cay",
+          "nm": 43,
+          "nmEstimated": true,
+          "notes": "New Year's Eve at anchor."
+        },
+        {
+          "toPort": "Nassau",
+          "nm": 39,
+          "nmEstimated": true,
+          "notes": "Disembark on New Year's Day."
+        }
+      ],
+      "addedIn": "2026-11-20"
     }
   ]
 }

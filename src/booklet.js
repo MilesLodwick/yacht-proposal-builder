@@ -87,5 +87,6 @@ export function buildSampleBooklets(templates, today) {
     showDate: t.showInDays == null ? null : addDays(today, t.showInDays),
     yachtIds: t.yachtIds,
     notes: t.notes ?? '',
+    ...(t.addedIn ? { addedIn: t.addedIn } : {}),
   }));
 }

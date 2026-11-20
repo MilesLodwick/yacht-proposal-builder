@@ -1,13 +1,137 @@
 {
   "about": "Fictional sample sales activity on one real public listing from data/for-sale.csv. Every buyer and broker here is made up, and the enquiries and viewings did not happen. Dates are days from today.",
   "entries": [
-    { "listingId": "berthon-oyster-54", "type": "enquiry", "daysFromToday": -41, "who": "Buyer ref B-104", "broker": "Saltmarsh Yacht Agency" },
-    { "listingId": "berthon-oyster-54", "type": "enquiry", "daysFromToday": -36, "who": "Buyer ref B-107", "broker": "Direct" },
-    { "listingId": "berthon-oyster-54", "type": "viewing", "daysFromToday": -31, "time": "10:30", "who": "Buyer ref B-104", "broker": "Saltmarsh Yacht Agency", "interest": "Medium", "feedback": "Liked the layout and the centre cockpit. Concerned about the condition of the teak deck." },
-    { "listingId": "berthon-oyster-54", "type": "enquiry", "daysFromToday": -24, "who": "Buyer ref B-112", "broker": "Kestrel Charter Partners" },
-    { "listingId": "berthon-oyster-54", "type": "viewing", "daysFromToday": -19, "time": "14:00", "who": "Buyer ref B-107", "broker": "Direct", "interest": "High", "feedback": "Strong interest. Asked for the survey history and the last two years of maintenance invoices." },
-    { "listingId": "berthon-oyster-54", "type": "viewing", "daysFromToday": -10, "time": "11:00", "who": "Buyer ref B-112", "broker": "Kestrel Charter Partners", "interest": "Not interested", "feedback": "Looking for something newer. Thought the price was high for the age." },
-    { "listingId": "berthon-oyster-54", "type": "enquiry", "daysFromToday": -4, "who": "Buyer ref B-118", "broker": "Saltmarsh Yacht Agency" },
-    { "listingId": "berthon-oyster-54", "type": "viewing", "daysFromToday": 5, "time": "09:30", "who": "Buyer ref B-107", "broker": "Direct" }
+    {
+      "listingId": "berthon-oyster-54",
+      "type": "enquiry",
+      "daysFromToday": -41,
+      "who": "Buyer ref B-104",
+      "broker": "Saltmarsh Yacht Agency"
+    },
+    {
+      "listingId": "berthon-oyster-54",
+      "type": "enquiry",
+      "daysFromToday": -36,
+      "who": "Buyer ref B-107",
+      "broker": "Direct"
+    },
+    {
+      "listingId": "berthon-oyster-54",
+      "type": "viewing",
+      "daysFromToday": -31,
+      "time": "10:30",
+      "who": "Buyer ref B-104",
+      "broker": "Saltmarsh Yacht Agency",
+      "interest": "Medium",
+      "feedback": "Liked the layout and the centre cockpit. Concerned about the condition of the teak deck."
+    },
+    {
+      "listingId": "berthon-oyster-54",
+      "type": "enquiry",
+      "daysFromToday": -24,
+      "who": "Buyer ref B-112",
+      "broker": "Kestrel Charter Partners"
+    },
+    {
+      "listingId": "berthon-oyster-54",
+      "type": "viewing",
+      "daysFromToday": -19,
+      "time": "14:00",
+      "who": "Buyer ref B-107",
+      "broker": "Direct",
+      "interest": "High",
+      "feedback": "Strong interest. Asked for the survey history and the last two years of maintenance invoices."
+    },
+    {
+      "listingId": "berthon-oyster-54",
+      "type": "viewing",
+      "daysFromToday": -10,
+      "time": "11:00",
+      "who": "Buyer ref B-112",
+      "broker": "Kestrel Charter Partners",
+      "interest": "Not interested",
+      "feedback": "Looking for something newer. Thought the price was high for the age."
+    },
+    {
+      "listingId": "berthon-oyster-54",
+      "type": "enquiry",
+      "daysFromToday": -4,
+      "who": "Buyer ref B-118",
+      "broker": "Saltmarsh Yacht Agency"
+    },
+    {
+      "listingId": "berthon-oyster-54",
+      "type": "viewing",
+      "daysFromToday": 5,
+      "time": "09:30",
+      "who": "Buyer ref B-107",
+      "broker": "Direct"
+    },
+    {
+      "listingId": "berthon-seaward-42",
+      "type": "enquiry",
+      "daysFromToday": -30,
+      "who": "Buyer ref B-133",
+      "broker": "Saltmarsh Yacht Agency",
+      "addedIn": "2026-11-20"
+    },
+    {
+      "listingId": "berthon-seaward-42",
+      "type": "enquiry",
+      "daysFromToday": -25,
+      "who": "Buyer ref B-140",
+      "broker": "Direct",
+      "addedIn": "2026-11-20"
+    },
+    {
+      "listingId": "berthon-seaward-42",
+      "type": "viewing",
+      "daysFromToday": -20,
+      "time": "10:00",
+      "who": "Buyer ref B-133",
+      "broker": "Saltmarsh Yacht Agency",
+      "interest": "Low",
+      "feedback": "Wanted more headroom in the aft cabin.",
+      "addedIn": "2026-11-20"
+    },
+    {
+      "listingId": "berthon-seaward-42",
+      "type": "viewing",
+      "daysFromToday": -12,
+      "time": "15:00",
+      "who": "Buyer ref B-140",
+      "broker": "Direct",
+      "interest": "High",
+      "feedback": "Loved the build quality. Asked for a second viewing with the family.",
+      "addedIn": "2026-11-20"
+    },
+    {
+      "listingId": "berthon-seaward-42",
+      "type": "viewing",
+      "daysFromToday": -6,
+      "time": "11:30",
+      "who": "Buyer ref B-140",
+      "broker": "Direct",
+      "interest": "High",
+      "feedback": "Family viewing went well. Offer expected this week.",
+      "addedIn": "2026-11-20"
+    },
+    {
+      "listingId": "berthon-comitti-breva-35",
+      "type": "enquiry",
+      "daysFromToday": -9,
+      "who": "Buyer ref B-144",
+      "broker": "Kestrel Charter Partners",
+      "addedIn": "2026-11-20"
+    },
+    {
+      "listingId": "berthon-comitti-breva-35",
+      "type": "viewing",
+      "daysFromToday": 3,
+      "time": "14:30",
+      "who": "Buyer ref B-144",
+      "broker": "Kestrel Charter Partners",
+      "addedIn": "2026-11-20"
+    }
   ]
 }

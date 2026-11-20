@@ -146,5 +146,6 @@ export function buildSampleDeals(templates, today) {
       docs: Object.fromEntries((st.docs ?? []).map((d) => [d, true])),
       notes: st.notes ?? '',
     }])),
+    ...(t.addedIn ? { addedIn: t.addedIn } : {}),
   }));
 }

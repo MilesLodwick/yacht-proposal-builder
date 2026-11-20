@@ -99,5 +99,6 @@ export function buildSampleActivity(templates, today) {
     broker: t.broker ?? '',
     interest: t.interest ?? '',
     feedback: t.feedback ?? '',
+    ...(t.addedIn ? { addedIn: t.addedIn } : {}),
   }));
 }

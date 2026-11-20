@@ -123,6 +123,7 @@ export function buildSamplePreferences(templates, enquiries) {
       otherActivities: t.otherActivities ?? '',
       occasions: t.occasions.map((o) => ({ date: addDays(enquiry.startDate, o.charterDay - 1), occasion: o.occasion, guest: o.guest ?? '' })),
       notes: t.notes ?? '',
+      ...(t.addedIn ? { addedIn: t.addedIn } : {}),
     };
   });
 }

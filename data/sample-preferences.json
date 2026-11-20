@@ -4,25 +4,171 @@
     {
       "enquiryId": "sample-enquiry-7",
       "guests": [
-        { "name": "Richard Whitcombe", "age": 68, "dietary": "Low salt" },
-        { "name": "Helen Whitcombe", "age": 66, "allergies": "Shellfish (severe, carries an adrenaline pen)" },
-        { "name": "James Whitcombe", "age": 41 },
-        { "name": "Priya Whitcombe", "age": 39, "dietary": "Vegetarian" },
-        { "name": "Oliver Whitcombe", "age": 12 },
-        { "name": "Maya Whitcombe", "age": 6, "allergies": "Peanuts and tree nuts" },
-        { "name": "Claire Fenwick", "age": 37, "dietary": "Gluten free (coeliac)" },
-        { "name": "Tom Fenwick", "age": 38 },
-        { "name": "Ella Fenwick", "age": 9 },
-        { "name": "Sam Fenwick", "age": 7, "dietary": "No spicy food" }
+        {
+          "name": "Richard Whitcombe",
+          "age": 68,
+          "dietary": "Low salt"
+        },
+        {
+          "name": "Helen Whitcombe",
+          "age": 66,
+          "allergies": "Shellfish (severe, carries an adrenaline pen)"
+        },
+        {
+          "name": "James Whitcombe",
+          "age": 41
+        },
+        {
+          "name": "Priya Whitcombe",
+          "age": 39,
+          "dietary": "Vegetarian"
+        },
+        {
+          "name": "Oliver Whitcombe",
+          "age": 12
+        },
+        {
+          "name": "Maya Whitcombe",
+          "age": 6,
+          "allergies": "Peanuts and tree nuts"
+        },
+        {
+          "name": "Claire Fenwick",
+          "age": 37,
+          "dietary": "Gluten free (coeliac)"
+        },
+        {
+          "name": "Tom Fenwick",
+          "age": 38
+        },
+        {
+          "name": "Ella Fenwick",
+          "age": 9
+        },
+        {
+          "name": "Sam Fenwick",
+          "age": 7,
+          "dietary": "No spicy food"
+        }
       ],
-      "arrival": { "dayOffset": 0, "time": "15:30", "place": "Nassau, Lynden Pindling Airport (transfer to the yacht)" },
-      "activities": ["Swimming", "Snorkelling", "Paddleboarding and kayaking", "Fishing", "Beach clubs"],
+      "arrival": {
+        "dayOffset": 0,
+        "time": "15:30",
+        "place": "Nassau, Lynden Pindling Airport (transfer to the yacht)"
+      },
+      "activities": [
+        "Swimming",
+        "Snorkelling",
+        "Paddleboarding and kayaking",
+        "Fishing",
+        "Beach clubs"
+      ],
       "otherActivities": "Swimming pigs at Big Major Cay",
       "occasions": [
-        { "charterDay": 3, "occasion": "Richard's 69th birthday", "guest": "Richard Whitcombe" },
-        { "charterDay": 6, "occasion": "Helen and Richard's 45th wedding anniversary", "guest": "Helen Whitcombe" }
+        {
+          "charterDay": 3,
+          "occasion": "Richard's 69th birthday",
+          "guest": "Richard Whitcombe"
+        },
+        {
+          "charterDay": 6,
+          "occasion": "Helen and Richard's 45th wedding anniversary",
+          "guest": "Helen Whitcombe"
+        }
       ],
       "notes": "Helen prefers a cabin away from the engine room. The children need a life jacket in each tender. Early dinners (18:30) for the children, adults later."
+    },
+    {
+      "enquiryId": "sample-enquiry-13",
+      "guests": [
+        {
+          "name": "Chidi Okonkwo",
+          "age": 52
+        },
+        {
+          "name": "Adaeze Okonkwo",
+          "age": 49,
+          "dietary": "Pescatarian"
+        },
+        {
+          "name": "Obinna Okonkwo",
+          "age": 22
+        },
+        {
+          "name": "Nneka Okonkwo",
+          "age": 19,
+          "allergies": "Sesame"
+        },
+        {
+          "name": "Ifeoma Okonkwo",
+          "age": 15
+        },
+        {
+          "name": "Grace Adeyemi",
+          "age": 76,
+          "dietary": "Soft foods, low sugar (diabetic)"
+        },
+        {
+          "name": "Tunde Bello",
+          "age": 51
+        },
+        {
+          "name": "Funmi Bello",
+          "age": 50,
+          "dietary": "Vegetarian"
+        },
+        {
+          "name": "Kemi Bello",
+          "age": 17
+        },
+        {
+          "name": "Daniel Bello",
+          "age": 13,
+          "allergies": "Peanuts (severe, carries an adrenaline pen)"
+        },
+        {
+          "name": "Sarah Whitfield",
+          "age": 48
+        },
+        {
+          "name": "Mark Whitfield",
+          "age": 50,
+          "dietary": "Gluten free"
+        }
+      ],
+      "arrival": {
+        "dayOffset": 0,
+        "time": "13:00",
+        "place": "Nassau, private aviation terminal"
+      },
+      "activities": [
+        "Swimming",
+        "Snorkelling",
+        "Diving",
+        "Paddleboarding and kayaking",
+        "Fishing",
+        "Beach clubs"
+      ],
+      "otherActivities": "A Christmas Day church service ashore if possible. Fireworks at anchor on New Year's Eve.",
+      "occasions": [
+        {
+          "charterDay": 5,
+          "occasion": "Christmas Day: traditional lunch on board",
+          "guest": ""
+        },
+        {
+          "charterDay": 9,
+          "occasion": "Ifeoma's 16th birthday",
+          "guest": "Ifeoma Okonkwo"
+        },
+        {
+          "charterDay": 10,
+          "occasion": "New Year's Eve dinner",
+          "guest": ""
+        }
+      ],
+      "notes": "Grace needs a cabin on the main deck (no stairs). Daniel's peanut allergy: no nuts on board at all. Two guests are qualified divers.",
+      "addedIn": "2026-11-20"
     }
   ]
 }

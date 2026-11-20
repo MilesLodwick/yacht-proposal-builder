@@ -8,11 +8,130 @@
       "agreedPrice": 640000,
       "currency": "USD",
       "stages": {
-        "offer": { "daysAgo": 20, "docs": ["writtenOffer", "offerAccepted"], "notes": "Offer of USD 640,000 accepted subject to sea trial and survey." },
-        "moa": { "daysAgo": 14, "docs": ["moaBuyer", "moaSeller", "kyc"] },
-        "deposit": { "daysAgo": 11, "docs": ["depositCleared"] },
-        "seaTrial": { "daysAgo": 3, "docs": ["seaTrialDone"], "notes": "Sea trial in the Solent. Buyer happy with performance under sail." }
+        "offer": {
+          "daysAgo": 20,
+          "docs": [
+            "writtenOffer",
+            "offerAccepted"
+          ],
+          "notes": "Offer of USD 640,000 accepted subject to sea trial and survey."
+        },
+        "moa": {
+          "daysAgo": 14,
+          "docs": [
+            "moaBuyer",
+            "moaSeller",
+            "kyc"
+          ]
+        },
+        "deposit": {
+          "daysAgo": 11,
+          "docs": [
+            "depositCleared"
+          ]
+        },
+        "seaTrial": {
+          "daysAgo": 3,
+          "docs": [
+            "seaTrialDone"
+          ],
+          "notes": "Sea trial in the Solent. Buyer happy with performance under sail."
+        }
       }
+    },
+    {
+      "listingId": "berthon-seaward-42",
+      "buyer": "Buyer ref B-140",
+      "buyerBroker": "Direct",
+      "agreedPrice": 520000,
+      "currency": "USD",
+      "stages": {
+        "offer": {
+          "daysAgo": 2,
+          "docs": [
+            "writtenOffer",
+            "offerAccepted"
+          ],
+          "notes": "Offer of USD 520,000 accepted subject to survey. MOA being drawn up."
+        }
+      },
+      "addedIn": "2026-11-20"
+    },
+    {
+      "listingId": "berthon-y-yachts-y8",
+      "buyer": "Buyer ref B-097",
+      "buyerBroker": "Kestrel Charter Partners",
+      "agreedPrice": 2150000,
+      "currency": "USD",
+      "defectsOutcome": "price reduced",
+      "priceReduction": 35000,
+      "stages": {
+        "offer": {
+          "daysAgo": 92,
+          "docs": [
+            "writtenOffer",
+            "offerAccepted"
+          ]
+        },
+        "moa": {
+          "daysAgo": 86,
+          "docs": [
+            "moaBuyer",
+            "moaSeller",
+            "kyc"
+          ]
+        },
+        "deposit": {
+          "daysAgo": 82,
+          "docs": [
+            "depositCleared"
+          ],
+          "notes": "10% deposit into escrow."
+        },
+        "seaTrial": {
+          "daysAgo": 70,
+          "docs": [
+            "seaTrialDone"
+          ],
+          "notes": "Sea trial off Palma in 15 knots."
+        },
+        "survey": {
+          "daysAgo": 64,
+          "docs": [
+            "surveyReport"
+          ],
+          "notes": "Rigging and sail wardrobe due for replacement."
+        },
+        "defects": {
+          "daysAgo": 58,
+          "docs": [
+            "defectsList"
+          ],
+          "notes": "Seller reduced the price by USD 35,000 instead of replacing the rigging."
+        },
+        "acceptance": {
+          "daysAgo": 55,
+          "docs": [
+            "acceptanceSigned"
+          ]
+        },
+        "closing": {
+          "daysAgo": 41,
+          "docs": [
+            "balancePaid",
+            "billOfSale",
+            "protocol"
+          ]
+        },
+        "commission": {
+          "daysAgo": 30,
+          "docs": [
+            "commissionInvoiced",
+            "commissionReceived"
+          ]
+        }
+      },
+      "addedIn": "2026-11-20"
     }
   ]
 }

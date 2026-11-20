@@ -5,10 +5,9 @@
 // work on GitHub Pages with no server set-up, and the browser's Back button
 // works as you would expect.
 
-import { load, loadDefaultSettings, onChange, getState, hasExampleData, clearExampleData, isStorageWorking, hasCollection, saveCollection, getCollection, newSamplesToAdd, getOfferedSamples, markSamplesOffered } from './store.js';
+import { load, loadDefaultSettings, onChange, getState, hasExampleData, clearExampleData, isStorageWorking, hasCollection, saveCollection } from './store.js';
+import { addStartupSamples } from './samples.js';
 import { KINDS, fetchPublished } from './yachts.js';
-import { buildSamples } from './enquiries.js';
-import { todayISO } from './calc/dates.js';
 import * as dataView from './views/data.js';
 import * as settingsView from './views/settings.js';
 import * as enquiriesView from './views/enquiries.js';
@@ -31,17 +30,6 @@ import * as crewView from './views/crew.js';
 import * as budgetView from './views/budget.js';
 import * as monthlyReportView from './views/monthly-report.js';
 import * as dashboardView from './views/dashboard.js';
-import { buildSampleBudget } from './budget.js';
-import { buildSampleCrew } from './crew.js';
-import { buildSampleManaged } from './compliance.js';
-import { buildSampleDeals } from './deals.js';
-import { buildSampleActivity } from './activity.js';
-import { buildSampleBriefs } from './buyer.js';
-import { buildSampleBooklets } from './booklet.js';
-import { buildSampleAvailability } from './calc/availability.js';
-import { buildSamplePreferences } from './preferences.js';
-import { buildSampleContracts } from './contracts.js';
-import { buildSampleItineraries } from './calc/itinerary.js';
 
 // Screens that have been built. Each view file exports
 // render(container, param, heading). Any screen not listed here shows a
@@ -300,108 +288,9 @@ for (const kind of Object.keys(KINDS)) {
   }
 }
 
-// First visit: add the fictional sample enquiries (marked as examples, so
-// the Example data banner shows and one button removes them).
-if (!hasCollection('enquiries')) {
-  const response = await fetch('data/sample-enquiries.json', { cache: 'no-cache' });
-  if (response.ok) {
-    const { enquiries } = await response.json();
-    saveCollection('enquiries', buildSamples(enquiries, todayISO()));
-  }
-}
-// Samples added in a later version: give them to a browser that already
-// has the earlier samples (once each). Skipped if the user has cleared the
-// example data.
-async function topUpSamples(name, file, key, build) {
-  if (!hasCollection(name) || !getCollection(name).some((r) => r.example)) return;
-  const response = await fetch(file, { cache: 'no-cache' });
-  if (!response.ok) return;
-  const samples = build((await response.json())[key]);
-  const toAdd = newSamplesToAdd(getCollection(name), samples, getOfferedSamples());
-  if (toAdd.length) saveCollection(name, [...getCollection(name), ...toAdd]);
-  markSamplesOffered(samples.filter((s) => s.addedIn).map((s) => s.id));
-}
-await topUpSamples('enquiries', 'data/sample-enquiries.json', 'enquiries', (t) => buildSamples(t, todayISO()));
+// Fictional sample data for every section (see src/samples.js).
+await addStartupSamples();
 
-if (!hasCollection('itineraries')) {
-  const response = await fetch('data/sample-itineraries.json', { cache: 'no-cache' });
-  if (response.ok) {
-    const { itineraries } = await response.json();
-    saveCollection('itineraries', buildSampleItineraries(itineraries, todayISO()));
-  }
-}
-if (!hasCollection('contracts')) {
-  const response = await fetch('data/sample-contracts.json', { cache: 'no-cache' });
-  if (response.ok) {
-    const { contracts } = await response.json();
-    saveCollection('contracts', buildSampleContracts(contracts, todayISO()));
-  }
-}
-if (!hasCollection('preferences')) {
-  const response = await fetch('data/sample-preferences.json', { cache: 'no-cache' });
-  if (response.ok) {
-    const { sheets } = await response.json();
-    saveCollection('preferences', buildSamplePreferences(sheets, getCollection('enquiries')));
-  }
-}
-if (!hasCollection('availability')) {
-  const response = await fetch('data/sample-availability.json', { cache: 'no-cache' });
-  if (response.ok) {
-    const { entries } = await response.json();
-    saveCollection('availability', buildSampleAvailability(entries, todayISO()));
-  }
-}
-if (!hasCollection('booklets')) {
-  const response = await fetch('data/sample-booklets.json', { cache: 'no-cache' });
-  if (response.ok) {
-    const { booklets } = await response.json();
-    saveCollection('booklets', buildSampleBooklets(booklets, todayISO()));
-  }
-}
-await topUpSamples('buyerBriefs', 'data/sample-briefs.json', 'briefs', buildSampleBriefs);
-if (!hasCollection('buyerBriefs')) {
-  const response = await fetch('data/sample-briefs.json', { cache: 'no-cache' });
-  if (response.ok) {
-    const { briefs } = await response.json();
-    saveCollection('buyerBriefs', buildSampleBriefs(briefs));
-  }
-}
-if (!hasCollection('saleActivity')) {
-  const response = await fetch('data/sample-activity.json', { cache: 'no-cache' });
-  if (response.ok) {
-    const { entries } = await response.json();
-    saveCollection('saleActivity', buildSampleActivity(entries, todayISO()));
-  }
-}
-if (!hasCollection('deals')) {
-  const response = await fetch('data/sample-deals.json', { cache: 'no-cache' });
-  if (response.ok) {
-    const { deals } = await response.json();
-    saveCollection('deals', buildSampleDeals(deals, todayISO()));
-  }
-}
-if (!hasCollection('managedYachts')) {
-  const response = await fetch('data/sample-managed.json', { cache: 'no-cache' });
-  if (response.ok) {
-    const sample = buildSampleManaged(await response.json(), todayISO());
-    saveCollection('managedYachts', sample.yachts);
-    saveCollection('compliance', sample.items);
-  }
-}
-if (!hasCollection('crew')) {
-  const response = await fetch('data/sample-crew.json', { cache: 'no-cache' });
-  if (response.ok) {
-    const { crew } = await response.json();
-    saveCollection('crew', buildSampleCrew(crew, todayISO()));
-  }
-}
-if (!hasCollection('budgets')) {
-  const response = await fetch('data/sample-budget.json', { cache: 'no-cache' });
-  if (response.ok) {
-    const { budget } = await response.json();
-    saveCollection('budgets', [buildSampleBudget(budget, todayISO())]);
-  }
-}
 onChange(() => {
   updateBanners();
 });

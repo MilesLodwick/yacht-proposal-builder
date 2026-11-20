@@ -7,6 +7,7 @@ import { getState, exportJSON, importJSON, countRecords, getCollection, saveColl
 import { KINDS, importCSV, exportCSV, summarise, fetchPublished } from '../yachts.js';
 import { formatDate, todayISO } from '../calc/dates.js';
 import { escapeHTML } from './html.js';
+import { addAllMissingSamples } from '../samples.js';
 
 let wrapper;
 let status; // stays in place so screen readers announce messages put in it
@@ -33,6 +34,12 @@ function draw(message = '', isError = false) {
       <p class="muted">To update the published list from the spreadsheet, run <code>python3 tools/sheet_to_csv.py</code> (see README).</p>
     </section>
 
+    <section class="section" aria-labelledby="samples-heading">
+      <h2 id="samples-heading">Sample data</h2>
+      <p>Fill every screen with fictional examples: enquiries, itineraries, proposals, contracts, preference sheets, availability, buyer briefs, viewings, deals, compliance, crew and budgets. Useful for a demo. Your own records are not changed, and the Example data banner removes the samples again in one click.</p>
+      <button type="button" class="button button--secondary" id="load-samples">Load sample data</button>
+    </section>
+
     <section class="section" aria-labelledby="export-heading">
       <h2 id="export-heading">Back up everything (JSON)</h2>
       <p>Download everything saved in this browser as one file: yachts, enquiries, your settings, all of it. Keep it somewhere safe. If this browser's data is cleared, import the file to get it all back.</p>
@@ -49,6 +56,11 @@ function draw(message = '', isError = false) {
     download(exportJSON(), `yacht-proposal-builder-${todayISO()}.json`, 'application/json');
   });
   wrapper.querySelector('#import-file').addEventListener('change', handleJSONImport);
+  wrapper.querySelector('#load-samples').addEventListener('click', async (event) => {
+    event.target.disabled = true;
+    const added = await addAllMissingSamples();
+    draw(added ? `Added ${added} sample records. Every screen now has examples to show.` : 'All the sample data is already here.');
+  });
 
   for (const kind of Object.keys(KINDS)) {
     wrapper.querySelector(`#export-${kind}`).addEventListener('click', () => {

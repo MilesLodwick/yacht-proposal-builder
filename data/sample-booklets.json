@@ -4,8 +4,24 @@
     {
       "showName": "Example winter charter show",
       "showInDays": 20,
-      "yachtIds": ["burgess-santosha", "tww-yachts-te-manu", "tww-yachts-dakota"],
+      "yachtIds": [
+        "burgess-santosha",
+        "tww-yachts-te-manu",
+        "tww-yachts-dakota"
+      ],
       "notes": "Caribbean and Bahamas yachts with winter dates still open."
+    },
+    {
+      "showName": "Example Mediterranean summer show",
+      "showInDays": 140,
+      "yachtIds": [
+        "camper-nicholsons-reliance",
+        "tww-yachts-after-you",
+        "tww-yachts-indigo",
+        "tww-yachts-aeterna"
+      ],
+      "notes": "Med yachts for next summer, from a 20-guest Croatia option to Amalfi and Sicily.",
+      "addedIn": "2026-11-20"
     }
   ]
 }

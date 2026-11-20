@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { detailsAge, firms, parseLinks, validateFleetRecord } from '../src/fleet.js';
+import { detailsAge, firms, parseLinks, validateFleetRecord, yachtPageLink } from '../src/fleet.js';
 import { weeklyRateFor, quoteYacht } from '../src/selection.js';
 import { importCSV, exportCSV } from '../src/yachts.js';
 import { ratesFromSettings } from '../src/calc/currency.js';
@@ -112,4 +112,21 @@ test('numbers, year, links and dates are checked', () => {
 test('rates need a currency', () => {
   assert.ok(validateFleetRecord({ ...form, currency: '' }, TODAY).errors.currency);
   assert.equal(validateFleetRecord({ ...form, currency: '', rateFromWeekly: '' }, TODAY).ok, true);
+});
+
+test('a yacht name links to its saved listing page first', () => {
+  const link = yachtPageLink({ name: 'Lady S', firm: 'Edmiston', sourceUrl: 'https://www.edmiston.com/yachts-for-charter', otherLinks: 'https://example.com/lady-s\nhttps://example.com/other' });
+  assert.deepEqual(link, { url: 'https://example.com/lady-s', kind: 'listing' });
+});
+
+test('without a saved page, a yacht name searches its firm\'s site', () => {
+  const link = yachtPageLink({ name: 'Lady S', firm: 'Edmiston', sourceUrl: 'https://www.edmiston.com/yachts-for-charter/management' });
+  assert.equal(link.kind, 'search');
+  assert.equal(new URL(link.url).searchParams.get('q'), '"Lady S" site:edmiston.com');
+});
+
+test('with no source link either, the search uses the firm name', () => {
+  const link = yachtPageLink({ name: 'Lady S', firm: 'Edmiston', sourceUrl: null });
+  assert.equal(new URL(link.url).searchParams.get('q'), '"Lady S" Edmiston yacht charter');
+  assert.equal(yachtPageLink({ name: '' }), null);
 });

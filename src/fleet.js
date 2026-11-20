@@ -79,3 +79,25 @@ export function validateFleetRecord(input, today) {
 
   return Object.keys(errors).length ? { ok: false, errors } : { ok: true, fields };
 }
+
+// Where clicking a yacht's name goes, so the user can see its photos and
+// full details.
+//   1. The first link in "Other listing links", if one has been saved:
+//      that is a page for this yacht.
+//   2. Otherwise a web search for the yacht's name on its firm's own site.
+//      The research sheet only links each firm's fleet page, so the search
+//      is what finds the yacht's own page there.
+// Returns { url, kind: 'listing' | 'search' }, or null with nothing to go on.
+export function yachtPageLink(yacht) {
+  const saved = parseLinks(yacht.otherLinks)[0];
+  if (saved) return { url: saved, kind: 'listing' };
+  if (!yacht.name) return null;
+  let site = '';
+  try {
+    site = yacht.sourceUrl ? new URL(yacht.sourceUrl).hostname.replace(/^www\./, '') : '';
+  } catch {
+    site = '';
+  }
+  const query = site ? `"${yacht.name}" site:${site}` : `"${yacht.name}" ${yacht.firm ?? ''} yacht charter`.trim();
+  return { url: `https://www.google.com/search?q=${encodeURIComponent(query)}`, kind: 'search' };
+}

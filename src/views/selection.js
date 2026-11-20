@@ -5,6 +5,7 @@
 import { getCollection, getSettings } from '../store.js';
 import { charterDays } from '../enquiries.js';
 import { checkPill } from '../yachts.js';
+import { yachtPageLink } from '../fleet.js';
 import { REGIONS, REGION_FOR_COUNTRY, filterYachts, quoteYacht, sortQuotes, yachtType } from '../selection.js';
 import { EMBARKATION_COUNTRIES, LINE_LABELS, VAT_NOTE } from '../calc/charter.js';
 import { CURRENCIES, ratesFromSettings, formatMoney, rateNote, groupThousands } from '../calc/currency.js';
@@ -86,6 +87,7 @@ export function render(container) {
     </form>
 
     <div class="notice">
+      <p>Select a yacht's name to see its photos and full details on the firm's website. To link straight to a yacht's own page, add it under "Other listing links" on its Fleet record.</p>
       <p>Rates are indicative "from" weekly rates as listed by each firm on the date shown. They are not an offer. Totals include VAT and APA but not the gratuity.</p>
       <p>${escapeHTML(VAT_NOTE)}</p>
     </div>
@@ -234,7 +236,7 @@ function cardHTML({ yacht, notStated, quote }, charter) {
     <article class="yacht-card" aria-labelledby="yacht-${escapeHTML(yacht.id)}">
       <div class="yacht-card__head">
         <div>
-          <h3 id="yacht-${escapeHTML(yacht.id)}">${escapeHTML(yacht.name)}</h3>
+          <h3 id="yacht-${escapeHTML(yacht.id)}">${nameLinkHTML(yacht)}</h3>
           <p class="cell-sub">${escapeHTML(yacht.firm)} · ${escapeHTML(specs)}</p>
           <p class="cell-sub">${escapeHTML(yacht.cruisingArea ?? 'Cruising area not stated')}</p>
         </div>
@@ -253,6 +255,15 @@ function cardHTML({ yacht, notStated, quote }, charter) {
         checked ${formatDate(yacht.dateChecked)}${yacht.notes ? `. Notes: ${escapeHTML(yacht.notes)}` : ''}
       </p>
     </article>`;
+}
+
+// The yacht's name, linked to its own page (or a search of its firm's
+// site for it), opening in a new tab.
+function nameLinkHTML(yacht) {
+  const link = yachtPageLink(yacht);
+  if (!link) return escapeHTML(yacht.name);
+  const hint = link.kind === 'listing' ? 'opens its listing in a new tab' : `finds it on the ${yacht.firm ?? 'firm'} website, in a new tab`;
+  return `<a href="${escapeHTML(link.url)}" target="_blank" rel="noopener" title="${escapeHTML(hint)}">${escapeHTML(yacht.name)}<span class="visually-hidden"> (${escapeHTML(hint)})</span></a>`;
 }
 
 // The headline figure: total in the chosen currency (two figures for the

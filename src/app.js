@@ -385,3 +385,10 @@ onChange(() => {
 buildNav();
 updateBanners();
 showScreen({ moveFocus: false });
+
+// Make the browser check for the newest version of every file each time
+// the site opens (see sw.js). Without it a phone can show the old site for
+// up to 10 minutes after an update.
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}

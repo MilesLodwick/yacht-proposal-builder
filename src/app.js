@@ -7,6 +7,7 @@
 
 import { load, loadDefaultSettings, onChange, getState, hasExampleData, clearExampleData, isStorageWorking, hasCollection, saveCollection } from './store.js';
 import { addStartupSamples } from './samples.js';
+import { keepUpToDate } from './update.js';
 import { KINDS, fetchPublished } from './yachts.js';
 import * as dataView from './views/data.js';
 import * as settingsView from './views/settings.js';
@@ -304,3 +305,6 @@ showScreen({ moveFocus: false });
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }
+
+// Reload onto a newer published version when there is one (see update.js).
+keepUpToDate();

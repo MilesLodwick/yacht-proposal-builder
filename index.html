@@ -30,6 +30,12 @@
     <nav id="site-nav" class="site-nav" aria-label="Main"></nav>
 
     <div class="content">
+    <!-- Shown by src/update.js when a newer version is published while a form has unsaved typing -->
+    <div id="update-banner" class="banner" role="status" hidden>
+      <p><strong>A newer version of this site is available.</strong> Save what you are working on, then update.</p>
+      <button type="button" class="button button--small" id="update-now">Update now</button>
+    </div>
+
     <!-- Shown by src/app.js only when sample records are present -->
     <div id="example-banner" class="banner" hidden>
       <p><strong>Example data.</strong> Clients, guests, crew and owners shown here are fictional.</p>

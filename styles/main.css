@@ -511,6 +511,19 @@ fieldset.section legend {
   background: var(--surface);
 }
 .yacht-card h3 { margin: 0 0 var(--space-1); }
+.yacht-card__body { min-width: 0; }
+
+/* Headline photo: on top on a phone, on the left from tablet width up */
+.yacht-card__photo { display: block; margin: calc(-1 * var(--space-4)) calc(-1 * var(--space-5)) var(--space-4); }
+.yacht-card__photo img {
+  display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover;
+  border-radius: var(--radius) var(--radius) 0 0; background: var(--accent-soft);
+}
+@media (min-width: 720px) {
+  .yacht-card--photo { display: grid; grid-template-columns: 260px 1fr; gap: var(--space-5); align-items: start; }
+  .yacht-card__photo { margin: 0; }
+  .yacht-card__photo img { border-radius: var(--radius); }
+}
 .yacht-card__head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3); }
 .yacht-card__total { text-align: right; display: flex; flex-direction: column; align-items: flex-end; }
 .total-label { font-size: 0.8125rem; color: var(--text-muted); }
@@ -518,6 +531,7 @@ fieldset.section legend {
 
 @media (max-width: 559px) {
   .yacht-card { padding: var(--space-4); }
+  .yacht-card__photo { margin: calc(-1 * var(--space-4)) calc(-1 * var(--space-4)) var(--space-4); }
   .yacht-card__total { text-align: left; align-items: flex-start; }
 }
 

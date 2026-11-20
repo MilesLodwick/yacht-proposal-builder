@@ -39,6 +39,7 @@ const openBreakdowns = new Set();
 
 // Each yacht's own page on its firm's website, loaded once.
 let yachtPages = {};
+let yachtPhotos = {};
 let yachtPagesLoaded = null;
 
 let resultsEl;
@@ -118,6 +119,15 @@ export function render(container) {
   form.addEventListener('input', (event) => onFormChange(form, event));
   form.addEventListener('change', (event) => onFormChange(form, event));
 
+  // A photo the firm has since taken down: drop it rather than show a
+  // broken image. ("error" does not bubble, so listen on the way down.)
+  resultsEl.addEventListener('error', (event) => {
+    if (event.target.tagName !== 'IMG') return;
+    const card = event.target.closest('.yacht-card');
+    event.target.closest('.yacht-card__photo')?.remove();
+    card?.classList.remove('yacht-card--photo');
+  }, true);
+
   // Remember open breakdowns. ("toggle" does not bubble, so listen while
   // the event travels down to the details element.)
   resultsEl.addEventListener('toggle', (event) => {
@@ -141,7 +151,7 @@ export function render(container) {
 
   drawResults();
 
-  yachtPagesLoaded ??= fetch('data/yacht-pages.json').then((r) => r.json()).then((d) => { yachtPages = d.pages; }).catch(() => {});
+  yachtPagesLoaded ??= fetch('data/yacht-pages.json').then((r) => r.json()).then((d) => { yachtPages = d.pages; yachtPhotos = d.images ?? {}; }).catch(() => {});
   yachtPagesLoaded.then(() => { if (resultsEl?.isConnected) drawResults(); });
 }
 
@@ -239,8 +249,11 @@ function cardHTML({ yacht, notStated, quote }, charter) {
 
   const notStatedPills = notStated.map((n) => `<span class="pill pill--neutral">${{ area: 'Area not stated', guests: 'Guests not stated', type: 'Type not stated' }[n]}</span>`).join('');
 
+  const photo = photoHTML(yacht);
   return `
-    <article class="yacht-card" aria-labelledby="yacht-${escapeHTML(yacht.id)}">
+    <article class="yacht-card${photo ? ' yacht-card--photo' : ''}" aria-labelledby="yacht-${escapeHTML(yacht.id)}">
+      ${photo}
+      <div class="yacht-card__body">
       <div class="yacht-card__head">
         <div>
           <h3 id="yacht-${escapeHTML(yacht.id)}">${nameLinkHTML(yacht)}</h3>
@@ -261,7 +274,22 @@ function cardHTML({ yacht, notStated, quote }, charter) {
         Source: ${yacht.sourceUrl ? `<a href="${escapeHTML(yacht.sourceUrl)}" target="_blank" rel="noopener">${escapeHTML(yacht.source ?? yacht.firm)}</a>` : escapeHTML(yacht.source ?? 'not stated')},
         checked ${formatDate(yacht.dateChecked)}${yacht.notes ? `. Notes: ${escapeHTML(yacht.notes)}` : ''}
       </p>
+      </div>
     </article>`;
+}
+
+// The yacht's headline photo from its page on the firm's website, linked
+// to that page. Loaded only as it scrolls into view, so a long list stays
+// quick on a phone. The name next to it is the link screen readers and
+// keyboards use, so the photo link is skipped by both.
+function photoHTML(yacht) {
+  const src = yachtPhotos[yacht.id];
+  if (!src) return '';
+  const link = yachtPageLink(yacht, yachtPages);
+  return `
+    <a class="yacht-card__photo" href="${escapeHTML(link.url)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+      <img src="${escapeHTML(src)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="800" height="450">
+    </a>`;
 }
 
 // The yacht's name, linked to its own page (or a search of its firm's

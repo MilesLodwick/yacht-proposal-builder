@@ -150,3 +150,12 @@ test('every yacht page link is on the website of the firm that lists the yacht',
     assert.equal(new URL(url).hostname, new URL(yacht.sourceUrl).hostname, `${id} links to another firm`);
   }
 });
+
+test('every yacht photo belongs to a yacht with a page, and is a web address', () => {
+  const { pages, images } = JSON.parse(read('../data/yacht-pages.json'));
+  assert.ok(Object.keys(images).length > 100);
+  for (const [id, url] of Object.entries(images)) {
+    assert.ok(pages[id], `${id} has a photo but no page`);
+    assert.match(url, /^https:\/\/\S+$/, `${id} photo is not a full https address`);
+  }
+});

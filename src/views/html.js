@@ -31,3 +31,21 @@ export function groupThousandsAsYouType(input) {
     input.setSelectionRange(pos, pos);
   });
 }
+
+// Link an embarkation and a disembarkation date box. When the
+// disembarkation box is opened while empty, it starts on the embarkation
+// date, so the calendar opens on that month rather than today. Dates
+// before embarkation are greyed out in the calendar.
+export function linkDateRange(startInput, endInput) {
+  const sync = () => {
+    endInput.min = startInput.value;
+  };
+  startInput.addEventListener('change', sync);
+  startInput.addEventListener('input', sync);
+  // "focus" fires before the calendar opens, whether by click, tap or keyboard.
+  endInput.addEventListener('focus', () => {
+    sync();
+    if (!endInput.value && startInput.value) endInput.value = startInput.value;
+  });
+  sync();
+}

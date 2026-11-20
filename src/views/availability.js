@@ -11,7 +11,7 @@ import {
 } from '../calc/availability.js';
 import { formatDate, formatDateRange, todayISO } from '../calc/dates.js';
 import { formatMoney } from '../calc/currency.js';
-import { escapeHTML } from './html.js';
+import { escapeHTML, linkDateRange } from './html.js';
 
 const COLLECTION = 'availability';
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -159,6 +159,7 @@ function renderYacht(container, yacht) {
   `);
 
   const form = container.querySelector('#entry-form');
+  linkDateRange(form.elements.start, form.elements.end);
   // Options need an expiry date; bookings can record the fee and broker
   // (used by the owner report).
   const showExpiry = () => {

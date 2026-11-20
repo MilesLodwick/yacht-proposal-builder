@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
   REGIONS, REGION_FOR_COUNTRY, matchesRegion, yachtType, rateSeason, seasonForDate,
-  filterYachts, quoteYacht, sortQuotes,
+  filterYachts, quoteYacht, sortQuotes, builders, rangeOf, sliderStep, weeklyRateIn,
 } from '../src/selection.js';
 import { importCSV } from '../src/yachts.js';
 import { ratesFromSettings } from '../src/calc/currency.js';
@@ -184,4 +184,45 @@ test('sort: within budget first, cheapest first, unquotable last', () => {
     { id: 'within-cheap', quote: quoteYacht(yacht({ rateFromWeekly: 200000 }), italyCharter, settings, noRates) },
   ];
   assert.deepEqual(sortQuotes(items).map((i) => i.id), ['within-cheap', 'within-dear', 'out', 'none']);
+});
+
+// ---- Search and sliders ------------------------------------------------------
+
+test('name search matches part of the name, ignoring case', () => {
+  const list = [yacht({ id: 'a', name: 'Lady S' }), yacht({ id: 'b', name: 'Lady Lara' }), yacht({ id: 'c', name: 'Whisper' })];
+  assert.deepEqual(filterYachts(list, { name: 'lady' }).map((r) => r.yacht.id), ['a', 'b']);
+  assert.deepEqual(filterYachts(list, { name: '  ' }).length, 3);
+});
+
+test('shipyard filter: matches, does not match, or not stated', () => {
+  const list = [yacht({ id: 'a', builder: 'Feadship' }), yacht({ id: 'b', builder: 'Benetti' }), yacht({ id: 'c', builder: null })];
+  const r = filterYachts(list, { builder: 'Feadship' });
+  assert.deepEqual(r.map((x) => [x.yacht.id, x.notStated]), [['a', []], ['c', ['builder']]]);
+  assert.deepEqual(filterYachts(list, { builder: 'Feadship', includeNotStated: false }).map((x) => x.yacht.id), ['a']);
+  assert.deepEqual(builders(list), ['Benetti', 'Feadship']);
+});
+
+test('length and year sliders keep yachts inside the range, ends included', () => {
+  const list = [yacht({ id: 'a', lengthM: 40, year: 2010 }), yacht({ id: 'b', lengthM: 60, year: 2020 }), yacht({ id: 'c', lengthM: null, year: 2015 })];
+  assert.deepEqual(filterYachts(list, { lengthRange: { min: 40, max: 50 } }).map((x) => [x.yacht.id, x.notStated]), [['a', []], ['c', ['length']]]);
+  assert.deepEqual(filterYachts(list, { yearRange: { min: 2015, max: 2020 }, includeNotStated: false }).map((x) => x.yacht.id), ['b', 'c']);
+});
+
+test('rate slider compares each yacht\'s weekly rate in the chosen currency', () => {
+  const list = [yacht({ id: 'eur', rateFromWeekly: 400000, currency: 'EUR' }), yacht({ id: 'usd', rateFromWeekly: 400000, currency: 'USD' }), yacht({ id: 'none', rateFromWeekly: null })];
+  // USD 400,000 is EUR 320,000 at 1.25.
+  assert.equal(weeklyRateIn(list[1], 'EUR', testRates), 320000);
+  const r = filterYachts(list, { rateRange: { min: 300000, max: 350000 }, rateCurrency: 'EUR', rates: testRates });
+  assert.deepEqual(r.map((x) => [x.yacht.id, x.notStated]), [['usd', []], ['none', ['rate']]]);
+  // Without a USD exchange rate the USD yacht cannot be compared, so it counts as not stated.
+  assert.deepEqual(filterYachts(list, { rateRange: { min: 300000, max: 350000 }, rateCurrency: 'EUR', rates: noRates }).map((x) => x.yacht.id), ['usd', 'none']);
+});
+
+test('slider ends are rounded outwards and steps are round numbers', () => {
+  assert.deepEqual(rangeOf([23.99, 126.2, null], 1), { min: 23, max: 127 });
+  assert.equal(rangeOf([null], 1), null);
+  assert.equal(sliderStep(1150000), 20000);
+  assert.equal(sliderStep(103), 2);
+  assert.equal(sliderStep(95), 1);
+  assert.equal(sliderStep(0), 1);
 });

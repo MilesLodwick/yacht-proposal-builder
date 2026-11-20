@@ -6,7 +6,7 @@ import { getCollection, getSettings } from '../store.js';
 import { charterDays } from '../enquiries.js';
 import { checkPill } from '../yachts.js';
 import { yachtPageLink } from '../fleet.js';
-import { REGIONS, REGION_FOR_COUNTRY, filterYachts, quoteYacht, sortQuotes, yachtType } from '../selection.js';
+import { REGIONS, REGION_FOR_COUNTRY, filterYachts, quoteYacht, sortQuotes, yachtType, builders, rangeOf, sliderStep, weeklyRateIn } from '../selection.js';
 import { EMBARKATION_COUNTRIES, LINE_LABELS, VAT_NOTE } from '../calc/charter.js';
 import { CURRENCIES, ratesFromSettings, formatMoney, rateNote, groupThousands } from '../calc/currency.js';
 import { formatDate } from '../calc/dates.js';
@@ -28,7 +28,34 @@ const state = {
   type: '',
   includeNotStated: true,
   hideOverBudget: false,
+  name: '',
+  builder: '',
+  // Slider ranges, { min, max }, or null when the slider is at its full extent.
+  ranges: { length: null, rate: null, year: null },
 };
+
+// The range sliders. "values" reads the figure from a yacht; the slider's
+// ends are the lowest and highest figures in the list.
+const SLIDERS = [
+  { key: 'length', label: 'Length', unit: 'm', values: (y) => y.lengthM, format: (v) => `${v} m`, step: () => 1 },
+  {
+    key: 'rate', label: 'Weekly rate', unit: 'weekly rate',
+    values: (y, rates) => weeklyRateIn(y, state.displayCurrency, rates),
+    format: (v) => formatMoney(v, state.displayCurrency),
+    step: (span) => sliderStep(span),
+  },
+  { key: 'year', label: 'Year built', unit: 'year', values: (y) => y.year, format: (v) => String(v), step: () => 1 },
+];
+
+// Lowest and highest value and the step for one slider, from the whole list.
+function sliderBounds(def) {
+  const rates = ratesFromSettings(getSettings());
+  const values = getCollection('yachts').map((y) => def.values(y, rates));
+  const rough = rangeOf(values, 1);
+  if (!rough) return null;
+  const step = def.step(rough.max - rough.min);
+  return { ...rangeOf(values, step), step };
+}
 
 // Delivery, redelivery and extras typed in for a particular yacht.
 const perYacht = new Map();
@@ -72,15 +99,23 @@ export function render(container) {
         <label for="greekEligible">Eligible for Greece's reduced charter VAT rate</label>
       </div>
 
-      <h2>Filter and display</h2>
+      <div class="filter-panel">
+      <h2>Find a yacht</h2>
+      ${input('name', 'Search by name', 'search', 'placeholder="Yacht name" autocomplete="off"')}
       <div class="form-grid form-grid--3">
+        ${select('type', 'Yacht type', [['', 'Any type'], ['Motor', 'Motor'], ['Sail', 'Sail']])}
+        ${select('builder', 'Shipyard', [['', 'Any shipyard'], ...builders(getCollection('yachts')).map((b) => [b, b])])}
         ${select('regionId', 'Cruising region', [['', 'Any region'], ...REGIONS.map((r) => [r.id, r.label])])}
-        ${select('type', 'Type', [['', 'Any type'], ['Motor', 'Motor'], ['Sail', 'Sail']])}
-        ${select('displayCurrency', 'Show totals in', CURRENCIES.map((c) => [c, c]))}
+      </div>
+      <div class="slider-grid">
+        ${SLIDERS.map((def) => `<div data-slider="${def.key}">${sliderHTML(def)}</div>`).join('')}
+      </div>
+      <div class="form-grid form-grid--3">
+        ${select('displayCurrency', 'Show totals and rates in', CURRENCIES.map((c) => [c, c]))}
       </div>
       <div class="field field--tick">
         <input type="checkbox" id="includeNotStated" name="includeNotStated" ${state.includeNotStated ? 'checked' : ''}>
-        <label for="includeNotStated">Include yachts where the area, guests or type is not stated</label>
+        <label for="includeNotStated">Include yachts that do not state a detail you are filtering on</label>
       </div>
       <div class="field field--tick">
         <input type="checkbox" id="hideOverBudget" name="hideOverBudget" ${state.hideOverBudget ? 'checked' : ''}>
@@ -88,6 +123,7 @@ export function render(container) {
       </div>
       <div class="button-row">
         <button type="submit" class="button" id="show-yachts">Show yachts</button>
+      </div>
       </div>
     </form>
 
@@ -114,6 +150,17 @@ export function render(container) {
     drawResults();
     summaryEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     summaryEl.focus({ preventScroll: true });
+  });
+
+  // Reset buttons put a slider back to its full extent.
+  form.addEventListener('click', (event) => {
+    const reset = event.target.closest('[data-reset]');
+    if (!reset) return;
+    const key = reset.dataset.reset;
+    state.ranges[key] = null;
+    redrawSlider(form, key);
+    drawResults();
+    form.querySelector(`#${key}Min`)?.focus();
   });
 
   form.addEventListener('input', (event) => onFormChange(form, event));
@@ -156,6 +203,12 @@ export function render(container) {
 }
 
 function onFormChange(form, event) {
+  // A slider handle moved.
+  if (event.target.dataset.range) {
+    readSlider(form, event.target);
+    drawResults();
+    return;
+  }
   // Choosing an enquiry fills in the charter details from it.
   if (event.target.name === 'enquiryId' && event.type === 'change') {
     state.enquiryId = form.elements.enquiryId.value;
@@ -169,11 +222,19 @@ function onFormChange(form, event) {
       for (const name of ['startDate', 'days', 'guests', 'countryId', 'budget', 'budgetCurrency', 'displayCurrency', 'regionId']) {
         form.elements[name].value = state[name];
       }
+      state.ranges.rate = null;
+      redrawSlider(form, 'rate');
       form.elements.greekEligible.checked = state.greekEligible;
     }
   } else {
-    for (const name of ['startDate', 'days', 'guests', 'countryId', 'budget', 'budgetCurrency', 'displayCurrency', 'regionId', 'type']) {
+    const currencyBefore = state.displayCurrency;
+    for (const name of ['startDate', 'days', 'guests', 'countryId', 'budget', 'budgetCurrency', 'displayCurrency', 'regionId', 'type', 'name', 'builder']) {
       state[name] = form.elements[name].value;
+    }
+    // Rates are shown in the display currency, so its slider starts again.
+    if (state.displayCurrency !== currencyBefore) {
+      state.ranges.rate = null;
+      redrawSlider(form, 'rate');
     }
     for (const name of ['greekEligible', 'includeNotStated', 'hideOverBudget']) state[name] = form.elements[name].checked;
   }
@@ -210,6 +271,9 @@ function drawResults() {
 
   const matches = filterYachts(getCollection('yachts'), {
     guests, regionId: state.regionId || null, type: state.type || null, includeNotStated: state.includeNotStated,
+    name: state.name, builder: state.builder || null,
+    lengthRange: state.ranges.length, yearRange: state.ranges.year,
+    rateRange: state.ranges.rate, rateCurrency: state.displayCurrency, rates,
   });
   let items = matches.map(({ yacht, notStated }) => ({
     yacht, notStated, quote: quoteYacht(yacht, charter, settings, rates, extrasFor(yacht.id)),
@@ -236,6 +300,11 @@ function drawResults() {
   `;
 }
 
+const NOT_STATED_LABELS = {
+  area: 'Area not stated', guests: 'Guests not stated', type: 'Type not stated', builder: 'Shipyard not stated',
+  length: 'Length not stated', rate: 'Rate not comparable', year: 'Year not stated',
+};
+
 function cardHTML({ yacht, notStated, quote }, charter) {
   const check = checkPill(yacht);
   const specs = [
@@ -247,7 +316,7 @@ function cardHTML({ yacht, notStated, quote }, charter) {
     yachtType(yacht),
   ].filter(Boolean).join(' · ');
 
-  const notStatedPills = notStated.map((n) => `<span class="pill pill--neutral">${{ area: 'Area not stated', guests: 'Guests not stated', type: 'Type not stated' }[n]}</span>`).join('');
+  const notStatedPills = notStated.map((n) => `<span class="pill pill--neutral">${NOT_STATED_LABELS[n]}</span>`).join('');
 
   const photo = photoHTML(yacht);
   return `
@@ -356,6 +425,69 @@ function extraBox(inputId, yachtId, key, label, value) {
       <label for="${escapeHTML(inputId)}">${escapeHTML(label)}</label>
       <input id="${escapeHTML(inputId)}" type="text" inputmode="numeric" data-yacht="${escapeHTML(yachtId)}" data-extra="${key}" value="${value ? value : ''}">
     </div>`;
+}
+
+// ---------------------------------------------------------------------------
+// Range sliders
+// ---------------------------------------------------------------------------
+
+// Two slider handles on one track: the lowest and highest value wanted.
+// Each handle is a real range input with its own label, so it works with
+// a keyboard (arrow keys) and a screen reader.
+function sliderHTML(def) {
+  const b = sliderBounds(def);
+  if (!b) return '';
+  const r = state.ranges[def.key] ?? b;
+  const id = (end) => `${def.key}${end}`;
+  return `
+    <fieldset class="range-field">
+      <legend>${escapeHTML(def.label)}</legend>
+      <div class="dual-range" style="${fillStyle(r, b)}">
+        <label class="visually-hidden" for="${id('Min')}">Lowest ${escapeHTML(def.label.toLowerCase())}</label>
+        <input type="range" id="${id('Min')}" data-range="${def.key}" data-end="min" min="${b.min}" max="${b.max}" step="${b.step}" value="${r.min}" aria-valuetext="${escapeHTML(def.format(r.min))}">
+        <label class="visually-hidden" for="${id('Max')}">Highest ${escapeHTML(def.label.toLowerCase())}</label>
+        <input type="range" id="${id('Max')}" data-range="${def.key}" data-end="max" min="${b.min}" max="${b.max}" step="${b.step}" value="${r.max}" aria-valuetext="${escapeHTML(def.format(r.max))}">
+      </div>
+      <div class="range-field__foot">
+        <output for="${id('Min')} ${id('Max')}" data-out="${def.key}">${escapeHTML(rangeText(def, r))}</output>
+        <button type="button" class="button button--small range-reset" data-reset="${def.key}">Reset</button>
+      </div>
+    </fieldset>`;
+}
+
+function rangeText(def, r) {
+  return `${def.format(r.min)} to ${def.format(r.max)}`;
+}
+
+// The filled part of the track, between the two handles.
+function fillStyle(r, b) {
+  const pct = (v) => (b.max === b.min ? 0 : ((v - b.min) / (b.max - b.min)) * 100);
+  return `--lo:${pct(r.min)}%;--hi:${pct(r.max)}%`;
+}
+
+// Read both handles of a slider into the state. The handles cannot cross:
+// the one being moved stops at the other.
+function readSlider(form, moved) {
+  const key = moved.dataset.range;
+  const def = SLIDERS.find((d) => d.key === key);
+  const b = sliderBounds(def);
+  const lo = form.querySelector(`#${key}Min`);
+  const hi = form.querySelector(`#${key}Max`);
+  if (Number(lo.value) > Number(hi.value)) {
+    if (moved === lo) lo.value = hi.value;
+    else hi.value = lo.value;
+  }
+  const r = { min: Number(lo.value), max: Number(hi.value) };
+  state.ranges[key] = r.min <= b.min && r.max >= b.max ? null : r;
+  lo.setAttribute('aria-valuetext', def.format(r.min));
+  hi.setAttribute('aria-valuetext', def.format(r.max));
+  lo.parentElement.setAttribute('style', fillStyle(r, b));
+  form.querySelector(`[data-out="${key}"]`).textContent = rangeText(def, r);
+}
+
+function redrawSlider(form, key) {
+  const def = SLIDERS.find((d) => d.key === key);
+  form.querySelector(`[data-slider="${key}"]`).innerHTML = sliderHTML(def);
 }
 
 // ---------------------------------------------------------------------------

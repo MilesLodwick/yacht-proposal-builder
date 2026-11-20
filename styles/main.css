@@ -498,6 +498,71 @@ fieldset.section legend {
 }
 
 /* ==========================================================================
+   Yacht selection: the blue "Find a yacht" panel and range sliders
+   ========================================================================== */
+
+.filter-panel {
+  --focus: var(--on-accent);          /* focus ring that shows on the blue */
+  margin-top: var(--space-5);
+  padding: var(--space-5);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.filter-panel h2 { margin-top: 0; color: inherit; }
+.filter-panel .field input,
+.filter-panel .field select { background: var(--surface); border-color: var(--surface); }
+.filter-panel .field--tick input[type="checkbox"] { accent-color: var(--surface); }
+.filter-panel .button-row { margin-top: var(--space-4); }
+.filter-panel .button[type="submit"] { background: var(--surface); border-color: var(--surface); color: var(--accent); }
+.filter-panel .button[type="submit"]:hover { background: var(--accent-soft); }
+@media (max-width: 559px) {
+  .filter-panel { padding: var(--space-4); margin-left: calc(-1 * var(--space-2)); margin-right: calc(-1 * var(--space-2)); }
+}
+
+.slider-grid { display: grid; gap: 0 var(--space-6); }
+@media (min-width: 640px) { .slider-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1100px) { .slider-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+.range-field { border: 0; padding: 0; margin: 0 0 var(--space-4); min-width: 0; }
+.range-field legend { font-weight: 500; padding: 0; margin-bottom: var(--space-1); }
+.range-field__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.range-field output { font-family: var(--font-figures); font-size: 0.9375rem; }
+.range-reset { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+/* Two range inputs laid over one track. The track is drawn once behind
+   them; the part between the handles (--lo to --hi) is filled. */
+.dual-range { position: relative; height: 36px; }
+.dual-range::before {
+  content: "";
+  position: absolute; left: 12px; right: 12px; top: 50%;
+  height: 6px; transform: translateY(-50%); border-radius: 3px;
+  background: linear-gradient(to right,
+    var(--accent-hover) var(--lo), var(--accent-soft) var(--lo),
+    var(--accent-soft) var(--hi), var(--accent-hover) var(--hi));
+}
+.dual-range input[type="range"] {
+  position: absolute; inset: 0; width: 100%; height: 36px; margin: 0;
+  background: none; pointer-events: none;
+  -webkit-appearance: none; appearance: none;
+}
+.dual-range input[type="range"]:focus-visible { outline: none; }
+.dual-range input[type="range"]::-webkit-slider-runnable-track { height: 36px; background: transparent; }
+.dual-range input[type="range"]::-moz-range-track { background: transparent; }
+.dual-range input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none; pointer-events: auto; cursor: pointer;
+  width: 24px; height: 24px; margin-top: 6px; border-radius: 50%;
+  background: var(--surface); border: 3px solid var(--accent-hover);
+}
+.dual-range input[type="range"]::-moz-range-thumb {
+  pointer-events: auto; cursor: pointer; box-sizing: border-box;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--surface); border: 3px solid var(--accent-hover);
+}
+.dual-range input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--on-accent); }
+.dual-range input[type="range"]:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(--on-accent); }
+
+/* ==========================================================================
    Yacht selection results
    ========================================================================== */
 

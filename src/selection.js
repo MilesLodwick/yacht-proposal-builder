@@ -95,13 +95,75 @@ export function weeklyRateFor(yacht, startDate) {
 // Filtering
 // ---------------------------------------------------------------------------
 
-// criteria: { guests, regionId, type, includeNotStated }
+// The listed weekly rate converted into another currency, for the rate
+// slider. null when there is no rate or no exchange rate to convert with.
+export function weeklyRateIn(yacht, currency, rates) {
+  const weekly = weeklyRateFor(yacht, null);
+  if (!weekly || !yacht.currency) return null;
+  return convert(weekly.rate, yacht.currency, currency, rates);
+}
+
+// The builders (shipyards) in the list, A to Z, for the Shipyard filter.
+export function builders(yachts) {
+  return [...new Set(yachts.map((y) => y.builder).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+}
+
+// Lowest and highest of some values, rounded outwards to a whole step, so
+// a slider's ends sit on round numbers. null when there are no values.
+// rangeOf([24, 126.2], 1) -> { min: 24, max: 127 }
+export function rangeOf(values, step) {
+  const known = values.filter((v) => v != null && Number.isFinite(v));
+  if (!known.length) return null;
+  return { min: Math.floor(Math.min(...known) / step) * step, max: Math.ceil(Math.max(...known) / step) * step };
+}
+
+// A round step that splits a span into roughly a hundred slider positions:
+// 1, 2 or 5 times a power of ten. sliderStep(1150000) -> 10000
+export function sliderStep(span) {
+  if (!(span > 0)) return 1;
+  const rough = span / 100;
+  const power = 10 ** Math.floor(Math.log10(rough));
+  const nice = [1, 2, 5, 10].find((m) => m * power >= rough);
+  return Math.max(1, nice * power);
+}
+
+// Does a value fall inside a slider range? true, false, or null when the
+// yacht does not state the value. No range set means everything matches.
+function inRange(value, range) {
+  if (!range) return true;
+  if (value == null) return null;
+  return value >= range.min && value <= range.max;
+}
+
+// criteria: { guests, regionId, type, includeNotStated, name, builder,
+//             lengthRange, yearRange, rateRange, rateCurrency, rates }
+// Ranges are { min, max }, or null when the slider is at its full extent.
+// The rate range is in rateCurrency; each yacht's rate is converted.
 // Returns the yachts that match, each with "notStated": the filters it
 // could not be checked against (e.g. ['area', 'guests']).
-export function filterYachts(yachts, { guests = null, regionId = null, type = null, includeNotStated = true }) {
+export function filterYachts(yachts, {
+  guests = null, regionId = null, type = null, includeNotStated = true,
+  name = '', builder = null, lengthRange = null, yearRange = null, rateRange = null, rateCurrency = 'EUR', rates = null,
+}) {
+  const searchFor = String(name ?? '').trim().toLowerCase();
   const results = [];
   for (const yacht of yachts) {
     const notStated = [];
+
+    if (searchFor && !String(yacht.name ?? '').toLowerCase().includes(searchFor)) continue;
+
+    if (builder) {
+      if (!yacht.builder) notStated.push('builder');
+      else if (yacht.builder !== builder) continue;
+    }
+
+    const checks = [
+      ['length', inRange(yacht.lengthM, lengthRange)],
+      ['year', inRange(yacht.year, yearRange)],
+      ['rate', rateRange ? inRange(weeklyRateIn(yacht, rateCurrency, rates), rateRange) : true],
+    ];
+    if (checks.some(([, ok]) => ok === false)) continue;
+    for (const [what, ok] of checks) if (ok === null) notStated.push(what);
 
     if (guests) {
       if (yacht.guests == null) notStated.push('guests');

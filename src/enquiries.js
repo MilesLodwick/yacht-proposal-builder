@@ -171,6 +171,7 @@ export function buildSamples(templates, today) {
       status: t.status,
       lostReason: t.lostReason ?? null,
       notes: t.notes ?? null,
+      ...(t.addedIn ? { addedIn: t.addedIn } : {}),
     };
   });
 }

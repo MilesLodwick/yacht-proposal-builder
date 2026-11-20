@@ -9,8 +9,60 @@
       "minLength": 14,
       "maxLength": 18,
       "minYear": 2005,
-      "boatIds": ["berthon-hallberg-rassy-44-carioca-ii", "berthon-discovery-55-3", "berthon-oyster-54"],
+      "boatIds": [
+        "berthon-hallberg-rassy-44-carioca-ii",
+        "berthon-discovery-55-3",
+        "berthon-oyster-54"
+      ],
       "notes": "Wants a yacht for an Atlantic crossing with family. Prefers a centre cockpit."
+    },
+    {
+      "buyerName": "Example buyer (fictional): family motor cruiser",
+      "currency": "EUR",
+      "budget": 600000,
+      "type": "Motor",
+      "minLength": 10,
+      "maxLength": 18,
+      "minYear": 2000,
+      "boatIds": [
+        "berthon-comitti-breva-35",
+        "berthon-seaward-42",
+        "berthon-astondoa-39"
+      ],
+      "notes": "First boat for a family moving up from a RIB. Wants to keep her on the Solent and cruise to France. Budget in euros, so sterling and dollar prices are converted.",
+      "addedIn": "2026-11-20"
+    },
+    {
+      "buyerName": "Example buyer (fictional): classic sailing yacht",
+      "currency": "GBP",
+      "budget": 250000,
+      "type": "Sail",
+      "minLength": 12,
+      "maxLength": 24,
+      "minYear": null,
+      "boatIds": [
+        "berthon-nautor-swan-43-java-of-london",
+        "berthon-nautor-swan-44",
+        "berthon-norseman-447"
+      ],
+      "notes": "Loves older Swans. Happy to take on a project, so running costs on the shortlist matter as much as the price.",
+      "addedIn": "2026-11-20"
+    },
+    {
+      "buyerName": "Example buyer (fictional): long-range motor yacht",
+      "currency": "USD",
+      "budget": 4000000,
+      "type": "Motor",
+      "minLength": 18,
+      "maxLength": 40,
+      "minYear": null,
+      "boatIds": [
+        "berthon-ocean-voyager-70",
+        "berthon-pearl-62",
+        "berthon-fleming-58"
+      ],
+      "notes": "Wants to cruise the US East Coast and Bahamas with family. Only four boats in the list fit, which shows how the brief narrows the market.",
+      "addedIn": "2026-11-20"
     }
   ]
 }

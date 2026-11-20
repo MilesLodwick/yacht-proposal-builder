@@ -5,7 +5,7 @@
 // work on GitHub Pages with no server set-up, and the browser's Back button
 // works as you would expect.
 
-import { load, loadDefaultSettings, onChange, getState, hasExampleData, clearExampleData, isStorageWorking, hasCollection, saveCollection, getCollection } from './store.js';
+import { load, loadDefaultSettings, onChange, getState, hasExampleData, clearExampleData, isStorageWorking, hasCollection, saveCollection, getCollection, newSamplesToAdd, getOfferedSamples, markSamplesOffered } from './store.js';
 import { KINDS, fetchPublished } from './yachts.js';
 import { buildSamples } from './enquiries.js';
 import { todayISO } from './calc/dates.js';
@@ -309,6 +309,20 @@ if (!hasCollection('enquiries')) {
     saveCollection('enquiries', buildSamples(enquiries, todayISO()));
   }
 }
+// Samples added in a later version: give them to a browser that already
+// has the earlier samples (once each). Skipped if the user has cleared the
+// example data.
+async function topUpSamples(name, file, key, build) {
+  if (!hasCollection(name) || !getCollection(name).some((r) => r.example)) return;
+  const response = await fetch(file, { cache: 'no-cache' });
+  if (!response.ok) return;
+  const samples = build((await response.json())[key]);
+  const toAdd = newSamplesToAdd(getCollection(name), samples, getOfferedSamples());
+  if (toAdd.length) saveCollection(name, [...getCollection(name), ...toAdd]);
+  markSamplesOffered(samples.filter((s) => s.addedIn).map((s) => s.id));
+}
+await topUpSamples('enquiries', 'data/sample-enquiries.json', 'enquiries', (t) => buildSamples(t, todayISO()));
+
 if (!hasCollection('itineraries')) {
   const response = await fetch('data/sample-itineraries.json', { cache: 'no-cache' });
   if (response.ok) {
@@ -344,6 +358,7 @@ if (!hasCollection('booklets')) {
     saveCollection('booklets', buildSampleBooklets(booklets, todayISO()));
   }
 }
+await topUpSamples('buyerBriefs', 'data/sample-briefs.json', 'briefs', buildSampleBriefs);
 if (!hasCollection('buyerBriefs')) {
   const response = await fetch('data/sample-briefs.json', { cache: 'no-cache' });
   if (response.ok) {

@@ -172,6 +172,16 @@ export function formatSettingValue(setting) {
   return `${number} ${setting.unit}`;
 }
 
+// Sample records added in a later version of the app, for a browser that
+// already has data. samples: the built sample records, each with "addedIn"
+// set if it was added later. offered: ids already offered to this browser.
+// A sample is added once, only if it is new, has not been offered before and
+// is not already there; one the user then deletes never comes back.
+export function newSamplesToAdd(records, samples, offered) {
+  const have = new Set(records.map((r) => r.id));
+  return samples.filter((s) => s.addedIn && !offered.includes(s.id) && !have.has(s.id));
+}
+
 // ---------------------------------------------------------------------------
 // Browser storage (uses localStorage, so not run in the Node tests)
 // ---------------------------------------------------------------------------
@@ -224,6 +234,24 @@ export function getState() {
 
 // True once a collection has ever been saved, even if it is now empty.
 // Used to load the published yacht list on a first visit only.
+// Ids of sample records already offered to this browser (see
+// newSamplesToAdd). Kept apart from the user's data, so it is never exported.
+const OFFERED_KEY = `${STORAGE_KEY}-samples-offered`;
+export function getOfferedSamples() {
+  try {
+    return JSON.parse(localStorage.getItem(OFFERED_KEY) ?? '[]');
+  } catch {
+    return [];
+  }
+}
+export function markSamplesOffered(ids) {
+  try {
+    localStorage.setItem(OFFERED_KEY, JSON.stringify([...new Set([...getOfferedSamples(), ...ids])]));
+  } catch {
+    // Storage blocked: nothing to remember.
+  }
+}
+
 export function hasCollection(name) {
   return name in state.collections;
 }

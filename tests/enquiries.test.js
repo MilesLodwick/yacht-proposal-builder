@@ -140,3 +140,14 @@ test('samples include one New enquiry overdue a reply, for the dashboard', () =>
   const samples = buildSamples(templates, '2026-11-17');
   assert.ok(samples.some((s) => needsReply(s, '2026-11-17T12:00', 24)));
 });
+
+test('every sample enquiry is valid and fictional-looking data is complete', () => {
+  const { enquiries } = JSON.parse(readFileSync(new URL('../data/sample-enquiries.json', import.meta.url), 'utf8'));
+  const built = buildSamples(enquiries, '2026-11-20');
+  assert.ok(built.length >= 16);
+  assert.equal(new Set(built.map((e) => e.id)).size, built.length);
+  for (const e of built) {
+    const v = validateEnquiry({ ...e, budget: e.budget == null ? '' : String(e.budget) });
+    assert.ok(v.ok, `${e.clientName}: ${JSON.stringify(v.errors)}`);
+  }
+});

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createEmptyState, validateImport, hasExampleData, removeExampleData, countRecords } from '../src/store.js';
+import { createEmptyState, validateImport, hasExampleData, removeExampleData, countRecords, newSamplesToAdd } from '../src/store.js';
 
 // A small saved state with one sample enquiry and one real one.
 function sampleState() {
@@ -67,4 +67,14 @@ test('removeExampleData does not change the original', () => {
 
 test('countRecords counts each kind of record', () => {
   assert.deepEqual(countRecords(sampleState()), { enquiries: 2, yachts: 1 });
+});
+
+test('later samples are added once to a browser that already has data', () => {
+  const samples = [{ id: 's1' }, { id: 's2', addedIn: '2026-11-20' }, { id: 's3', addedIn: '2026-11-20' }];
+  // Has the first sample only: the two new ones are added, the old one is not re-added.
+  assert.deepEqual(newSamplesToAdd([{ id: 'mine' }], samples, []).map((s) => s.id), ['s2', 's3']);
+  // Already offered (the user deleted s3): nothing comes back.
+  assert.deepEqual(newSamplesToAdd([{ id: 's2' }], samples, ['s2', 's3']), []);
+  // Already there: not added twice.
+  assert.deepEqual(newSamplesToAdd([{ id: 's2' }], samples, []).map((s) => s.id), ['s3']);
 });

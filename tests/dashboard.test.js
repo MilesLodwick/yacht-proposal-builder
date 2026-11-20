@@ -46,9 +46,13 @@ test('red items come before amber ones', () => {
 });
 
 test('1. enquiries not answered within 24 hours', () => {
-  // Lena Hartmann wrote 2 days ago at 16:05 (43 hours by noon today); the
-  // Ashworths wrote this morning, so they are not overdue yet.
-  assert.deepEqual(find(/^Reply to/).map((t) => t.text), ['Reply to Lena Hartmann: enquiry waiting 43 hours.']);
+  // The Pembertons wrote 3 days ago and Lena Hartmann 2 days ago (43 hours
+  // by noon today), longest wait first; the Ashworths wrote this morning,
+  // so they are not overdue yet.
+  assert.deepEqual(find(/^Reply to/).map((t) => t.text), [
+    'Reply to Charlotte and James Pemberton: enquiry waiting 2 days.',
+    'Reply to Lena Hartmann: enquiry waiting 43 hours.',
+  ]);
 });
 
 test('2. options expiring, expired, and calendar clashes', () => {
@@ -82,9 +86,10 @@ test('every item links to the screen where it is dealt with', () => {
 
 test('pipelines: enquiries, listings, deals and yacht management', () => {
   const p = pipelines(data, settings, TODAY);
-  assert.equal(p.charter.total, 10);
-  // Two New enquiries (Ashworth, Hartmann), then one sample at each other stage.
-  assert.deepEqual(p.charter.counts.map((c) => c.count), [2, 1, 1, 1, 1, 1, 1, 1, 1]);
+  assert.equal(p.charter.total, 16);
+  // New: Ashworth, Hartmann, Pemberton, Delacroix, Greaves. Two each at
+  // Proposal sent, Option held and Lost; one at every other stage.
+  assert.deepEqual(p.charter.counts.map((c) => c.count), [5, 2, 2, 1, 1, 1, 1, 1, 2]);
   assert.deepEqual(p.sales.counts.map((c) => c.count), [134, 0, 0, 0]);
   assert.deepEqual(p.deals.counts, [{ status: 'Next: Survey', count: 1 }]);
   assert.deepEqual(p.management.compliance, { red: 1, amber: 4, green: 5 });

@@ -127,3 +127,20 @@ test('sold or withdrawn needs a date, after the listing date', () => {
   assert.ok(validateStatus({ status: 'Sold', listedOn: '2026-06-01', statusDate: '2026-05-01' }, TODAY).errors.statusDate);
   assert.ok(validateStatus({ status: 'Active', listedOn: '2027-01-01' }, TODAY).errors.listedOn);
 });
+
+test('sale boat pages and photos belong to boats in the list, on the selling firm\'s site', () => {
+  const { pages, images } = JSON.parse(readFileSync(new URL('../data/sale-pages.json', import.meta.url), 'utf8'));
+  const boats = importCSV('forSale', readFileSync(new URL('../data/for-sale.csv', import.meta.url), 'utf8')).records;
+  const byId = new Map(boats.map((b) => [b.id, b]));
+  const siteFor = { Ancasta: 'ancasta.com', Berthon: 'www.berthoninternational.com' };
+  assert.ok(Object.keys(pages).length >= 30);
+  for (const [id, url] of Object.entries(pages)) {
+    const boat = byId.get(id);
+    assert.ok(boat, `${id} is not a boat in the list`);
+    assert.equal(new URL(url).hostname, siteFor[boat.firm], `${id} links to the wrong site`);
+  }
+  for (const [id, url] of Object.entries(images)) {
+    assert.ok(pages[id], `${id} has a photo but no page`);
+    assert.match(url, /^https:\/\/\S+$/);
+  }
+});

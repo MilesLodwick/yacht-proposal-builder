@@ -10,6 +10,7 @@ import { matchingBoats, shortlistRow, validateBrief } from '../buyer.js';
 import { salesSettings, ASKING_NOT_SOLD } from '../calc/sales.js';
 import { CURRENCIES, ratesFromSettings, formatMoney, rateNote } from '../calc/currency.js';
 import { formatDate, todayISO } from '../calc/dates.js';
+import { boatPhoto } from './boat-photos.js';
 import { escapeHTML } from './html.js';
 
 const COLLECTION = 'buyerBriefs';
@@ -117,7 +118,7 @@ function renderBrief(container, saved) {
     container.querySelector('#matches').innerHTML = matches.slice(0, 80).map(({ boat, price }) => `
       <div class="field field--tick">
         <input type="checkbox" id="pick-${escapeHTML(boat.id)}" value="${escapeHTML(boat.id)}" ${brief.boatIds.includes(boat.id) ? 'checked' : ''}>
-        <label for="pick-${escapeHTML(boat.id)}">${escapeHTML(boat.name)}
+        ${boatPhoto(boat.id)}<label for="pick-${escapeHTML(boat.id)}">${escapeHTML(boat.name)}
           <span class="muted">${[boat.lengthM && `${boat.lengthM} m`, boat.year, price != null ? formatMoney(price, brief.currency) : null].filter(Boolean).join(', ')}</span></label>
       </div>`).join('') || '<p class="muted">No boats match. Widen the brief.</p>';
   };
@@ -153,7 +154,7 @@ function renderBrief(container, saved) {
             </tr></thead>
             <tbody>
               ${rows.map((r) => `<tr>
-                <th scope="row">${escapeHTML(r.boat.name)}<span class="cell-sub">${escapeHTML(r.boat.firm)}${r.boat.location ? `, ${escapeHTML(r.boat.location)}` : ''}</span></th>
+                <th scope="row">${boatPhoto(r.boat.id)}${escapeHTML(r.boat.name)}<span class="cell-sub">${escapeHTML(r.boat.firm)}${r.boat.location ? `, ${escapeHTML(r.boat.location)}` : ''}</span></th>
                 <td>${r.boat.lengthM ? `${r.boat.lengthM} m` : '-'}${r.boat.year ? `, ${r.boat.year}` : ''}</td>
                 <td class="num">${r.price != null ? formatMoney(r.price, brief.currency) : 'Not available'}${r.converted ? `<span class="cell-sub">from ${escapeHTML(r.boat.currencyAsListed ?? r.boat.currency)} ${r.boat.askingPrice.toLocaleString('en-GB')}</span>` : ''}${r.overBudget ? '<span class="cell-sub"><span class="pill pill--red">Over budget</span></span>' : ''}</td>
                 <td class="num">${r.pricePerMetre != null ? formatMoney(r.pricePerMetre, brief.currency) : '-'}</td>

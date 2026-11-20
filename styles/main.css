@@ -497,6 +497,16 @@ fieldset.section legend {
   .form-grid--3 { grid-template-columns: 1fr 1fr 1fr; }
 }
 
+/* Photos of boats for sale (brokerage screens) */
+.boat-photo { display: block; }
+.boat-photo img { display: block; object-fit: cover; border-radius: var(--radius); background: var(--accent-soft); }
+.boat-photo--thumb { margin-bottom: var(--space-2); }
+.boat-photo--thumb img { width: 120px; height: 80px; }
+.boat-photo--large { margin: var(--space-3) 0 var(--space-4); }
+.boat-photo--large img { width: 100%; max-width: 560px; height: auto; aspect-ratio: 16 / 9; }
+.field--tick .boat-photo--thumb { flex-basis: 100%; margin: var(--space-2) 0 0; }
+@media print { .boat-photo { display: none; } }
+
 /* ==========================================================================
    Yacht selection: the blue "Find a yacht" panel and range sliders
    ========================================================================== */

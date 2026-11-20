@@ -15,6 +15,7 @@ import { firms } from '../fleet.js';
 import { checkPill } from '../yachts.js';
 import { formatMoney } from '../calc/currency.js';
 import { formatDate, todayISO } from '../calc/dates.js';
+import { boatPhoto } from './boat-photos.js';
 import { escapeHTML } from './html.js';
 
 const COLLECTION = 'forSale';
@@ -101,7 +102,7 @@ function renderList(container) {
               const ppm = l.currency ? pricePerMetre(l.askingPrice, l.lengthM) : null;
               const dom = daysOnMarket(l, today);
               return `<tr>
-                <th scope="row" data-label="Boat"><a href="#/listings/${escapeHTML(l.id)}">${escapeHTML(l.name)}</a>
+                <th scope="row" data-label="Boat">${boatPhoto(l.id)}<a href="#/listings/${escapeHTML(l.id)}">${escapeHTML(l.name)}</a>
                   <span class="cell-sub">${escapeHTML(l.firm)}${l.location ? ` · ${escapeHTML(l.location)}` : ''}</span></th>
                 <td data-label="Size and year"><span>${l.lengthM ? `${l.lengthM} m` : 'Length not stated'}<span class="cell-sub">${[l.type, l.year].filter(Boolean).join(', ') || 'Type and year not stated'}</span></span></td>
                 <td data-label="Asking price" class="num"><span>${escapeHTML(priceText(l))}${summary && summary.change < 0 ? `<span class="cell-sub"><span class="pill pill--amber">Reduced ${Math.abs(summary.changePercent)}%</span></span>` : ''}</span></td>
@@ -132,6 +133,7 @@ function renderListing(container, saved) {
 
   container.insertAdjacentHTML('beforeend', `
     <p><a href="#/listings">Back to listings</a> · <a href="#/seller-view/${escapeHTML(saved.id)}">Compare with similar boats</a></p>
+    ${boatPhoto(saved.id, 'large')}
     <div id="listing-facts"></div>
 
     <form class="section" id="status-form" novalidate>

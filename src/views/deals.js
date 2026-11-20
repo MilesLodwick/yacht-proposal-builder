@@ -9,6 +9,7 @@ import { getCollection, saveCollection, getSettings } from '../store.js';
 import { DEAL_STAGES, DEFECTS_OUTCOMES, dealFigures, depositStatus, dealProgress, dealWarnings, validateDeal } from '../deals.js';
 import { formatMoney } from '../calc/currency.js';
 import { formatDate, todayISO } from '../calc/dates.js';
+import { boatPhoto } from './boat-photos.js';
 import { escapeHTML } from './html.js';
 
 const COLLECTION = 'deals';
@@ -50,7 +51,7 @@ function renderList(container) {
               const p = dealProgress(d);
               const dep = depositStatus(d, settings, today);
               return `<tr>
-                <th scope="row" data-label="Boat and buyer"><a href="#/deals/${escapeHTML(d.id)}">${escapeHTML(l?.name ?? 'Boat')}</a><span class="cell-sub">${escapeHTML(d.buyer)}${d.buyerBroker ? ` via ${escapeHTML(d.buyerBroker)}` : ''}</span></th>
+                <th scope="row" data-label="Boat and buyer">${l ? boatPhoto(l.id) : ''}<a href="#/deals/${escapeHTML(d.id)}">${escapeHTML(l?.name ?? 'Boat')}</a><span class="cell-sub">${escapeHTML(d.buyer)}${d.buyerBroker ? ` via ${escapeHTML(d.buyerBroker)}` : ''}</span></th>
                 <td data-label="Agreed price" class="num">${formatMoney(d.agreedPrice, d.currency)}</td>
                 <td data-label="Stage"><span>${p.current ? `Next: ${escapeHTML(p.current.label)}` : 'Complete'}<span class="cell-sub">${p.done} of ${p.total} stages done</span></span></td>
                 <td data-label="Deposit"><span class="pill pill--${dep.tone}">${escapeHTML(dep.text)}</span></td>
@@ -124,6 +125,7 @@ function renderDeal(container, saved, listing) {
 
   container.insertAdjacentHTML('beforeend', `
     <p><a href="#/deals">Back to the deal tracker</a>${listing ? ` · <a href="#/listings/${escapeHTML(listing.id)}">Open the listing</a>` : ''}</p>
+    ${listing ? boatPhoto(listing.id, 'large') : ''}
     <p class="muted">${escapeHTML(deal.buyer)}${deal.buyerBroker ? ` via ${escapeHTML(deal.buyerBroker)}` : ''}</p>
     ${deal.example ? '<p class="notice">This deal is a fictional example on a real listing. It did not happen.</p>' : ''}
     <div id="figures"></div>

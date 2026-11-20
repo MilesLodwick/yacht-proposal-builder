@@ -10,6 +10,7 @@ import { getCollection, getSettings } from '../store.js';
 import { findComparables, priceStats, pricePosition, pricePerMetre, salesSettings, ASKING_NOT_SOLD } from '../calc/sales.js';
 import { ratesFromSettings, formatMoney, rateNote } from '../calc/currency.js';
 import { formatDate, todayISO } from '../calc/dates.js';
+import { boatPhoto } from './boat-photos.js';
 import { escapeHTML } from './html.js';
 
 export function render(container, param, heading) {
@@ -83,6 +84,7 @@ export function render(container, param, heading) {
     <header class="proposal-head">
       <p class="proposal-kicker">Seller view: price comparison</p>
       <h2>${escapeHTML(subject.name)}</h2>
+      ${boatPhoto(subject.id, 'large')}
       <dl class="proposal-facts">
         <div><dt>Asking price</dt><dd>${money(subject.askingPrice)}</dd></div>
         <div><dt>Length and year</dt><dd>${subject.lengthM} m, ${subject.year}</dd></div>
@@ -124,7 +126,7 @@ export function render(container, param, heading) {
             </tr></thead>
             <tbody>
               ${comparables.map((c) => `<tr>
-                <th scope="row">${c.sourceUrl ? `<a href="${escapeHTML(c.sourceUrl)}" target="_blank" rel="noopener">${escapeHTML(c.name)}</a>` : escapeHTML(c.name)}<span class="cell-sub">${escapeHTML(c.firm)}</span></th>
+                <th scope="row">${boatPhoto(c.id)}${c.sourceUrl ? `<a href="${escapeHTML(c.sourceUrl)}" target="_blank" rel="noopener">${escapeHTML(c.name)}</a>` : escapeHTML(c.name)}<span class="cell-sub">${escapeHTML(c.firm)}</span></th>
                 <td>${escapeHTML(c.location ?? '-')}</td>
                 <td class="num">${c.lengthM} m</td>
                 <td class="num">${c.year}</td>

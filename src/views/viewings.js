@@ -11,6 +11,7 @@ import {
 import { withListingDefaults, daysOnMarket, statusTone, priceSummary } from '../listings.js';
 import { formatMoney } from '../calc/currency.js';
 import { formatDate, todayISO } from '../calc/dates.js';
+import { boatPhoto } from './boat-photos.js';
 import { escapeHTML } from './html.js';
 
 const COLLECTION = 'saleActivity';
@@ -70,7 +71,7 @@ function renderOverview(container) {
               const mine = entries.filter((e) => e.listingId === l.id);
               const last = mine.filter((e) => e.date <= today).sort((a, b) => b.date.localeCompare(a.date))[0];
               return `<tr>
-                <th scope="row" data-label="Listing"><a href="#/viewings/${escapeHTML(l.id)}">${escapeHTML(l.name)}</a><span class="cell-sub">${escapeHTML(l.firm)}</span></th>
+                <th scope="row" data-label="Listing">${boatPhoto(l.id)}<a href="#/viewings/${escapeHTML(l.id)}">${escapeHTML(l.name)}</a><span class="cell-sub">${escapeHTML(l.firm)}</span></th>
                 <td data-label="Enquiries" class="num">${mine.filter((e) => e.type === 'enquiry').length}</td>
                 <td data-label="Viewings held" class="num">${mine.filter((e) => e.type === 'viewing' && !isBooked(e, today)).length}</td>
                 <td data-label="Last activity">${last ? formatDate(last.date) : '-'}</td>
@@ -279,6 +280,7 @@ function reportHTML(listing, period, r, today) {
     <header class="proposal-head">
       <p class="proposal-kicker">Owner activity report</p>
       <h2>${escapeHTML(listing.name)}</h2>
+      ${boatPhoto(listing.id, 'large')}
       <dl class="proposal-facts">
         <div><dt>Period</dt><dd>${period.from ? `${formatDate(period.from)} to ${formatDate(period.to)}` : `All activity to ${formatDate(period.to)}`}</dd></div>
         <div><dt>Status</dt><dd><span class="pill pill--${statusTone(listing.status)}">${listing.status}</span></dd></div>

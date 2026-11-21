@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
   LISTING_STATUSES, statusTone, withListingDefaults, daysOnMarket, priceSummary,
-  addPriceChange, removePriceChange, validatePriceChange, validateStatus,
+  addPriceChange, removePriceChange, validatePriceChange, validateStatus, applyStatusUpdates,
 } from '../src/listings.js';
 import { importCSV } from '../src/yachts.js';
 
@@ -142,5 +142,34 @@ test('sale boat pages and photos belong to boats in the list, on the selling fir
   for (const [id, url] of Object.entries(images)) {
     assert.ok(pages[id], `${id} has a photo but no page`);
     assert.match(url, /^https:\/\/\S+$/);
+  }
+});
+
+test('website status checks move a boat to Under offer once, and never overwrite the user', () => {
+  const boats = [{ id: 'a', status: 'Active' }, { id: 'b' }, { id: 'c', status: 'Sold', statusDate: '2026-11-01' }];
+  const updates = [
+    { id: 'a', status: 'Under offer', note: 'Shown as Under Offer on the listing', sourceUrl: 'https://example.com/a' },
+    { id: 'c', status: 'Under offer', note: 'Shown as Under Offer on the listing' },
+  ];
+  const first = applyStatusUpdates(boats, updates, '2026-11-21');
+  assert.equal(first.boats[0].status, 'Under offer');
+  assert.equal(first.boats[0].statusDate, '2026-11-21');
+  assert.equal(first.boats[0].statusNote, 'Shown as Under Offer on the listing, checked 2026-11-21');
+  assert.equal(first.boats[1], boats[1]);                       // no update for it
+  assert.equal(first.boats[2].status, 'Sold');                  // the user's own status stands
+  assert.deepEqual(first.applied, ['a|Under offer|2026-11-21']);
+  // Already applied: the user moved it back to Active, and it stays there.
+  const again = applyStatusUpdates([{ id: 'a', status: 'Active' }], updates, '2026-11-21', first.applied);
+  assert.equal(again.boats[0].status, 'Active');
+  assert.deepEqual(again.applied, []);
+});
+
+test('every status check names a boat in the list and a status the app knows', () => {
+  const { updates, dateChecked } = JSON.parse(readFileSync(new URL('../data/sale-status.json', import.meta.url), 'utf8'));
+  const ids = new Set(importCSV('forSale', readFileSync(new URL('../data/for-sale.csv', import.meta.url), 'utf8')).records.map((b) => b.id));
+  assert.match(dateChecked, /^\d{4}-\d{2}-\d{2}$/);
+  for (const u of updates) {
+    assert.ok(ids.has(u.id), `${u.id} is not a boat in the list`);
+    assert.ok(LISTING_STATUSES.includes(u.status), `${u.status} is not a status`);
   }
 });

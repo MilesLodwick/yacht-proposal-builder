@@ -1,0 +1,13 @@
+{
+  "about": "Status checks on boats for sale, against each boat's own listing on the selling firm's website. Only boats with a confirmed listing page could be checked: Rightboat, where the other Berthon boats are listed, blocks automated checks. An update is applied once, and only to a boat still shown as Active, so a status set in the app is never overwritten.",
+  "dateChecked": "2026-11-21",
+  "checked": 40,
+  "updates": [
+    {
+      "id": "ancasta-sealine-t46",
+      "status": "Under offer",
+      "sourceUrl": "https://ancasta.com/boats-for-sale/used/power/sealine/t46/178/",
+      "note": "Shown as Under Offer on Ancasta's listing"
+    }
+  ]
+}

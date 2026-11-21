@@ -7,6 +7,7 @@
 
 import { load, loadDefaultSettings, onChange, getState, hasExampleData, clearExampleData, isStorageWorking, hasCollection, saveCollection } from './store.js';
 import { addStartupSamples } from './samples.js';
+import { applySaleStatusChecks } from './sale-status.js';
 import { keepUpToDate } from './update.js';
 import { KINDS, fetchPublished } from './yachts.js';
 import * as dataView from './views/data.js';
@@ -291,6 +292,9 @@ for (const kind of Object.keys(KINDS)) {
 
 // Fictional sample data for every section (see src/samples.js).
 await addStartupSamples();
+
+// Latest status checks on the boats for sale (see src/sale-status.js).
+await applySaleStatusChecks();
 
 onChange(() => {
   updateBanners();

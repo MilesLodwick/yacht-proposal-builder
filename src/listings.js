@@ -32,6 +32,23 @@ export function withListingDefaults(boat) {
   };
 }
 
+// Apply status checks made against the firms' websites (data/sale-status.json).
+// An update changes a boat only if it is still Active and the update has not
+// been applied before (applied: keys of updates already applied in this
+// browser), so a status the user has set is never overwritten.
+// Returns { boats, applied: keys of the updates applied now }.
+export function applyStatusUpdates(boats, updates, dateChecked, applied = []) {
+  const keyOf = (u) => `${u.id}|${u.status}|${dateChecked}`;
+  const now = [];
+  const result = boats.map((boat) => {
+    const update = updates.find((u) => u.id === boat.id);
+    if (!update || applied.includes(keyOf(update)) || (boat.status ?? 'Active') !== 'Active') return boat;
+    now.push(keyOf(update));
+    return { ...boat, status: update.status, statusDate: dateChecked, statusNote: `${update.note}, checked ${dateChecked}`, statusSourceUrl: update.sourceUrl ?? null };
+  });
+  return { boats: result, applied: now };
+}
+
 // Days from listing to today, or to the day it sold or was withdrawn.
 // null if the listing date is not recorded.
 export function daysOnMarket(listing, today) {

@@ -199,6 +199,7 @@ function renderListing(container, saved) {
 
     container.querySelector('#listing-facts').innerHTML = `
       <p class="pill-row"><span class="pill pill--${statusTone(listing.status)}">${listing.status}</span><span class="pill pill--${check.tone}">${check.text}</span></p>
+      ${listing.statusNote && listing.status !== 'Active' ? `<p class="hint">${escapeHTML(statusNoteText(listing))}${listing.statusSourceUrl ? ` (<a href="${escapeHTML(listing.statusSourceUrl)}" target="_blank" rel="noopener">see listing</a>)` : ''}.</p>` : ''}
       <div class="report-figures">
         <div><span class="figure-label">Asking price</span><span class="figure num">${escapeHTML(priceText(listing))}</span></div>
         <div><span class="figure-label">Per metre</span><span class="figure num">${ppm != null ? formatMoney(ppm, listing.currency) : '-'}</span></div>
@@ -258,7 +259,10 @@ function renderListing(container, saved) {
     const result = validateStatus(input, today);
     showErrors(statusForm, result.ok ? {} : result.errors);
     if (!result.ok) return;
+    // A status the user sets replaces any status found by a website check.
+    const statusChanged = input.status !== listing.status || (input.statusDate || null) !== listing.statusDate;
     listing = { ...listing, status: input.status, listedOn: input.listedOn || null, statusDate: input.statusDate || null };
+    if (statusChanged) listing = { ...listing, statusNote: null, statusSourceUrl: null };
     save();
     draw();
     container.querySelector('#listing-status').textContent = 'Status saved.';
@@ -289,4 +293,10 @@ function renderListing(container, saved) {
   });
 
   draw();
+}
+
+// "Shown as Under Offer on Ancasta's listing, checked 2026-11-21" with the
+// date in display format.
+function statusNoteText(listing) {
+  return listing.statusNote.replace(/(\d{4}-\d{2}-\d{2})$/, (iso) => formatDate(iso));
 }

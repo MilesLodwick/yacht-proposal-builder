@@ -481,22 +481,22 @@
       "id": "currency.gbpPerEur",
       "group": "Currency rates",
       "label": "GBP per 1 EUR",
-      "value": 0.83755,
+      "value": 0.83504,
       "unit": "rate",
       "source": "European Central Bank reference rate",
       "sourceUrl": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
-      "dateChecked": "2026-11-26",
+      "dateChecked": "2026-11-27",
       "note": "Indicative. Updated each weekday from the European Central Bank reference rate. A rate you type here is used until a newer daily rate arrives."
     },
     {
       "id": "currency.usdPerEur",
       "group": "Currency rates",
       "label": "USD per 1 EUR",
-      "value": 1.0975,
+      "value": 1.0957,
       "unit": "rate",
       "source": "European Central Bank reference rate",
       "sourceUrl": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
-      "dateChecked": "2026-11-26",
+      "dateChecked": "2026-11-27",
       "note": "Indicative. Updated each weekday from the European Central Bank reference rate. A rate you type here is used until a newer daily rate arrives."
     }
   ]
